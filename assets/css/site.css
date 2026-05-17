@@ -289,6 +289,17 @@ section.block{padding:46px 0}
 .comm .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;
   padding:28px;margin:20px 0;box-shadow:var(--shadow)}
 
+/* how-to (受講の進め方) */
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}
+.howto .st{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:20px;box-shadow:var(--shadow)}
+.howto .st .no{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;
+  background:var(--orange);color:#fff;font-weight:900;margin-bottom:8px}
+.howto .st h3{margin:.1em 0 .3em;font-size:1.02rem;color:var(--ink)}
+.howto .st p{margin:0;color:var(--muted);font-size:.92rem}
+.resume-hint{display:block;margin-top:10px;color:var(--muted);font-size:.85rem}
+@media (max-width:780px){.howto{grid-template-columns:1fr}}
+
 /* footer */
 .site-footer{background:var(--bg-cream);border-top:1px solid var(--line);margin-top:40px}
 .site-footer .inner{max-width:var(--maxw);margin:0 auto;padding:34px 20px}

@@ -61,6 +61,39 @@
       else if (mq.addListener) mq.addListener(onMq);
     } catch (e) {}
 
+    /* --- resume / next-step CTA（進捗連動の「次にやること」） --- */
+    function nextLesson(st0) {
+      for (var i = 0; i < STEPS.length; i++) {
+        if (stepDone(st0, STEPS[i]) < STEPS[i].total) return { st: STEPS[i], idx: i };
+      }
+      return null;
+    }
+    (function () {
+      var anyProgress = grandDone(state) > 0;
+      var nx = nextLesson(state);
+      document.querySelectorAll("[data-resume]").forEach(function (a) {
+        var base = a.getAttribute("data-base") || "lessons/";
+        if (!nx) {
+          a.href = base + "pitfalls.html";
+          a.textContent = "全レッスン完了 — 補講と見直しへ →";
+        } else if (anyProgress && nx.idx > 0) {
+          a.href = base + nx.st.file;
+          a.textContent = "続きから：" + nx.st.name + " →";
+        } else {
+          a.href = base + nx.st.file;
+          a.textContent = nx.idx === 0
+            ? "STEP1から無料で始める →"
+            : nx.st.name + " から始める →";
+        }
+      });
+      document.querySelectorAll("[data-resume-hint]").forEach(function (h) {
+        if (anyProgress) {
+          h.hidden = false;
+          h.textContent = "前回の進捗から再開できます（この端末に保存）";
+        }
+      });
+    })();
+
     /* --- mobile: header nav + lesson toc --- */
     var toggle = document.querySelector(".menu-toggle");
     if (toggle) {
