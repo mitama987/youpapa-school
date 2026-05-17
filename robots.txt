@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mitama987.github.io/youpapa-school/sitemap.xml
