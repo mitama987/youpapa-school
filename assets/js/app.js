@@ -1,4 +1,4 @@
-/* youpapa-school — サイドバー / 進捗(localStorage) / モバイル開閉 */
+/* Youパパ school — フィルタ / 進捗(localStorage) / ナビ */
 (function () {
   "use strict";
   var STEPS = [
@@ -14,86 +14,116 @@
     try { return JSON.parse(localStorage.getItem(LSKEY)) || {}; }
     catch (e) { return {}; }
   }
-  function save(o) {
-    try { localStorage.setItem(LSKEY, JSON.stringify(o)); } catch (e) {}
-  }
-  function stepDoneCount(state, step) {
+  function save(o) { try { localStorage.setItem(LSKEY, JSON.stringify(o)); } catch (e) {} }
+  function stepDone(state, st) {
     var c = 0;
-    for (var i = 1; i <= step.total; i++) { if (state[step.key + "-" + i]) c++; }
+    for (var i = 1; i <= st.total; i++) { if (state[st.key + "-" + i]) c++; }
     return c;
   }
   function grandDone(state) {
-    return STEPS.reduce(function (s, st) { return s + stepDoneCount(state, st); }, 0);
+    return STEPS.reduce(function (s, st) { return s + stepDone(state, st); }, 0);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     var state = load();
 
-    /* --- mobile sidebar toggle --- */
+    /* --- mobile: header nav + lesson toc --- */
     var toggle = document.querySelector(".menu-toggle");
-    var sidebar = document.querySelector(".sidebar");
-    if (toggle && sidebar) {
-      toggle.addEventListener("click", function () { sidebar.classList.toggle("open"); });
-      sidebar.addEventListener("click", function (e) {
-        if (e.target.tagName === "A") sidebar.classList.remove("open");
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        var nav = document.querySelector(".nav");
+        var toc = document.querySelector(".toc");
+        if (toc) toc.classList.toggle("open");
+        else if (nav) nav.classList.toggle("open");
       });
     }
 
-    /* --- active nav by current file --- */
-    var here = (location.pathname.split("/").pop() || "index.html");
-    if (here === "") here = "index.html";
-    var navLinks = document.querySelectorAll(".sidebar nav a");
-    navLinks.forEach(function (a) {
-      var href = a.getAttribute("href");
-      if (href === here) a.classList.add("active");
+    /* --- active nav (by data-nav vs body[data-page]) --- */
+    var page = document.body.getAttribute("data-page");
+    document.querySelectorAll(".nav a[data-nav]").forEach(function (a) {
+      if (a.getAttribute("data-nav") === page) a.classList.add("active");
     });
 
-    /* --- restore checkboxes + wire change --- */
+    /* --- course catalog filter (index) --- */
+    var cards = document.querySelectorAll(".course-card[data-level]");
+    if (cards.length) {
+      var sel = { level: "all", cat: "all" };
+      var chips = document.querySelectorAll(".chip[data-group]");
+      var emptyNote = document.querySelector(".empty-note");
+      function apply() {
+        var shown = 0;
+        cards.forEach(function (c) {
+          var okL = sel.level === "all" || c.getAttribute("data-level") === sel.level;
+          var okC = sel.cat === "all" || c.getAttribute("data-cat") === sel.cat;
+          if (okL && okC) { c.classList.remove("is-hidden"); shown++; }
+          else c.classList.add("is-hidden");
+        });
+        if (emptyNote) emptyNote.style.display = shown ? "none" : "block";
+      }
+      chips.forEach(function (ch) {
+        ch.addEventListener("click", function () {
+          var g = ch.getAttribute("data-group");
+          document.querySelectorAll('.chip[data-group="' + g + '"]')
+            .forEach(function (x) { x.classList.remove("active"); });
+          ch.classList.add("active");
+          sel[g] = ch.getAttribute("data-value");
+          apply();
+        });
+      });
+      var reset = document.querySelector(".filter-reset");
+      if (reset) reset.addEventListener("click", function () {
+        sel = { level: "all", cat: "all" };
+        chips.forEach(function (x) {
+          x.classList.toggle("active", x.getAttribute("data-value") === "all");
+        });
+        apply();
+      });
+      apply();
+    }
+
+    /* --- lesson checklists + progress --- */
     var boxes = document.querySelectorAll(".checklist input[type=checkbox]");
     boxes.forEach(function (b) {
       if (state[b.id]) b.checked = true;
       b.addEventListener("change", function () {
         if (b.checked) state[b.id] = true; else delete state[b.id];
-        save(state);
-        refresh();
+        save(state); refresh();
       });
     });
 
     function refresh() {
-      /* page-level pill */
       var pill = document.querySelector("[data-page-progress]");
       if (pill) {
-        var total = boxes.length;
-        var done = 0;
-        boxes.forEach(function (b) { if (b.checked) done++; });
-        pill.textContent = "このSTEPの進捗  " + done + " / " + total;
+        var d = 0; boxes.forEach(function (b) { if (b.checked) d++; });
+        pill.textContent = "このレッスンの進捗  " + d + " / " + boxes.length;
       }
-      /* header global strip */
       var gd = grandDone(state);
       var pctAll = Math.round((gd / GRAND) * 100);
       var fill = document.querySelector(".progress-fill");
       if (fill) fill.style.width = pctAll + "%";
       var lbl = document.querySelector("[data-progress-label]");
-      if (lbl) lbl.textContent = "全体達成 " + pctAll + "% (" + gd + "/" + GRAND + ")";
-      /* sidebar done marks */
-      navLinks.forEach(function (a) {
-        var href = a.getAttribute("href");
-        var st = STEPS.filter(function (s) { return s.file === href; })[0];
-        if (st && stepDoneCount(state, st) === st.total) a.classList.add("done");
-        else a.classList.remove("done");
+      if (lbl) lbl.textContent = "コース達成 " + pctAll + "% (" + gd + "/" + GRAND + ")";
+
+      document.querySelectorAll(".toc nav a, .curriculum li").forEach(function (el) {
+        var href = el.tagName === "A" ? el.getAttribute("href")
+                 : (el.querySelector("a") && el.querySelector("a").getAttribute("href"));
+        if (!href) return;
+        var fname = href.split("/").pop();
+        var st = STEPS.filter(function (s) { return s.file === fname; })[0];
+        if (st && stepDone(state, st) === st.total) el.classList.add("done");
+        else el.classList.remove("done");
       });
-      /* index dashboard */
+
       var dash = document.querySelector("[data-dashboard]");
       if (dash) {
         dash.innerHTML = "";
         STEPS.forEach(function (st) {
-          var d = stepDoneCount(state, st);
-          var p = Math.round((d / st.total) * 100);
+          var dn = stepDone(state, st), p = Math.round((dn / st.total) * 100);
           var cell = document.createElement("a");
-          cell.href = st.file;
+          cell.href = "../lessons/" + st.file;
           cell.className = "cell" + (p === 100 ? " complete" : "");
           cell.innerHTML = '<div class="pct">' + p + '%</div><div class="nm">' +
-            st.name + "<br>" + d + " / " + st.total + "</div>";
+            st.name + "<br>" + dn + " / " + st.total + "</div>";
           dash.appendChild(cell);
         });
       }
