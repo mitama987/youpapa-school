@@ -27,6 +27,40 @@
   document.addEventListener("DOMContentLoaded", function () {
     var state = load();
 
+    /* --- theme toggle (light/dark) --- */
+    var THKEY = "yps:theme";
+    var root = document.documentElement;
+    function currentTheme() {
+      return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    }
+    function paintToggle(btn) {
+      var dark = currentTheme() === "dark";
+      btn.textContent = dark ? "☀️" : "🌙";
+      btn.setAttribute("aria-pressed", dark ? "true" : "false");
+      btn.title = dark ? "ライトモードに切替" : "ダークモードに切替";
+    }
+    var tBtn = document.querySelector(".theme-toggle");
+    if (tBtn) {
+      paintToggle(tBtn);
+      tBtn.addEventListener("click", function () {
+        var next = currentTheme() === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem(THKEY, next); } catch (e) {}
+        paintToggle(tBtn);
+      });
+    }
+    /* OS変更追従（手動選択が未保存のときだけ） */
+    try {
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      var onMq = function (e) {
+        if (localStorage.getItem(THKEY)) return;
+        root.setAttribute("data-theme", e.matches ? "dark" : "light");
+        if (tBtn) paintToggle(tBtn);
+      };
+      if (mq.addEventListener) mq.addEventListener("change", onMq);
+      else if (mq.addListener) mq.addListener(onMq);
+    } catch (e) {}
+
     /* --- mobile: header nav + lesson toc --- */
     var toggle = document.querySelector(".menu-toggle");
     if (toggle) {
