@@ -1,4 +1,4 @@
-# Youパパ school — 副業×AI×自動化 アカデミーサイト
+# シクミ — 副業×AI×自動化 アカデミーサイト
 
 オンライン講座アカデミー型サイト（参照: claude-code-academy 風）。ビルド不要の純静的（HTML/CSS/JS）。GitHub Pages 公開。
 

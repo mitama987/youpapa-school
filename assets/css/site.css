@@ -80,7 +80,7 @@ img{max-width:100%;height:auto;display:block}
 .brand:hover{text-decoration:none}
 .brand .mark{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;
   background:linear-gradient(135deg,var(--orange),var(--yellow));color:#fff;font-weight:900}
-.brand .mark::after{content:"Y"}
+.brand .mark::after{content:"S"}
 .nav{display:flex;gap:6px;align-items:center}
 .nav a{color:var(--ink);font-weight:700;font-size:.95rem;padding:8px 12px;border-radius:9px}
 .nav a:hover{background:var(--bg-soft);text-decoration:none}
