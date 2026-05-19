@@ -633,6 +633,8 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0 0 8p
   .why-grid, .feat-grid, .metric-grid { grid-template-columns: 1fr; }
   .addon-grid { grid-template-columns: 1fr; }
   .sp-only { display: inline; }
+  .br-pc { display: none; }
+  .hero-copy h1 { font-size: clamp(28px, 8vw, 38px); overflow-wrap: anywhere; }
   .hero { padding: 56px 0 48px; }
   .pain, .why, .features, .metrics, .pricing, .addons, .compare, .reviews, .dev, .faq { padding: 64px 0; }
   .final { padding: 80px 0; }
