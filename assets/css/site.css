@@ -81,11 +81,11 @@ img{max-width:100%;height:auto;display:block}
 .brand .mark{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;
   background:linear-gradient(135deg,var(--orange),var(--yellow));color:#fff;font-weight:900}
 .brand .mark::after{content:"S"}
-.nav{display:flex;gap:6px;align-items:center}
+.nav{display:flex;gap:6px;align-items:center;margin-left:auto}
 .nav a{color:var(--ink);font-weight:700;font-size:.95rem;padding:8px 12px;border-radius:9px}
 .nav a:hover{background:var(--bg-soft);text-decoration:none}
 .nav a.active{color:var(--orange-d)}
-.header-cta{margin-left:auto;display:flex;align-items:center;gap:10px}
+.header-cta{margin-left:14px;display:flex;align-items:center;gap:10px}
 .btn{display:inline-block;padding:11px 20px;border-radius:999px;font-weight:800;
   font-size:.93rem;border:0;cursor:pointer;line-height:1.2;text-align:center}
 .btn-line{background:var(--green);color:#fff}
@@ -329,3 +329,7 @@ section.block{padding:46px 0}
   .card{padding:22px 18px}
   .hero .wrap{padding:46px 18px 38px}
 }
+
+/* ===== Version History =====
+ ver1.1 | 2026-05-19 | ヘッダーナビ＋CTAを右寄せ（.nav に margin-left:auto、.header-cta を margin-left:14px に変更）。ロゴは左固定。
+ ===== */
