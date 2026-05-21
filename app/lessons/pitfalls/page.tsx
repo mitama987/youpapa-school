@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { CommentThread } from "@/components/CommentThread";
 import { LessonShell } from "@/components/LessonShell";
 import { LikeButton } from "@/components/LikeButton";
 import { Pager } from "@/components/Pager";
@@ -49,6 +50,8 @@ export default function Pitfalls() {
           <LikeButton targetId="lessons:pitfalls" />
         </p>
       </div>
+
+      <CommentThread targetId="lessons:pitfalls" />
 
       <div className="action-card">
         <h3>もっと深く、もっとラクに</h3>

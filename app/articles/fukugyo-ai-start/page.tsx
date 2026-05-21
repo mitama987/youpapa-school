@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { CommentThread } from "@/components/CommentThread";
 import { LikeButton } from "@/components/LikeButton";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
@@ -66,6 +67,8 @@ export default function ArticleStart() {
       <p style={{ marginTop: 24, marginBottom: 24 }}>
         <LikeButton targetId="articles:fukugyo-ai-start" />
       </p>
+
+      <CommentThread targetId="articles:fukugyo-ai-start" />
 
       <div className="action-card">
         <h3>手を動かして実践する</h3>

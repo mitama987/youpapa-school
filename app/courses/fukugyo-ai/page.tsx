@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { CommentThread } from "@/components/CommentThread";
 import { CurriculumList } from "@/components/CurriculumList";
 import { Dashboard } from "@/components/Dashboard";
 import { LikeButton } from "@/components/LikeButton";
@@ -64,6 +65,8 @@ export default function Course() {
               <LikeButton targetId="courses:fukugyo-ai" />
             </p>
           </div>
+
+          <CommentThread targetId="courses:fukugyo-ai" />
 
           <div className="action-card">
             <h3>まず5分だけ</h3>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { CommentThread } from "@/components/CommentThread";
 import { LessonShell } from "@/components/LessonShell";
 import { LessonChecklist } from "@/components/LessonChecklist";
 import { LikeButton } from "@/components/LikeButton";
@@ -66,6 +67,8 @@ export default function Step1() {
           <LikeButton targetId="lessons:step1" />
         </p>
       </div>
+
+      <CommentThread targetId="lessons:step1" />
 
       <Pager
         prev={{ href: "/courses/fukugyo-ai", label: "← 講座トップ" }}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { CommentThread } from "@/components/CommentThread";
 import { LessonShell } from "@/components/LessonShell";
 import { LessonChecklist } from "@/components/LessonChecklist";
 import { LikeButton } from "@/components/LikeButton";
@@ -71,6 +72,8 @@ export default function Step4() {
           <LikeButton targetId="lessons:step4" />
         </p>
       </div>
+
+      <CommentThread targetId="lessons:step4" />
 
       <div className="action-card">
         <h3>次のアクション：配信を自動化して続ける仕組みにする</h3>
