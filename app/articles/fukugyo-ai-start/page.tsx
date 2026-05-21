@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { LikeButton } from "@/components/LikeButton";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
 
@@ -60,6 +61,10 @@ export default function ArticleStart() {
       <h2>つまずき対処とまとめ</h2>
       <p>
         完璧主義は70点で進む。目移りは1商品まで封印。売れないときは商品より先にLPと相手を疑う。続かないときは核を1つに絞る。複利は後半で効きます。必要なのは、ひらめきではなく順番と仕組み。仕組みは、だれでも作れます。
+      </p>
+
+      <p style={{ marginTop: 24, marginBottom: 24 }}>
+        <LikeButton targetId="articles:fukugyo-ai-start" />
       </p>
 
       <div className="action-card">

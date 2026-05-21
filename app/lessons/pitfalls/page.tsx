@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { LessonShell } from "@/components/LessonShell";
+import { LikeButton } from "@/components/LikeButton";
 import { Pager } from "@/components/Pager";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
@@ -43,6 +44,9 @@ export default function Pitfalls() {
         <h2>まとめ：才能ではなく「順番」と「仕組み」</h2>
         <p>
           特別な才能はありませんでした。人脈もありません。あったのは「会社を辞めたい」という気持ちと、夜10時から続けた小さな積み重ねだけです。副業で人生の選択肢を増やすのに必要なのは、ひらめきではなく順番と仕組みです。仕組みは、だれでも作れます。
+        </p>
+        <p style={{ marginTop: 18 }}>
+          <LikeButton targetId="lessons:pitfalls" />
         </p>
       </div>
 

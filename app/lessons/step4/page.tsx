@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { LessonShell } from "@/components/LessonShell";
 import { LessonChecklist } from "@/components/LessonChecklist";
+import { LikeButton } from "@/components/LikeButton";
 import { Pager } from "@/components/Pager";
 
 export const metadata: Metadata = {
@@ -66,6 +67,9 @@ export default function Step4() {
             { id: "s4-5", text: "導線を「X固定ポスト→note→商品LP」の一本道にしたか" },
           ]}
         />
+        <p style={{ marginTop: 18 }}>
+          <LikeButton targetId="lessons:step4" />
+        </p>
       </div>
 
       <div className="action-card">

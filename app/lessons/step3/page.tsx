@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { LessonShell } from "@/components/LessonShell";
 import { LessonChecklist } from "@/components/LessonChecklist";
+import { LikeButton } from "@/components/LikeButton";
 import { Pager } from "@/components/Pager";
 
 export const metadata: Metadata = {
@@ -49,6 +50,9 @@ export default function Step3() {
           <div className="label">私の実例</div>
           3ヶ月売上ゼロの本当の原因は、DM一発で「便利ですよ」と押し付け、価値を順序立てて伝える場所を持っていなかったこと。販売ページを整え「誰の・どの悩みが・どう消えるか」を順番に並べただけで、同じ商品の反応がまるで変わりました。売れないとき疑うのは、商品より先に「伝えかた」と「相手」です。
         </div>
+        <p style={{ marginTop: 18 }}>
+          <LikeButton targetId="lessons:step3" />
+        </p>
       </div>
 
       <div className="action-card">

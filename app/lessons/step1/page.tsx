@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { LessonShell } from "@/components/LessonShell";
 import { LessonChecklist } from "@/components/LessonChecklist";
+import { LikeButton } from "@/components/LikeButton";
 import { Pager } from "@/components/Pager";
 
 export const metadata: Metadata = {
@@ -61,6 +62,9 @@ export default function Step1() {
           ]}
         />
         <p>5つ埋まればSTEP1は合格です。完璧でなくてかまいません。</p>
+        <p style={{ marginTop: 18 }}>
+          <LikeButton targetId="lessons:step1" />
+        </p>
       </div>
 
       <Pager

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { CurriculumList } from "@/components/CurriculumList";
 import { Dashboard } from "@/components/Dashboard";
+import { LikeButton } from "@/components/LikeButton";
 import { ResumeCTA } from "@/components/ResumeCTA";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
@@ -58,6 +59,9 @@ export default function Course() {
             <Dashboard />
             <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
               ※チェックはこの端末のブラウザに自動保存されます。
+            </p>
+            <p style={{ marginTop: 18 }}>
+              <LikeButton targetId="courses:fukugyo-ai" />
             </p>
           </div>
 
