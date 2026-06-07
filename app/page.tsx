@@ -76,22 +76,27 @@ export default function Home() {
             <div>
               <div className="kicker">COURSES</div>
               <h2>講座一覧</h2>
-              <p>まずは入門の「副業×AI×自動化」から。</p>
+              <p>
+                稼ぐ流れは「商品 → 販売 → 集客」。まずは全体像をつかむ入門講座から始め、各分野を深掘りできます。
+              </p>
             </div>
           </div>
 
+          {/* ★まずはここから（フィーチャー講座） */}
           <div className="grid">
             <Link className="course-card" href="/courses/fukugyo-ai">
               <div className="thumb t1">
-                副業×AI×自動化
-                <br />
-                月10万 4ステップ
+                <img
+                  src="/thumbs/fukugyo-ai.webp"
+                  alt="副業×AI×自動化 月10万 4ステップ"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
                   <span className="pill live">★まずはここから</span>
                   <span className="pill lv">入門→実践</span>
-                  <span className="pill cat">副業の始め方</span>
+                  <span className="pill cat">全体像</span>
                 </div>
                 <h3>副業×AI×自動化で月10万 ― 4ステップ実践</h3>
                 <p>
@@ -103,78 +108,149 @@ export default function Home() {
                 </div>
               </div>
             </Link>
+          </div>
 
-            <a
-              className="course-card"
-              href="https://mitama987.github.io/youpapa-school/xtp3/"
-            >
-              <div className="thumb t2">XToolsPro3</div>
+          {/* 商品 */}
+          <div className="cat-head">
+            <div className="kicker">PRODUCT</div>
+            <h3>商品 ― つくる</h3>
+            <p>解決したい不満を、AIと自動化で最小工数の商品に。</p>
+          </div>
+          <div className="grid">
+            <Link className="course-card" href="/courses/web-app">
+              <div className="thumb t5">
+                <img
+                  src="/thumbs/web-app.webp"
+                  alt="Webアプリ作成講座"
+                  loading="lazy"
+                />
+              </div>
               <div className="course-body">
                 <div className="pills">
-                  <span className="pill lv">実践</span>
-                  <span className="pill cat">ツール</span>
-                  <span className="pill live">LP公開</span>
+                  <span className="pill lv">入門→実践</span>
+                  <span className="pill cat">開発・自動化</span>
+                  <span className="pill soon">準備中</span>
                 </div>
-                <h3>XToolsPro3で集客を自動化する</h3>
-                <p>API不要・買い切りのX自動投稿ツール。実物のプロダクトLPを「お手本」として確認できます。</p>
+                <h3>Webアプリ作成講座</h3>
+                <p>環境構築不要のWebアプリを、Claude CodeなどのAIで最小工数から作る型を実践します。</p>
                 <div className="course-meta">
-                  <span>製品LP</span>
-                  <span className="go">LPを見る →</span>
+                  <span>簡易ガイド公開中</span>
+                  <span className="go">見てみる →</span>
                 </div>
               </div>
-            </a>
+            </Link>
 
-            <a
-              className="course-card"
-              href="https://mitama987.github.io/youpapa-school/xtp3/amazon/"
-            >
+            <Link className="course-card" href="/courses/youtube">
+              <div className="thumb t3">
+                <img
+                  src="/thumbs/youtube.webp"
+                  alt="YouTube作成講座"
+                  loading="lazy"
+                />
+              </div>
+              <div className="course-body">
+                <div className="pills">
+                  <span className="pill lv">入門→実践</span>
+                  <span className="pill cat">コンテンツ作成</span>
+                  <span className="pill soon">準備中</span>
+                </div>
+                <h3>YouTube作成講座</h3>
+                <p>これから実際に発信していく過程を教材化。企画→台本→編集→サムネ→投稿の型を学べます。</p>
+                <div className="course-meta">
+                  <span>簡易ガイド公開中</span>
+                  <span className="go">見てみる →</span>
+                </div>
+              </div>
+            </Link>
+
+            <span className="course-card">
+              <div className="thumb t6">
+                <img
+                  src="/thumbs/youtube-edit.webp"
+                  alt="YouTube自動編集・サムネ・投稿"
+                  loading="lazy"
+                />
+              </div>
+              <div className="course-body">
+                <div className="pills">
+                  <span className="pill lv">応用</span>
+                  <span className="pill cat">開発・自動化</span>
+                  <span className="pill soon">準備中</span>
+                </div>
+                <h3>YouTube自動編集・サムネ・投稿</h3>
+                <p>動画編集からサムネ生成・投稿まで自動化するスキル。近日公開予定。</p>
+                <div className="course-meta">
+                  <span>Coming soon</span>
+                  <span className="go">準備中</span>
+                </div>
+              </div>
+            </span>
+          </div>
+
+          {/* 販売 */}
+          <div className="cat-head">
+            <div className="kicker">SALES</div>
+            <h3>販売 ― 売る</h3>
+            <p>良い商品を「伝わる形」にして売る。</p>
+          </div>
+          <div className="grid">
+            <Link className="course-card" href="/courses/lp">
+              <div className="thumb t2">
+                <img src="/thumbs/lp.webp" alt="LP作成講座" loading="lazy" />
+              </div>
+              <div className="course-body">
+                <div className="pills">
+                  <span className="pill lv">入門→実践</span>
+                  <span className="pill cat">セールス</span>
+                  <span className="pill soon">準備中</span>
+                </div>
+                <h3>LP作成講座</h3>
+                <p>価値が伝わるLPの構成・コピー・価格設計の型を、実物の製品LPを教材に学びます。</p>
+                <div className="course-meta">
+                  <span>簡易ガイド公開中</span>
+                  <span className="go">見てみる →</span>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* 集客 */}
+          <div className="cat-head">
+            <div className="kicker">ATTRACT</div>
+            <h3>集客 ― 広める</h3>
+            <p>広告に頼らず、同じ核を配信し続けて広める。</p>
+          </div>
+          <div className="grid">
+            <Link className="course-card" href="/courses/sns">
               <div className="thumb t7">
-                XTP3 アドオン
-                <br />
-                Amazon在庫復活
+                <img
+                  src="/thumbs/sns.webp"
+                  alt="SNS集客講座 note・ココナラ・X・Threads"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
                   <span className="pill lv">実践</span>
-                  <span className="pill cat">ツール</span>
-                  <span className="pill live">アドオン / LP公開</span>
+                  <span className="pill cat">SNS実践</span>
+                  <span className="pill soon">準備中</span>
                 </div>
-                <h3>XToolsPro3 アドオン ― Amazon在庫復活</h3>
-                <p>
-                  Keepa連携でAmazonの在庫復活を全自動検知し、アフィリンク付きでXへ自動投稿。実運用アカウントの投稿例つき。
-                </p>
+                <h3>SNS集客講座（note・ココナラ・X・Threads）</h3>
+                <p>これまで実際に実践してきた内容を中心に、各SNSの使い分けと発信の仕組み化を公開します。</p>
                 <div className="course-meta">
-                  <span>製品LP（アドオン）</span>
-                  <span className="go">LPを見る →</span>
+                  <span>簡易ガイド公開中</span>
+                  <span className="go">見てみる →</span>
                 </div>
               </div>
-            </a>
-
-            <a
-              className="course-card"
-              href="https://mitama987.github.io/youpapa-school/xtp4/"
-            >
-              <div className="thumb t3">XToolsPro4</div>
-              <div className="course-body">
-                <div className="pills">
-                  <span className="pill lv">実践</span>
-                  <span className="pill cat">ツール</span>
-                  <span className="pill live">LP公開</span>
-                </div>
-                <h3>XToolsPro4 ― 中小企業のX運用</h3>
-                <p>少人数でX運用を続ける仕組み。法人向けLPの構成も販売の参考になります。</p>
-                <div className="course-meta">
-                  <span>製品LP</span>
-                  <span className="go">LPを見る →</span>
-                </div>
-              </div>
-            </a>
+            </Link>
 
             <span className="course-card">
               <div className="thumb t4">
-                Claude Code
-                <br />
-                記事自動化
+                <img
+                  src="/thumbs/claude-note.webp"
+                  alt="Claude Codeで記事自動生成→note投稿"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -193,9 +269,11 @@ export default function Home() {
 
             <span className="course-card">
               <div className="thumb t5">
-                Xポスト
-                <br />
-                自動生成
+                <img
+                  src="/thumbs/x-post.webp"
+                  alt="Xポスト自動生成スキル"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -211,27 +289,22 @@ export default function Home() {
                 </div>
               </div>
             </span>
+          </div>
 
-            <span className="course-card">
-              <div className="thumb t6">
-                YouTube
-                <br />
-                自動編集
-              </div>
-              <div className="course-body">
-                <div className="pills">
-                  <span className="pill lv">応用</span>
-                  <span className="pill cat">開発・自動化</span>
-                  <span className="pill soon">準備中</span>
-                </div>
-                <h3>YouTube自動編集・サムネ・投稿</h3>
-                <p>動画編集からサムネ生成・投稿まで自動化するスキル。近日公開予定。</p>
-                <div className="course-meta">
-                  <span>Coming soon</span>
-                  <span className="go">準備中</span>
-                </div>
-              </div>
-            </span>
+          {/* ツール誘導（販売ツールは講座一覧に置かず、マーケットへ） */}
+          <div className="tool-cta">
+            <div>
+              <h3>集客ツールをお探しですか？</h3>
+              <p>
+                XToolsPro3 / Amazon在庫復活アドオン / XToolsPro4 などの集客ツールは、ツール一覧（マーケット）にまとめています。
+              </p>
+            </div>
+            <a
+              className="btn btn-primary"
+              href="https://sns-tools-market.vercel.app/"
+            >
+              ツール一覧を見る →
+            </a>
           </div>
         </div>
       </section>

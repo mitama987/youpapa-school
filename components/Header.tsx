@@ -41,6 +41,7 @@ export function Header() {
           <Link className={linkCls("home")} href="/">
             講座一覧
           </Link>
+          <a href="https://sns-tools-market.vercel.app/">ツール一覧</a>
           <Link className={linkCls("articles")} href="/articles">
             記事
           </Link>

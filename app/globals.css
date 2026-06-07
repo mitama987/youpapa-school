@@ -517,6 +517,58 @@ section.block {
   color: var(--orange-d);
   font-weight: 800;
 }
+
+/* thumbnail image (gpt-image-2 で生成した画像を使う場合。未生成時はグラデーションがフォールバック) */
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* category sub-heading inside 講座一覧（商品 / 販売 / 集客） */
+.cat-head {
+  margin: 34px 0 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.cat-head .kicker {
+  margin-bottom: 2px;
+}
+.cat-head h3 {
+  margin: 0.1em 0 0.2em;
+  font-size: 1.18rem;
+  color: var(--ink);
+}
+.cat-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* tool guidance banner (販売ツールは外部マーケットへ誘導) */
+.tool-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+  padding: 22px 24px;
+  background: var(--bg-cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.tool-cta h3 {
+  margin: 0 0 0.3em;
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+.tool-cta p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
 .empty-note {
   display: none;
   color: var(--muted);
@@ -1162,6 +1214,20 @@ section.block {
 @media (max-width: 620px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+  .howto {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .howto .st {
+    padding: 16px 16px 14px;
+  }
+  .tool-cta {
+    padding: 18px;
+  }
+  .tool-cta .btn {
+    width: 100%;
   }
   .header-cta .btn {
     padding: 9px 14px;
