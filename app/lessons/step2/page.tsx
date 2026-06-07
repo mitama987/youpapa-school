@@ -65,12 +65,14 @@ export default function Step2() {
       <CommentThread targetId="lessons:step2" />
 
       <div className="action-card">
-        <h3>次のアクション：AIで開発を加速する</h3>
+        <h3>次のアクション：商品づくりを深掘りする</h3>
         <p>
-          個人開発の速度を何倍にもするClaude Codeの開発スキルを準備中です。公開したらここからアクセスできます。
+          このSTEPの「商品」を実際に形にする専門講座を用意しています。まずは環境構築不要で作れる「Webアプリ作成講座」から、AIで最小工数の商品づくりを学べます。
         </p>
         <div className="links">
-          <span className="btn btn-primary soon">Claude Code 開発スキルLP</span>
+          <Link className="btn btn-primary" href="/courses/web-app">
+            Webアプリ作成講座へ →
+          </Link>
           <a
             className="btn btn-ghost"
             href="https://mitama987.github.io/youpapa-school/xtp3/"
