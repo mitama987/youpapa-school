@@ -139,52 +139,6 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-
-            <Link className="course-card" href="/courses/youtube">
-              <div className="thumb t3">
-                <img
-                  src="/thumbs/youtube.webp"
-                  alt="YouTube作成講座"
-                  loading="lazy"
-                />
-              </div>
-              <div className="course-body">
-                <div className="pills">
-                  <span className="pill lv">入門→実践</span>
-                  <span className="pill cat">コンテンツ作成</span>
-                  <span className="pill soon">準備中</span>
-                </div>
-                <h3>YouTube作成講座</h3>
-                <p>これから実際に発信していく過程を教材化。企画→台本→編集→サムネ→投稿の型を学べます。</p>
-                <div className="course-meta">
-                  <span>簡易ガイド公開中</span>
-                  <span className="go">見てみる →</span>
-                </div>
-              </div>
-            </Link>
-
-            <span className="course-card">
-              <div className="thumb t6">
-                <img
-                  src="/thumbs/youtube-edit.webp"
-                  alt="YouTube自動編集・サムネ・投稿"
-                  loading="lazy"
-                />
-              </div>
-              <div className="course-body">
-                <div className="pills">
-                  <span className="pill lv">応用</span>
-                  <span className="pill cat">開発・自動化</span>
-                  <span className="pill soon">準備中</span>
-                </div>
-                <h3>YouTube自動編集・サムネ・投稿</h3>
-                <p>動画編集からサムネ生成・投稿まで自動化するスキル。近日公開予定。</p>
-                <div className="course-meta">
-                  <span>Coming soon</span>
-                  <span className="go">準備中</span>
-                </div>
-              </div>
-            </span>
           </div>
 
           {/* 販売 */}
@@ -218,7 +172,7 @@ export default function Home() {
           <div className="cat-head">
             <div className="kicker">ATTRACT</div>
             <h3>集客 ― 広める</h3>
-            <p>広告に頼らず、同じ核を配信し続けて広める。</p>
+            <p>SNS・YouTubeなどに同じ核を配信し続け、広告に頼らず広める。</p>
           </div>
           <div className="grid">
             <Link className="course-card" href="/courses/sns">
@@ -243,6 +197,52 @@ export default function Home() {
                 </div>
               </div>
             </Link>
+
+            <Link className="course-card" href="/courses/youtube">
+              <div className="thumb t3">
+                <img
+                  src="/thumbs/youtube.webp"
+                  alt="YouTube作成講座"
+                  loading="lazy"
+                />
+              </div>
+              <div className="course-body">
+                <div className="pills">
+                  <span className="pill lv">入門→実践</span>
+                  <span className="pill cat">YouTube集客</span>
+                  <span className="pill soon">準備中</span>
+                </div>
+                <h3>YouTube作成講座</h3>
+                <p>これから実際に発信していく過程を教材化。企画→台本→編集→サムネ→投稿の型で、YouTubeを集客チャネルに育てます。</p>
+                <div className="course-meta">
+                  <span>簡易ガイド公開中</span>
+                  <span className="go">見てみる →</span>
+                </div>
+              </div>
+            </Link>
+
+            <span className="course-card">
+              <div className="thumb t6">
+                <img
+                  src="/thumbs/youtube-edit.webp"
+                  alt="YouTube自動編集・サムネ・投稿"
+                  loading="lazy"
+                />
+              </div>
+              <div className="course-body">
+                <div className="pills">
+                  <span className="pill lv">応用</span>
+                  <span className="pill cat">YouTube集客</span>
+                  <span className="pill soon">準備中</span>
+                </div>
+                <h3>YouTube自動編集・サムネ・投稿</h3>
+                <p>動画編集からサムネ生成・投稿まで自動化するスキル。YouTube集客の継続を仕組み化します。近日公開予定。</p>
+                <div className="course-meta">
+                  <span>Coming soon</span>
+                  <span className="go">準備中</span>
+                </div>
+              </div>
+            </span>
 
             <span className="course-card">
               <div className="thumb t4">
