@@ -86,9 +86,11 @@ export default function Home() {
           <div className="grid">
             <Link className="course-card" href="/courses/fukugyo-ai">
               <div className="thumb t1">
-                副業×AI×自動化
-                <br />
-                月10万 4ステップ
+                <img
+                  src="/thumbs/fukugyo-ai.webp"
+                  alt="副業×AI×自動化 月10万 4ステップ"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -117,9 +119,11 @@ export default function Home() {
           <div className="grid">
             <Link className="course-card" href="/courses/web-app">
               <div className="thumb t5">
-                Webアプリ
-                <br />
-                作成講座
+                <img
+                  src="/thumbs/web-app.webp"
+                  alt="Webアプリ作成講座"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -138,9 +142,11 @@ export default function Home() {
 
             <Link className="course-card" href="/courses/youtube">
               <div className="thumb t3">
-                YouTube
-                <br />
-                作成講座
+                <img
+                  src="/thumbs/youtube.webp"
+                  alt="YouTube作成講座"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -159,9 +165,11 @@ export default function Home() {
 
             <span className="course-card">
               <div className="thumb t6">
-                YouTube
-                <br />
-                自動編集
+                <img
+                  src="/thumbs/youtube-edit.webp"
+                  alt="YouTube自動編集・サムネ・投稿"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -188,9 +196,7 @@ export default function Home() {
           <div className="grid">
             <Link className="course-card" href="/courses/lp">
               <div className="thumb t2">
-                LP作成
-                <br />
-                講座
+                <img src="/thumbs/lp.webp" alt="LP作成講座" loading="lazy" />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -217,9 +223,11 @@ export default function Home() {
           <div className="grid">
             <Link className="course-card" href="/courses/sns">
               <div className="thumb t7">
-                SNS集客
-                <br />
-                note・X・他
+                <img
+                  src="/thumbs/sns.webp"
+                  alt="SNS集客講座 note・ココナラ・X・Threads"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -238,9 +246,11 @@ export default function Home() {
 
             <span className="course-card">
               <div className="thumb t4">
-                Claude Code
-                <br />
-                記事自動化
+                <img
+                  src="/thumbs/claude-note.webp"
+                  alt="Claude Codeで記事自動生成→note投稿"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
@@ -259,9 +269,11 @@ export default function Home() {
 
             <span className="course-card">
               <div className="thumb t5">
-                Xポスト
-                <br />
-                自動生成
+                <img
+                  src="/thumbs/x-post.webp"
+                  alt="Xポスト自動生成スキル"
+                  loading="lazy"
+                />
               </div>
               <div className="course-body">
                 <div className="pills">
