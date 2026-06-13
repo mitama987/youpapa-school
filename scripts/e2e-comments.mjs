@@ -52,7 +52,7 @@ try {
     display_name: `テストA#${uidA.slice(0, 4)}`,
     is_anonymous: true,
     body: "Phase4 E2E: A の投稿",
-  }).select();
+  }).select("id");
   if (ins1.error) throw new Error(`A insert: ${ins1.error.message}`);
   log("A insert", `id=${ins1.data[0].id.slice(0, 8)} OK`);
   const aCommentId = ins1.data[0].id;
@@ -74,13 +74,30 @@ try {
     display_name: `テストB#${uidB.slice(0, 4)}`,
     is_anonymous: true,
     body: "Phase4 E2E: B の投稿",
-  }).select();
+  }).select("id");
   if (ins2.error) throw new Error(`B insert: ${ins2.error.message}`);
   log("B insert", `id=${ins2.data[0].id.slice(0, 8)} OK`);
   const bCommentId = ins2.data[0].id;
 
+  // 3b. user_id 隠蔽の検証（匿名性リーク対策）
+  //   直接 user_id select → permission denied、表示は get_comments(user_id 無し / is_mine あり)
+  const leak = await a.from("comments").select("user_id").eq("target_id", TARGET);
+  log("user_id direct select", leak.error ? `BLOCKED ✅ (${leak.error.code ?? leak.error.message})` : "LEAK ❌");
+
+  const got = await a.rpc("get_comments", { p_target: TARGET });
+  const rows = got.data ?? [];
+  const noUserId = rows.length > 0 && rows.every((r) => !("user_id" in r));
+  const hasIsMine = rows.length > 0 && rows.every((r) => "is_mine" in r);
+  const mineTrue = rows.some((r) => r.is_mine === true); // A 自身の行
+  log(
+    "get_comments",
+    got.error
+      ? `FAIL ${got.error.message}`
+      : `rows=${rows.length} noUserId=${noUserId ? "✅" : "❌"} isMine=${hasIsMine ? "✅" : "❌"} mineTrue=${mineTrue ? "✅" : "❌"}`,
+  );
+
   // 4. A が B のコメントを delete 試行 → 0 行（RLS で UPDATE policy 無し）
-  const del = await a.from("comments").delete().eq("id", bCommentId).select();
+  const del = await a.from("comments").delete().eq("id", bCommentId).select("id");
   log("A→B delete", del.data?.length === 0 ? "BLOCKED ✅ (0 rows)" : `LEAK ❌ (${del.data?.length})`);
 
   // 5. A が B を通報 → OK
@@ -99,7 +116,7 @@ try {
   log("A→B dup report", rep2.error?.code === "23505" ? "BLOCKED ✅ (23505)" : `unexpected: ${rep2.error?.code ?? "OK?"}`);
 
   // 7. A が自分のコメント delete → OK
-  const delOwn = await a.from("comments").delete().eq("id", aCommentId).select();
+  const delOwn = await a.from("comments").delete().eq("id", aCommentId).select("id");
   log("A own delete", (delOwn.data?.length ?? 0) > 0 ? "OK ✅" : "FAIL ❌");
 
   // 8. Cleanup

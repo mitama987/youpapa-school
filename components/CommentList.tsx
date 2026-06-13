@@ -31,12 +31,11 @@ export function CommentList({
 
   const refresh = useCallback(async () => {
     const supabase = supabaseRef.current!;
-    const { data } = await supabase
-      .from("comments")
-      .select("id,target_id,user_id,display_name,is_anonymous,body,status,created_at")
-      .eq("target_id", targetId)
-      .order("created_at", { ascending: false })
-      .limit(20);
+    // user_id は返さず is_mine だけ返す RPC 経由（匿名性リーク対策）
+    const { data } = await supabase.rpc("get_comments", {
+      p_target: targetId,
+      p_limit: 20,
+    });
     if (data) setComments(data as CommentRow[]);
   }, [targetId]);
 
@@ -60,8 +59,8 @@ export function CommentList({
             <CommentItem
               key={c.id}
               comment={c}
-              isOwn={userId === c.user_id}
-              canReport={!!userId && userId !== c.user_id}
+              isOwn={c.is_mine}
+              canReport={!!userId && !c.is_mine}
               onDelete={handleDelete}
             />
           ))
