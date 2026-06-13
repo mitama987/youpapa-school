@@ -1,0 +1,5 @@
+{
+  "openaiApiKey": "sk-REPLACE_ME",
+  "openaiImageModel": "gpt-image-2",
+  "apiKey": "AIza-REPLACE_ME"
+}

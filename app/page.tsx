@@ -244,28 +244,28 @@ export default function Home() {
               </div>
             </span>
 
-            <span className="course-card">
+            <Link className="course-card" href="/courses/note-shukyaku">
               <div className="thumb t4">
                 <img
                   src="/thumbs/claude-note.webp"
-                  alt="Claude Codeで記事自動生成→note投稿"
+                  alt="note集客 Claude Codeで記事自動生成→note投稿"
                   loading="lazy"
                 />
               </div>
               <div className="course-body">
                 <div className="pills">
+                  <span className="pill live">公開中</span>
                   <span className="pill lv">応用</span>
-                  <span className="pill cat">開発・自動化</span>
-                  <span className="pill soon">準備中</span>
+                  <span className="pill cat">note集客</span>
                 </div>
-                <h3>Claude Codeで記事自動生成→note投稿</h3>
-                <p>記事を自動生成し、そのままnoteへ投稿するスキル。近日公開予定です。</p>
+                <h3>note集客 ― Claude Codeで記事自動生成→note投稿</h3>
+                <p>記事を自動生成し、そのままnoteへ投稿するスキル。noteで集客する考え方と、API・note投稿の設定までを公開しています。</p>
                 <div className="course-meta">
-                  <span>Coming soon</span>
-                  <span className="go">準備中</span>
+                  <span>全5レッスン・無料</span>
+                  <span className="go">受講する →</span>
                 </div>
               </div>
-            </span>
+            </Link>
 
             <span className="course-card">
               <div className="thumb t5">
