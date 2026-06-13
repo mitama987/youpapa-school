@@ -5,85 +5,108 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { Pager } from "@/components/Pager";
 
 export const metadata: Metadata = {
-  title: "導入：全体像と事前準備｜note集客の自動化スキル",
+  title: "導入：インストールと最初の設定｜note集客スキル",
   description:
-    "BuzzBlog と note-edit を動かすための土台づくり。必要なもの早見表、Claude Code / uv / ブラウザ自動化MCP、スキル本体（フォルダ）の配置までを順に整えます。",
+    "PC初心者向け。Claude Codeにプラグインを3コマンドで入れて、note集客スキルを使えるようにする手順。コア（記事生成→note投稿）はPython不要。画像生成だけ任意でPythonを使います。",
 };
+
+const CMD_ADD = "/plugin marketplace add mitama987/youpapa-school";
+const CMD_INSTALL = "/plugin install note-shukyaku@youpapa-tools";
 
 export default function SetupPage() {
   return (
     <NoteGuideShell>
       <div className="crumbs">
-        <Link href="/">講座一覧</Link> ＞ <Link href="/courses/note-shukyaku">note集客</Link> ＞ 導入：事前準備
+        <Link href="/">講座一覧</Link> ＞ <Link href="/courses/note-shukyaku">note集客</Link> ＞ 導入：インストール
       </div>
       <div className="card">
-        <span className="eyebrow">② 導入：全体像と事前準備</span>
-        <h1>スキルを動かす準備をする</h1>
+        <span className="eyebrow">② 導入：インストールと最初の設定</span>
+        <h1>スキルを入れて、使えるようにする</h1>
         <p className="lead">
-          ここから実際にスキルを導入します。まず全体像と「必要なもの」を確認し、実行環境・ブラウザMCP・スキル本体の配置までを整えます。
+          むずかしい準備は不要です。まずは <strong>Python なし</strong>で「記事を書く → note に投稿する」まで動かします。
+          画像の自動生成だけ、あとから<strong>任意</strong>で足せます。
         </p>
 
-        <h2>標準ワークフロー</h2>
-        <p>2つのスキルは連携して使います。基本はこの流れです。</p>
-        <ul>
-          <li><code>/buzzblog &lt;メモ&gt;</code> … メモから記事本文＋画像を生成し <code>_generated.md</code> を出力</li>
-          <li><code>/note-edit &lt;_generated.md&gt;</code> … その記事をnote.comへ書式付きで投稿（下書き保存）</li>
-        </ul>
-
-        <h2>必要なもの早見表</h2>
-        <ul className="req-list">
-          <li><b>Claude Code</b> ― スキルの実行環境<span className="rt need">必須</span></li>
-          <li><b>uv ＋ Python 3.12+</b> ― 画像生成・プレビューの実行<span className="rt need">必須</span></li>
-          <li><b>ブラウザ自動化MCP</b>（agent-browser / Chrome MCP）― note-edit の投稿操作<span className="rt need">必須</span></li>
-          <li><b>note.com アカウント</b> ― 投稿先（ブラウザでログイン済みに）<span className="rt need">必須</span></li>
-          <li><b>OpenAI APIキー</b>（gpt-image-2）― サムネ・図解の生成<span className="rt opt">任意</span></li>
-          <li><b>Gemini APIキー</b> ― 挿絵・画像のフォールバック<span className="rt opt">任意</span></li>
-        </ul>
         <div className="callout note">
-          <div className="label">画像を使わないなら</div>
-          画像生成が不要なら API キーの設定は省略できます（テキストだけ生成）。note投稿だけ使いたい場合は note-edit だけでもOKです。
+          <div className="label">必要なものは2つだけ（コア）</div>
+          <strong>① Claude Code</strong>（このスキルを動かすアプリ）と <strong>② note.com アカウント</strong>。
+          この2つがあれば、記事作成とnote投稿は始められます。
         </div>
 
-        <h2>1. 実行環境を整える</h2>
-        <p>プロジェクト一式（スキル定義・<code>note_preview</code>・<code>scripts/blog_assets</code>）を受け取ったら、ルートで依存をインストールします。</p>
-        <CodeBlock label="依存インストール" code={"uv sync"} />
-        <p>これで <code>openai</code> / <code>pillow</code> / <code>python-dotenv</code> / <code>pyyaml</code> / <code>jinja2</code> が入ります（<code>pyproject.toml</code> 定義済み）。Pythonは必ず <code>uv run</code> 経由で実行します。</p>
-        <CodeBlock label="プレビュー動作確認" code={"uv run note-preview --help"} />
-
-        <h2>2. スキル本体（フォルダ）を配置する</h2>
-        <p><code>SKILL.md</code> が入ったフォルダごと、次の場所にコピーします。</p>
-        <div className="gtable">
-          <table>
-            <thead>
-              <tr><th>スキル</th><th>配置先</th><th>役割</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><code>note-edit/</code></td><td>プロジェクトの <code>.claude/skills/</code></td><td>note.comへの投稿</td></tr>
-              <tr><td><code>note-preview/</code></td><td>プロジェクトの <code>.claude/skills/</code></td><td>投稿前のローカルプレビュー</td></tr>
-              <tr><td><code>buzzblog/</code></td><td>グローバル <code>~/.claude/skills/buzzblog/</code></td><td>記事＋画像の生成</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p>配置後、Claude Code を再起動すると <code>/buzzblog</code> <code>/note-edit</code> <code>/note-preview</code> が候補に出ます。</p>
-
-        <h2>3. ブラウザ自動化MCP（note-edit に必須）</h2>
+        <h2>1. Claude Code を用意する</h2>
         <p>
-          note-edit は note.com のエディタをブラウザ操作で動かします。タブ取得・スナップショット・JS実行・クリック/入力を提供する MCP（<strong>agent-browser</strong> もしくは <strong>Chrome MCP</strong>）を Claude Code に接続してください。
+          まだなら <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> をインストールしてログインします。
+          以降のコマンドは、すべて Claude Code の入力欄に貼り付けて使います。
+        </p>
+
+        <h2>2. プラグインを入れる（コピペ3手）</h2>
+        <p>Claude Code の入力欄に、次を1行ずつ貼って実行します（Git も黒い画面も不要）。</p>
+        <CodeBlock label="① マーケットプレイスを追加" code={CMD_ADD} />
+        <CodeBlock label="② プラグインをインストール" code={CMD_INSTALL} />
+        <p>
+          これで3つのスキルが入ります。<code>/</code> を押すと
+          <code>/note-shukyaku:buzzblog</code>・<code>/note-shukyaku:note-edit</code>・<code>/note-shukyaku:note-preview</code> が出ます。
         </p>
         <div className="callout warn">
-          <div className="label">ログイン＝アクセス権限</div>
-          note-edit は<strong>パスワードを保存しません</strong>。代わりにブラウザの note.com ログイン状態を使って投稿します。詳しくは <Link href="/courses/note-shukyaku/note">④ note投稿設定</Link> で説明します。
+          <div className="label">出てこないとき</div>
+          <code>/reload-plugins</code> を実行 → それでも出なければ Claude Code を一度閉じて開き直してください。
+          一覧確認は <code>/plugin marketplace list</code>。
         </div>
 
-        <div className="callout note">
-          <div className="label">次のステップ</div>
-          準備ができたら <Link href="/courses/note-shukyaku/api">③ API設定（画像生成）</Link> へ進みます。画像を使わない場合は <Link href="/courses/note-shukyaku/note">④ note投稿設定</Link> へ飛んでも構いません。
+        <h2>3. note.com にログインしておく（＝アクセス権限）</h2>
+        <p>
+          note-edit は<strong>パスワードを保存しません</strong>。Claude が操作するブラウザの
+          <strong>ログイン状態</strong>を使って投稿します。投稿前に、そのブラウザで
+          <a href="https://note.com/login" target="_blank" rel="noopener">note.com</a> にログインしておいてください。
+          （ブラウザ操作には agent-browser か Chrome MCP の接続が必要です）
+        </p>
+
+        <h2>4. 最初に1回だけ「あなたの情報」を設定</h2>
+        <p>あいさつ文・note ID・CTAリンクは、最初に1回だけ自分の値にします。むずかしければ、初回に Claude へ口頭で伝えるだけでOKです。</p>
+        <ul>
+          <li><strong>かんたん</strong>：「note IDは○○、あいさつ文は『こんにちは！△△です。』で」と Claude に伝える。</li>
+          <li><strong>しっかり</strong>：プラグイン同梱の <code>config.example.md</code> を見て値を決めておく。</li>
+        </ul>
+
+        <div className="callout ok">
+          <div className="label">ここまでで「記事 → 投稿」ができます（Python不要）</div>
+          次の流れで使います。
         </div>
+
+        <h2>使い方（基本の流れ）</h2>
+        <ul className="howto">
+          <li className="st" style={{ listStyle: "none" }}>
+            <span className="no">1</span>
+            <h3>記事を作る</h3>
+            <p><code>/note-shukyaku:buzzblog &lt;メモのパス&gt;</code> → タイトル案から選ぶ → 本文が生成されます。</p>
+          </li>
+          <li className="st" style={{ listStyle: "none" }}>
+            <span className="no">2</span>
+            <h3>note に投稿</h3>
+            <p><code>/note-shukyaku:note-edit &lt;生成された_generated.md&gt;</code> → 下書き保存まで自動。</p>
+          </li>
+        </ul>
+
+        <h2>（任意）画像生成・プレビューを使う人だけ</h2>
+        <p>
+          サムネ・図解の<strong>自動生成</strong>や、投稿前の<strong>ローカルプレビュー</strong>を使う場合だけ、
+          Python（uv）と APIキーが要ります。手順は <Link href="/courses/note-shukyaku/api">③ API設定（画像生成）</Link> にまとめました。
+          <strong>使わないならスキップでOK</strong>です（画像は Canva 等で手動でも作れます）。
+        </p>
+
+        <h2>ダウンロード（プラグインを使わない場合）</h2>
+        <p>
+          コマンドを使いたくない場合は、zip をダウンロードして展開し、中の <code>skills/</code> にある
+          各フォルダ（buzzblog / note-edit / note-preview）を <code>~/.claude/skills/</code> にコピーします。
+        </p>
+        <p>
+          <a className="btn btn-ghost btn-sm" href="/skills-guide/note-shukyaku-skills.zip" download>note-shukyaku-skills.zip をダウンロード</a>
+        </p>
       </div>
 
       <Pager
         prev={{ href: "/courses/note-shukyaku/method", label: "← ① note集客の方法" }}
-        next={{ href: "/courses/note-shukyaku/api", label: "③ API設定 →" }}
+        next={{ href: "/courses/note-shukyaku/api", label: "③ API設定（任意）→" }}
       />
     </NoteGuideShell>
   );

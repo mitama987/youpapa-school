@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import { CommentThread } from "@/components/CommentThread";
 import { CurriculumList } from "@/components/CurriculumList";
 import { LikeButton } from "@/components/LikeButton";
+import { CodeBlock } from "@/components/CodeBlock";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
+const CMD_ADD = "/plugin marketplace add mitama987/youpapa-school";
+const CMD_INSTALL = "/plugin install note-shukyaku@youpapa-tools";
 
 export const metadata: Metadata = {
   title: "note集客 ― Claude Codeで記事自動生成→note投稿｜集客を仕組み化",
@@ -58,6 +61,15 @@ export default function NoteShukyakuCourse() {
               記事の文章は <strong>Claude が生成</strong>します。OpenAI（GPT）のチャットAPIは使いません。外部APIキーが必要になるのは
               <strong>画像生成だけ</strong>です。詳しくは「③ API設定」で説明します。
             </div>
+
+            <h2>導入は3コマンド（Python不要で始められます）</h2>
+            <p>Claude Code に貼るだけ。手動コピーの zip もあります。詳しい手順は <Link href="/courses/note-shukyaku/setup">② 導入</Link> へ。</p>
+            <CodeBlock label="① マーケットプレイスを追加" code={CMD_ADD} />
+            <CodeBlock label="② プラグインをインストール" code={CMD_INSTALL} />
+            <p className="dl-row">
+              <a className="btn btn-ghost btn-sm" href="/skills-guide/note-shukyaku-skills.zip" download>zipでダウンロード</a>
+              <Link className="btn btn-primary btn-sm" href="/courses/note-shukyaku/setup">導入手順を見る →</Link>
+            </p>
 
             <p style={{ marginTop: 18 }}>
               <LikeButton targetId="courses:note-shukyaku" />

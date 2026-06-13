@@ -1,0 +1,8 @@
+{
+  "name": "note-shukyaku",
+  "description": "note集客の自動化スキル一式（記事生成 buzzblog / note投稿 note-edit / プレビュー note-preview）。コアの「記事生成→note投稿」はPython不要、画像生成とプレビューのみPython(uv)が必要。",
+  "version": "1.0.0",
+  "author": {
+    "name": "youpapa"
+  }
+}

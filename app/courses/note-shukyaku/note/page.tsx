@@ -26,35 +26,36 @@ export default function NoteSetupPage() {
 
         <h2>(a) ノートのID（アカウント）の差し替え</h2>
         <p>
-          スキルには、前の持ち主のアカウント名・あいさつ文・CTAリンクが<strong>直書き（ハードコード）</strong>されています。そのままだと他人の名前で投稿してしまうため、<strong>自分のnote ID用に差し替え</strong>てください。
+          配布版のスキルは、あいさつ文・note ID・CTAリンクが <code>&lt;あなたの…&gt;</code> の<strong>プレースホルダ</strong>になっています。これを自分の値にします（そのままだと投稿時にプレースホルダのまま入ってしまいます）。
         </p>
         <div className="gtable">
           <table>
             <thead>
-              <tr><th>差し替える場所</th><th>現在の値（例）</th><th>変更後</th></tr>
+              <tr><th>プレースホルダ</th><th>意味</th><th>あなたの値の例</th></tr>
             </thead>
             <tbody>
               <tr>
-                <td><code>note_preview/transformer.py</code> のあいさつ文 <code>GREETING</code></td>
-                <td>こんにちは！…Youパパです。</td>
-                <td>自分の自己紹介文へ</td>
+                <td><code>&lt;あなたのあいさつ文…&gt;</code></td>
+                <td>記事の冒頭に自動で入る自己紹介</td>
+                <td>こんにちは！副業ブロガーのタローです。</td>
               </tr>
               <tr>
-                <td><code>note_preview/transformer.py</code> の <code>CTA_URL</code></td>
-                <td><code>https://note.com/youpapalife/n/...</code></td>
-                <td>自分の誘導先URL（自分のnote ID）へ</td>
+                <td><code>&lt;あなたのnote ID&gt;</code></td>
+                <td>note.com のアカウントID（URLの note.com/●●●）</td>
+                <td><code>taro-blog</code></td>
               </tr>
               <tr>
-                <td><code>.claude/skills/note-edit/SKILL.md</code>（あいさつ文）</td>
-                <td>こんにちは！…Youパパです。</td>
-                <td>上と同じ自己紹介文へ</td>
+                <td><code>&lt;あなたのCTA記事URL&gt;</code></td>
+                <td>記事末尾などで誘導したい自分のnote記事URL</td>
+                <td><code>https://note.com/taro-blog/n/xxxx</code></td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className="callout note">
-          <div className="label">探し方</div>
-          プロジェクト内を <code>youpapa</code> で全文検索すると、差し替え候補がまとめて見つかります。あいさつ文は本文の先頭に自動挿入されるので、忘れず変更してください。
+          <div className="label">設定の仕方（どちらでもOK）</div>
+          <strong>かんたん</strong>：初回に Claude へ口頭で伝える（例:「note IDは taro-blog、あいさつ文は『こんにちは！タローです。』で」）。
+          <strong>しっかり</strong>：プラグイン同梱の <code>config.example.md</code> を見て値を決め、各スキルのプレースホルダを置き換える。
         </div>
 
         <h2>(b) パスワード／アクセス権限の正体</h2>

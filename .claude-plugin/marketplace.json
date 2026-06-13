@@ -1,0 +1,13 @@
+{
+  "name": "youpapa-tools",
+  "owner": {
+    "name": "youpapa"
+  },
+  "plugins": [
+    {
+      "name": "note-shukyaku",
+      "source": "./plugins/note-shukyaku",
+      "description": "note集客スキル一式：記事自動生成(buzzblog)＋note自動投稿(note-edit)＋ローカルプレビュー(note-preview)"
+    }
+  ]
+}
