@@ -4,7 +4,7 @@ import { CommentList } from "./CommentList";
 export type CommentRow = {
   id: string;
   target_id: string;
-  user_id: string;
+  is_mine: boolean;
   display_name: string;
   is_anonymous: boolean;
   body: string;
@@ -15,13 +15,9 @@ export type CommentRow = {
 export async function CommentThread({ targetId }: { targetId: string }) {
   const supabase = await createClient();
 
+  // user_id は返さず is_mine だけ返す RPC 経由（匿名性リーク対策）
   const [{ data: comments }, { data: userData }] = await Promise.all([
-    supabase
-      .from("comments")
-      .select("id,target_id,user_id,display_name,is_anonymous,body,status,created_at")
-      .eq("target_id", targetId)
-      .order("created_at", { ascending: false })
-      .limit(20),
+    supabase.rpc("get_comments", { p_target: targetId, p_limit: 20 }),
     supabase.auth.getUser(),
   ]);
 
