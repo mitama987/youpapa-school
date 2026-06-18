@@ -65,7 +65,7 @@ export default function NoteSetupPage() {
         </div>
         <p>ID・パスワードを使う場所は <strong>note.comの公式ログイン画面だけ</strong>。スキルや設定ファイルにパスワードを書く必要はありません（書いてもいけません）。</p>
         <ul>
-          <li>事前準備で接続したブラウザ自動化MCP（agent-browser / Chrome MCP）が操作するブラウザを開く</li>
+          <li>事前準備で接続した <strong>Claude in Chrome</strong>（<code>/chrome</code> で接続）が操作するブラウザを開く</li>
           <li>そのブラウザで <a href="https://note.com/login" target="_blank" rel="noopener">note.com</a> に自分のID・パスワードでログイン（ここが唯一パスワードを入れる場所）</li>
           <li>ログアウトしないでおけば、以降 note-edit はそのセッションで投稿できる</li>
         </ul>
