@@ -23,7 +23,7 @@ export default function FaqPage() {
         <h2>note-edit（投稿）</h2>
         <h3>「エディタが見つかりません」と出る</h3>
         <p>
-          ほぼ note.com に<strong>未ログイン</strong>です。MCPが操作するブラウザで note.com にログイン済みか確認してください（<Link href="/courses/note-shukyaku/note">④ note投稿設定</Link>）。ログイン済みでも出る場合は、ページ読み込みの完了前に操作した可能性があるので、少し待って再実行します。
+          ほぼ note.com に<strong>未ログイン</strong>です。Claude in Chrome が操作するブラウザで note.com にログイン済みか確認してください（<Link href="/courses/note-shukyaku/note">④ note投稿設定</Link>）。ログイン済みでも出る場合は、ページ読み込みの完了前に操作した可能性があるので、少し待って再実行します。
         </p>
         <h3>note.comを開くと Access Denied になる</h3>
         <p>
@@ -69,7 +69,12 @@ export default function FaqPage() {
         </p>
         <h3>ブラウザ操作が反応しない</h3>
         <p>
-          ブラウザ自動化MCP（agent-browser / Chrome MCP）が Claude Code に接続されているか、対象タブが note.com を開いているかを確認してください。
+          <strong>Claude in Chrome</strong>（<code>/chrome</code> で接続）が Claude Code に繋がっているか、対象タブが note.com を開いているかを確認してください。
+        </p>
+        <h3>Playwright や Chrome DevTools MCP は必要？</h3>
+        <p>
+          <strong>不要</strong>です。note-edit が使うのは <strong>Claude in Chrome</strong>（Claude Code で <code>/chrome</code> を実行して接続）だけで、Playwright や Chrome DevTools MCP では動きません。
+          <strong>VSCode拡張でもターミナルでも</strong>、Claude in Chrome が1つ繋がっていれば使えます。接続手順は <Link href="/courses/note-shukyaku/setup">② 導入</Link> の「ブラウザ操作を繋ぐ」を参照してください。
         </p>
 
         <div className="callout note">

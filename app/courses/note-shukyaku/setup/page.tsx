@@ -28,9 +28,10 @@ export default function SetupPage() {
         </p>
 
         <div className="callout note">
-          <div className="label">必要なものは2つだけ（コア）</div>
+          <div className="label">必要なものは2つ＋α</div>
           <strong>① Claude Code</strong>（このスキルを動かすアプリ）と <strong>② note.com アカウント</strong>。
-          この2つがあれば、記事作成とnote投稿は始められます。
+          記事作成はこの2つで始められます。note への<strong>投稿</strong>には、加えてブラウザを動かす
+          <strong> Claude in Chrome</strong>（次の手順で <code>/chrome</code> で接続）が必要です。
         </div>
 
         <h2>1. Claude Code を用意する</h2>
@@ -53,15 +54,29 @@ export default function SetupPage() {
           一覧確認は <code>/plugin marketplace list</code>。
         </div>
 
-        <h2>3. note.com にログインしておく（＝アクセス権限）</h2>
+        <h2>3. ブラウザ操作を繋ぐ（Claude in Chrome）</h2>
+        <p>
+          note-edit は note.com のエディタを<strong>実際にブラウザで操作</strong>して投稿します。そのため Claude Code に
+          <strong>ブラウザ自動化MCPを1つ接続</strong>しておく必要があります。推奨は <strong>Claude in Chrome</strong>。
+          Claude Code の入力欄で次を実行して繋ぎます。
+        </p>
+        <CodeBlock label="ブラウザを繋ぐ" code="/chrome" />
+        <div className="callout note">
+          <div className="label">Playwright や Chrome DevTools MCP は不要です</div>
+          note-edit が前提にしているのは <strong>Claude in Chrome</strong>（<code>/chrome</code> で接続）だけです。
+          Playwright や Chrome DevTools MCP は使いません。
+          <strong>VSCode拡張版でもターミナル版でも同じ</strong>で、Claude in Chrome が繋がっていれば動きます。
+        </div>
+
+        <h2>4. note.com にログインしておく（＝アクセス権限）</h2>
         <p>
           note-edit は<strong>パスワードを保存しません</strong>。Claude が操作するブラウザの
           <strong>ログイン状態</strong>を使って投稿します。投稿前に、そのブラウザで
           <a href="https://note.com/login" target="_blank" rel="noopener">note.com</a> にログインしておいてください。
-          （ブラウザ操作には agent-browser か Chrome MCP の接続が必要です）
+          （ブラウザ操作には前手順の <strong>Claude in Chrome</strong>（<code>/chrome</code>）接続が必要です）
         </p>
 
-        <h2>4. 最初に1回だけ「あなたの情報」を設定</h2>
+        <h2>5. 最初に1回だけ「あなたの情報」を設定</h2>
         <p>あいさつ文・note ID・CTAリンクは、最初に1回だけ自分の値にします。むずかしければ、初回に Claude へ口頭で伝えるだけでOKです。</p>
         <ul>
           <li><strong>かんたん</strong>：「note IDは○○、あいさつ文は『こんにちは！△△です。』で」と Claude に伝える。</li>
