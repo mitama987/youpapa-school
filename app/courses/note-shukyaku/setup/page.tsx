@@ -56,16 +56,62 @@ export default function SetupPage() {
 
         <h2>3. ブラウザ操作を繋ぐ（Claude in Chrome）</h2>
         <p>
-          note-edit は note.com のエディタを<strong>実際にブラウザで操作</strong>して投稿します。そのため Claude Code に
-          <strong>ブラウザ自動化MCPを1つ接続</strong>しておく必要があります。推奨は <strong>Claude in Chrome</strong>。
-          Claude Code の入力欄で次を実行して繋ぎます。
+          note-edit は note.com の編集画面を<strong>実際にブラウザで操作</strong>して投稿します。
+          そのため「<strong>Claude in Chrome</strong>」という <strong>Chromeの拡張機能</strong>を、最初に1回だけ入れて Claude Code とつなぎます。
+          覚えるコマンドは <code>/chrome</code> ひとつだけ。下の順番どおりにやれば大丈夫です。
         </p>
-        <CodeBlock label="ブラウザを繋ぐ" code="/chrome" />
+
+        <div className="callout warn">
+          <div className="label">先に確認：有料プランが必要です</div>
+          Claude in Chrome は Claude の<strong>有料プラン（Pro・Max など）</strong>で使えます。
+          <strong>無料プランでは使えません</strong>。また Claude Code は <code>2.0.73</code> 以上にしておいてください（古いと <code>/chrome</code> が出ません）。
+        </div>
+
+        <ul className="howto">
+          <li className="st" style={{ listStyle: "none" }}>
+            <span className="no">1</span>
+            <h3>Chrome（または Edge）を用意する</h3>
+            <p>
+              使えるブラウザは <strong>Google Chrome</strong> か <strong>Microsoft Edge</strong> です（Brave・Arc などは非対応）。
+              ふだん Chrome を使っていれば、そのままでOKです。
+            </p>
+          </li>
+          <li className="st" style={{ listStyle: "none" }}>
+            <span className="no">2</span>
+            <h3>拡張機能「Claude」をChromeに追加する</h3>
+            <p>
+              下のボタンから Chrome ウェブストアを開き、<strong>「Chromeに追加」</strong>を押すだけ。これは最初の1回だけの作業です。
+            </p>
+            <p>
+              <a className="btn btn-ghost btn-sm" href="https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn" target="_blank" rel="noopener">
+                Claude in Chrome を追加（Chromeウェブストア）
+              </a>
+            </p>
+          </li>
+          <li className="st" style={{ listStyle: "none" }}>
+            <span className="no">3</span>
+            <h3>Claude Code で <code>/chrome</code> を実行する</h3>
+            <p>
+              Claude Code の入力欄に <code>/chrome</code> と打って実行すると、さきほど入れた拡張機能とつながります。
+              つながっているかの確認や、つなぎ直しも、すべてこの <code>/chrome</code> でできます。
+              <strong>「mcp add」のような設定ファイルの追記は一切いりません。</strong>
+            </p>
+          </li>
+          <li className="st" style={{ listStyle: "none" }}>
+            <span className="no">4</span>
+            <h3>note.com の操作を「許可」する</h3>
+            <p>
+              拡張機能の設定で、Claude が操作してよいサイトに <strong>note.com</strong> を許可します（サイトごとに1回だけ）。
+              許可すると、note の投稿操作が自動でできるようになります。
+            </p>
+          </li>
+        </ul>
+
         <div className="callout note">
           <div className="label">Playwright や Chrome DevTools MCP は不要です</div>
-          note-edit が前提にしているのは <strong>Claude in Chrome</strong>（<code>/chrome</code> で接続）だけです。
+          note-edit が使うのは <strong>Claude in Chrome</strong>（拡張を入れて <code>/chrome</code> でつなぐ）だけです。
           Playwright や Chrome DevTools MCP は使いません。
-          <strong>VSCode拡張版でもターミナル版でも同じ</strong>で、Claude in Chrome が繋がっていれば動きます。
+          <strong>VSCode拡張版でもターミナル版でも同じ</strong>で、Claude in Chrome がつながっていれば動きます。
         </div>
 
         <h2>4. note.com にログインしておく（＝アクセス権限）</h2>
