@@ -1444,3 +1444,156 @@ section.block {
   padding: 8px 14px;
   font-size: 0.85rem;
 }
+
+/* ===== note集客ガイド: 可読性リデザイン（.guide スコープ限定） =====
+   NoteGuideShell の <main class="content guide"> 配下（setup/method/api/note/faq）だけに適用。
+   既存トークンのみ使用・light/dark 自動対応。home/lessons/他コースには影響しない。 */
+
+/* --- セクションのリズム / 余白（h2は .guide .card h2 で確実に上書き） --- */
+.guide .card h2 {
+  margin: 2.4em 0 0.7em;
+  padding: 1.4em 0 0 13px;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.guide .card > h2:first-of-type {
+  margin-top: 1.2em;
+  padding-top: 0;
+  border-top: 0;
+}
+.guide .card p {
+  margin: 0.8em 0;
+}
+
+/* --- ステップ: 3列グリッド → 縦の番号付きリスト --- */
+.guide .howto {
+  display: block;
+  margin: 22px 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+.guide .howto .st {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  column-gap: 16px;
+  align-items: start;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 22px;
+  position: relative;
+}
+.guide .howto .st:last-child {
+  padding-bottom: 0;
+}
+.guide .howto .st:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 34px;
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+.guide .howto .st .no {
+  grid-row: 1 / span 99;
+  grid-column: 1;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 900;
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+}
+.guide .howto .st h3 {
+  grid-column: 2;
+  margin: 0.25em 0 0.3em;
+  font-size: 1.04rem;
+  color: var(--ink);
+}
+.guide .howto .st p {
+  grid-column: 2;
+  margin: 0.2em 0 0;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+.guide .howto .st p:has(> a.btn) {
+  margin-top: 0.7em;
+}
+
+/* --- コールアウト: フラットな左アクセントバー型＋ok(緑)を新規定義 --- */
+.guide .callout {
+  border: 0;
+  border-left: 3px solid var(--line);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+.guide .callout .label {
+  font-size: 0.8rem;
+  margin-bottom: 3px;
+}
+.guide .callout.note {
+  background: var(--call-note-bg);
+  border-left-color: var(--call-note-bd);
+}
+.guide .callout.note .label {
+  color: var(--call-note-fg);
+}
+.guide .callout.warn {
+  background: var(--call-warn-bg);
+  border-left-color: var(--call-warn-bd);
+}
+.guide .callout.warn .label {
+  color: var(--call-warn-fg);
+}
+.guide .callout.story {
+  background: var(--call-story-bg);
+  border-left-color: var(--call-story-bd);
+}
+.guide .callout.story .label {
+  color: var(--call-story-fg);
+}
+.guide .callout.ok {
+  background: var(--pill-live-bg);
+  border-left-color: var(--pill-live-bd);
+}
+.guide .callout.ok .label {
+  color: var(--pill-live-fg);
+}
+
+/* --- インラインコードの彩度を少し落とす（オレンジ→落ち着いたink） ---
+   .guide と .content は同じ <main> 要素に同居するため子孫結合子ではなく複合セレクタで指定する */
+.guide.content :not(pre) > code {
+  color: var(--ink-2);
+  background: var(--bg-soft);
+  border-color: var(--line);
+}
+
+/* --- 必要なもの早見表（死蔵 .req-list を再利用） --- */
+.guide .req-list li b {
+  font-weight: 800;
+}
+
+/* --- レスポンシブ微調整（縦リストの番号バッジ） --- */
+@media (max-width: 620px) {
+  .guide .howto .st {
+    grid-template-columns: 30px 1fr;
+    column-gap: 12px;
+  }
+  .guide .howto .st::before {
+    left: 14px;
+  }
+  .guide .howto .st .no {
+    width: 30px;
+    height: 30px;
+  }
+}

@@ -35,23 +35,23 @@ export default function ApiSetupPage() {
         <h1>画像生成APIのキーを設定する</h1>
         <p className="lead">
           このページは<strong>任意（上級）</strong>です。画像の自動生成を使う人だけ読めばOK。ここで初めて
-          <strong>Python（uv）</strong>を使います。使わないなら <Link href="/courses/note-shukyaku/note">④ note投稿設定</Link> へ進んでください（画像は Canva 等で手動でも作れます）。
+          Python（uv）を使います。使わないなら <Link href="/courses/note-shukyaku/note">④ note投稿設定</Link> へ進んでください（画像は Canva 等で手動でも作れます）。
         </p>
 
         <h2>0. 環境を準備する（uv / PowerShell）</h2>
         <p>画像生成は Python スクリプトで動きます。Windows での最短手順です（使う人だけ）。</p>
         <ul className="howto">
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">1</span>
             <h3>PowerShell を開く</h3>
             <p>スタートボタン → 「PowerShell」と入力 → 「Windows PowerShell」を開く（黒い画面が出ればOK）。</p>
           </li>
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">2</span>
             <h3>uv を入れる</h3>
             <p>下のコマンドを貼って Enter。Python ごと自動で用意されます。</p>
           </li>
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">3</span>
             <h3>ライブラリを入れる</h3>
             <p><code>uv add openai pillow</code> を実行（画像生成に使います）。</p>
@@ -62,8 +62,8 @@ export default function ApiSetupPage() {
         <h2>使うキーは最大2つ</h2>
         <div className="callout note">
           <div className="label">「GPTのAPIキー」＝「画像用API」＝ OpenAIキー（同じ1つ）</div>
-          記事の文章は <strong>Claude が生成</strong>します。OpenAIのGPT（チャットAPI）は使いません。OpenAIキーが要るのは
-          <strong>画像（サムネ・図解）の生成だけ</strong>。つまり「サムネ用API」と「GPTキー」は別物ではなく、<strong>同じ OpenAIキー1本</strong>です。
+          記事の文章は Claude が生成します。OpenAIのGPT（チャットAPI）は使いません。OpenAIキーが要るのは
+          画像（サムネ・図解）の生成だけ。つまり「サムネ用API」と「GPTキー」は別物ではなく、<strong>同じ OpenAIキー1本</strong>です。
         </div>
         <div className="gtable">
           <table>

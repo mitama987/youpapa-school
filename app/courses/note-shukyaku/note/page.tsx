@@ -59,13 +59,13 @@ export default function NoteSetupPage() {
         </div>
 
         <h2>(b) パスワード／アクセス権限の正体</h2>
-        <div className="callout warn">
+        <div className="callout note">
           <div className="label">パスワードはどこにも保存しません</div>
-          note-edit は note.com の<strong>ID・パスワードを設定ファイルに保存しません</strong>。代わりに、<strong>あなたがブラウザで note.com にログインした状態（セッション）をそのまま借りて</strong>投稿します。つまり「アクセス権限」＝「投稿前にブラウザで note.com にログインしておくこと」です。
+          note-edit は note.com の ID・パスワードを設定ファイルに保存しません。代わりに、<strong>あなたがブラウザで note.com にログインした状態（セッション）をそのまま借りて</strong>投稿します。つまり「アクセス権限」＝「投稿前にブラウザで note.com にログインしておくこと」です。
         </div>
         <p>ID・パスワードを使う場所は <strong>note.comの公式ログイン画面だけ</strong>。スキルや設定ファイルにパスワードを書く必要はありません（書いてもいけません）。</p>
         <ul>
-          <li>事前準備で接続した <strong>Claude in Chrome</strong>（<code>/chrome</code> で接続）が操作するブラウザを開く</li>
+          <li>事前準備で接続した Claude in Chrome（<code>/chrome</code> で接続）が操作するブラウザを開く</li>
           <li>そのブラウザで <a href="https://note.com/login" target="_blank" rel="noopener">note.com</a> に自分のID・パスワードでログイン（ここが唯一パスワードを入れる場所）</li>
           <li>ログアウトしないでおけば、以降 note-edit はそのセッションで投稿できる</li>
         </ul>
