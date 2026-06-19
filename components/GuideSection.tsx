@@ -19,6 +19,7 @@ export function GuideSection({
     <details className="acc" open={open}>
       <summary>
         <Heading className="acc-title">{title}</Heading>
+        <span className="acc-toggle" aria-hidden="true" />
       </summary>
       <div className="acc-body">{children}</div>
     </details>

@@ -1609,14 +1609,14 @@ section.block {
 .guide .howto .st h3 { font-size: 1.12rem; }
 .guide .howto .st p { font-size: 1.01rem; color: var(--ink-2); }
 
-/* 折りたたみセクション本体 */
+/* 折りたたみセクション（各セクション＝隙間を空けたカード状の行） */
 .guide .card details.acc {
-  border-bottom: 1px solid var(--line);
+  margin: 11px 0;
 }
 .guide .card details.acc:first-of-type {
-  border-top: 1px solid var(--line);
-  margin-top: 1em;
+  margin-top: 1.1em;
 }
+/* 見出し行: 行全体に背景＋枠を付けて「押せるバー」だと分かるように */
 .guide .card details.acc > summary {
   display: flex;
   align-items: center;
@@ -1624,40 +1624,76 @@ section.block {
   list-style: none;
   cursor: pointer;
   user-select: none;
-  padding: 18px 8px;
-  border-radius: 10px;
+  padding: 15px 16px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 .guide .card details.acc > summary::-webkit-details-marker { display: none; }
-.guide .card details.acc > summary:hover { background: var(--bg-soft); }
+.guide .card details.acc > summary:hover {
+  background: var(--surface-2);
+  border-color: var(--accent-soft-bd);
+}
+.guide .card details.acc[open] > summary {
+  background: var(--surface-2);
+  border-color: var(--orange);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 /* 見出し（h2/h3）はサマリー内。既存の hairline/left-bar を打ち消して行見出し化 */
 .guide .card details.acc > summary .acc-title {
   margin: 0;
-  padding: 0 0 0 13px;
+  padding: 0 0 0 12px;
   border: 0;
   border-left: 4px solid var(--orange);
-  font-size: 1.22rem;
+  font-size: 1.18rem;
   line-height: 1.4;
   font-weight: 700;
   color: var(--ink);
   flex: 1 1 auto;
 }
 .guide .card details.acc[open] > summary .acc-title { color: var(--orange-d); }
-/* 右側のシェブロン（開くと反転） */
-.guide .card details.acc > summary::after {
-  content: "";
+/* 右側の ＋／− トグルボタン（クリックで開閉と分かるように） */
+.guide .card details.acc > summary .acc-toggle {
+  position: relative;
   flex: 0 0 auto;
-  width: 10px;
-  height: 10px;
+  width: 26px;
+  height: 26px;
   margin-left: auto;
-  margin-right: 8px;
-  border-right: 2.5px solid var(--muted);
-  border-bottom: 2.5px solid var(--muted);
-  transform: rotate(45deg);
-  transition: transform 0.18s ease;
+  border-radius: 999px;
+  background: var(--orange);
 }
-.guide .card details.acc[open] > summary::after { transform: rotate(-135deg); }
-/* 折りたたみの中身 */
-.guide .card details.acc > .acc-body {
-  padding: 2px 8px 24px 21px;
+.guide .card details.acc > summary .acc-toggle::before,
+.guide .card details.acc > summary .acc-toggle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: #fff;
+  border-radius: 2px;
+}
+.guide .card details.acc > summary .acc-toggle::before {
+  width: 12px;
+  height: 2.5px;
+  transform: translate(-50%, -50%);
+}
+.guide .card details.acc > summary .acc-toggle::after {
+  width: 2.5px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.guide .card details.acc[open] > summary .acc-toggle::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+/* 開いた中身: 見出しと枠でつながったボックス */
+.guide .card details.acc[open] > .acc-body {
+  border: 1px solid var(--orange);
+  border-top: 0;
+  border-radius: 0 0 12px 12px;
+  padding: 14px 20px 22px;
+  background: var(--surface);
 }
 .guide .card details.acc > .acc-body > :first-child { margin-top: 0; }
