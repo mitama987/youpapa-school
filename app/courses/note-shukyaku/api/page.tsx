@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { NoteGuideShell } from "@/components/NoteGuideShell";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Pager } from "@/components/Pager";
+import { GuideSection } from "@/components/GuideSection";
 
 export const metadata: Metadata = {
   title: "API設定（画像生成）｜gpt-image-2 / Gemini のキー設定",
@@ -38,106 +39,113 @@ export default function ApiSetupPage() {
           Python（uv）を使います。使わないなら <Link href="/courses/note-shukyaku/note">④ note投稿設定</Link> へ進んでください（画像は Canva 等で手動でも作れます）。
         </p>
 
-        <h2>0. 環境を準備する（uv / PowerShell）</h2>
-        <p>画像生成は Python スクリプトで動きます。Windows での最短手順です（使う人だけ）。</p>
-        <ul className="howto">
-          <li className="st">
-            <span className="no">1</span>
-            <h3>PowerShell を開く</h3>
-            <p>スタートボタン → 「PowerShell」と入力 → 「Windows PowerShell」を開く（黒い画面が出ればOK）。</p>
-          </li>
-          <li className="st">
-            <span className="no">2</span>
-            <h3>uv を入れる</h3>
-            <p>下のコマンドを貼って Enter。Python ごと自動で用意されます。</p>
-          </li>
-          <li className="st">
-            <span className="no">3</span>
-            <h3>ライブラリを入れる</h3>
-            <p><code>uv add openai pillow</code> を実行（画像生成に使います）。</p>
-          </li>
-        </ul>
-        <CodeBlock label="uv を入れる（PowerShellに貼る）" code={UV_INSTALL} />
+        <GuideSection title="0. 環境を準備する（uv / PowerShell）" level={2} open={true}>
+          <p>画像生成は Python スクリプトで動きます。Windows での最短手順です（使う人だけ）。</p>
+          <ul className="howto">
+            <li className="st">
+              <span className="no">1</span>
+              <h3>PowerShell を開く</h3>
+              <p>スタートボタン → 「PowerShell」と入力 → 「Windows PowerShell」を開く（黒い画面が出ればOK）。</p>
+            </li>
+            <li className="st">
+              <span className="no">2</span>
+              <h3>uv を入れる</h3>
+              <p>下のコマンドを貼って Enter。Python ごと自動で用意されます。</p>
+            </li>
+            <li className="st">
+              <span className="no">3</span>
+              <h3>ライブラリを入れる</h3>
+              <p><code>uv add openai pillow</code> を実行（画像生成に使います）。</p>
+            </li>
+          </ul>
+          <CodeBlock label="uv を入れる（PowerShellに貼る）" code={UV_INSTALL} />
+        </GuideSection>
 
-        <h2>使うキーは最大2つ</h2>
-        <div className="callout note">
-          <div className="label">「GPTのAPIキー」＝「画像用API」＝ OpenAIキー（同じ1つ）</div>
-          記事の文章は Claude が生成します。OpenAIのGPT（チャットAPI）は使いません。OpenAIキーが要るのは
-          画像（サムネ・図解）の生成だけ。つまり「サムネ用API」と「GPTキー」は別物ではなく、<strong>同じ OpenAIキー1本</strong>です。
-        </div>
-        <div className="gtable">
-          <table>
-            <thead>
-              <tr><th>キー</th><th>サービス</th><th>用途</th><th>必須度</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><strong>OpenAI APIキー</strong></td><td>OpenAI（<code>gpt-image-2</code>）</td><td>サムネ・図解の生成</td><td>画像を使うなら必須</td></tr>
-              <tr><td><strong>Gemini APIキー</strong></td><td>Google（<code>gemini-3-pro-image-preview</code>）</td><td>挿絵・画像のフォールバック</td><td>任意</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <GuideSection title="使うキーは最大2つ" level={2}>
+          <div className="callout note">
+            <div className="label">「GPTのAPIキー」＝「画像用API」＝ OpenAIキー（同じ1つ）</div>
+            記事の文章は Claude が生成します。OpenAIのGPT（チャットAPI）は使いません。OpenAIキーが要るのは
+            画像（サムネ・図解）の生成だけ。つまり「サムネ用API」と「GPTキー」は別物ではなく、<strong>同じ OpenAIキー1本</strong>です。
+          </div>
+          <div className="gtable">
+            <table>
+              <thead>
+                <tr><th>キー</th><th>サービス</th><th>用途</th><th>必須度</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>OpenAI APIキー</strong></td><td>OpenAI（<code>gpt-image-2</code>）</td><td>サムネ・図解の生成</td><td>画像を使うなら必須</td></tr>
+                <tr><td><strong>Gemini APIキー</strong></td><td>Google（<code>gemini-3-pro-image-preview</code>）</td><td>挿絵・画像のフォールバック</td><td>任意</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </GuideSection>
 
-        <h2>APIキーの取得</h2>
-        <ul>
-          <li><strong>OpenAI</strong>：<a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener">platform.openai.com</a> で発行（画像APIは課金設定が必要）。モデルは <code>gpt-image-2</code>。</li>
-          <li><strong>Google Gemini</strong>：<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> で発行（無料枠あり）。モデルは <code>gemini-3-pro-image-preview</code>。</li>
-        </ul>
-        <div className="callout warn">
-          <div className="label">キーは絶対に公開しない</div>
-          発行したキーは <code>.env</code> か <code>data.json</code> にだけ書き、公開リポジトリにコミットしないでください（<code>.env</code>・<code>data.json</code> は <code>.gitignore</code> 済み）。漏れたら各サービスで即無効化（ローテーション）します。
-        </div>
+        <GuideSection title="APIキーの取得" level={2}>
+          <ul>
+            <li><strong>OpenAI</strong>：<a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener">platform.openai.com</a> で発行（画像APIは課金設定が必要）。モデルは <code>gpt-image-2</code>。</li>
+            <li><strong>Google Gemini</strong>：<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> で発行（無料枠あり）。モデルは <code>gemini-3-pro-image-preview</code>。</li>
+          </ul>
+          <div className="callout warn">
+            <div className="label">キーは絶対に公開しない</div>
+            発行したキーは <code>.env</code> か <code>data.json</code> にだけ書き、公開リポジトリにコミットしないでください（<code>.env</code>・<code>data.json</code> は <code>.gitignore</code> 済み）。漏れたら各サービスで即無効化（ローテーション）します。
+          </div>
+        </GuideSection>
 
-        <h2>モデルの使い分け</h2>
-        <div className="gtable">
-          <table>
-            <thead>
-              <tr><th>画像の種類</th><th>用途</th><th>モデル</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><strong>サムネイル</strong></td><td>タイトル・バッジなど文字多め</td><td><code>gpt-image-2</code>（日本語が崩れにくい）</td></tr>
-              <tr><td><strong>図解</strong></td><td>比較表・フローチャート</td><td><code>gpt-image-2</code></td></tr>
-              <tr><td><strong>挿絵（H2直下）</strong></td><td>文字なしの抽象イラスト</td><td><code>gemini-3-pro-image-preview</code></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <ul>
-          <li>OpenAI側で課金エラー（402）やレート制限（429）が出ると、画像生成は自動でGeminiにフォールバックします。</li>
-          <li>サムネは <code>1536x1024</code> で生成 → 中央を 1.91:1 にクロップ → <code>1280×670</code>（note推奨）へ縮小します。</li>
-          <li><code>gemini-2.5-flash-image</code> は日本語が化けるため使いません。</li>
-        </ul>
+        <GuideSection title="モデルの使い分け" level={2}>
+          <div className="gtable">
+            <table>
+              <thead>
+                <tr><th>画像の種類</th><th>用途</th><th>モデル</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>サムネイル</strong></td><td>タイトル・バッジなど文字多め</td><td><code>gpt-image-2</code>（日本語が崩れにくい）</td></tr>
+                <tr><td><strong>図解</strong></td><td>比較表・フローチャート</td><td><code>gpt-image-2</code></td></tr>
+                <tr><td><strong>挿絵（H2直下）</strong></td><td>文字なしの抽象イラスト</td><td><code>gemini-3-pro-image-preview</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <ul>
+            <li>OpenAI側で課金エラー（402）やレート制限（429）が出ると、画像生成は自動でGeminiにフォールバックします。</li>
+            <li>サムネは <code>1536x1024</code> で生成 → 中央を 1.91:1 にクロップ → <code>1280×670</code>（note推奨）へ縮小します。</li>
+            <li><code>gemini-2.5-flash-image</code> は日本語が化けるため使いません。</li>
+          </ul>
+        </GuideSection>
 
-        <h2>キーの入れ方（2方式）</h2>
-        <p>スクリプトは「環境変数 → <code>data.json</code>」の順に探します。どちらか一方でOK。両方ある場合は環境変数（<code>.env</code>）が優先されます。</p>
+        <GuideSection title="キーの入れ方（2方式）" level={2}>
+          <p>スクリプトは「環境変数 → <code>data.json</code>」の順に探します。どちらか一方でOK。両方ある場合は環境変数（<code>.env</code>）が優先されます。</p>
 
-        <h3>方式A：data.json（Obsidianプラグイン設定）</h3>
-        <div className="cmd">
-          <code>&lt;Vault Root&gt;\.obsidian\plugins\buzzblog-generator\data.json</code>
-        </div>
-        <CodeBlock label="data.json（プレースホルダ）" code={DATA_JSON} />
-        <div className="callout warn">
-          <div className="label">フィールド名の注意</div>
-          <code>openaiApiKey</code> = OpenAIキー、<code>apiKey</code> = <strong>Geminiキー</strong>（名前が紛らわしいので取り違え注意）。<code>openaiImageModel</code> は <code>gpt-image-2</code> のまま変えないでください。
-        </div>
+          <h3>方式A：data.json（Obsidianプラグイン設定）</h3>
+          <div className="cmd">
+            <code>&lt;Vault Root&gt;\.obsidian\plugins\buzzblog-generator\data.json</code>
+          </div>
+          <CodeBlock label="data.json（プレースホルダ）" code={DATA_JSON} />
+          <div className="callout warn">
+            <div className="label">フィールド名の注意</div>
+            <code>openaiApiKey</code> = OpenAIキー、<code>apiKey</code> = <strong>Geminiキー</strong>（名前が紛らわしいので取り違え注意）。<code>openaiImageModel</code> は <code>gpt-image-2</code> のまま変えないでください。
+          </div>
 
-        <h3>方式B：.env（プロジェクトルート）</h3>
-        <CodeBlock label=".env（プレースホルダ）" code={ENV_EXAMPLE} />
+          <h3>方式B：.env（プロジェクトルート）</h3>
+          <CodeBlock label=".env（プレースホルダ）" code={ENV_EXAMPLE} />
+        </GuideSection>
 
-        <h2>テンプレートのダウンロード</h2>
-        <p>値を自分のキーに置き換えて使ってください（<strong>実キーは記載していません</strong>）。</p>
-        <div className="dl-row">
-          <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/data.json.example" download>data.json.example</a>
-          <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/env.example.txt" download>env.example.txt（.env として保存）</a>
-        </div>
-        <p>記事生成のプロンプト雛形（任意・<code>&lt;Vault Root&gt;\80_ブログ作成ガイド\プロンプト\</code> に配置）も用意しています。</p>
-        <div className="dl-row">
-          <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/prompt-記事タイトル生成.md" download>プロンプト：記事タイトル生成</a>
-          <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/prompt-ブログ生成.md" download>プロンプト：ブログ生成</a>
-          <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/prompt-サムネイル生成.md" download>プロンプト：サムネイル生成</a>
-        </div>
+        <GuideSection title="テンプレートのダウンロード" level={2}>
+          <p>値を自分のキーに置き換えて使ってください（<strong>実キーは記載していません</strong>）。</p>
+          <div className="dl-row">
+            <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/data.json.example" download>data.json.example</a>
+            <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/env.example.txt" download>env.example.txt（.env として保存）</a>
+          </div>
+          <p>記事生成のプロンプト雛形（任意・<code>&lt;Vault Root&gt;\80_ブログ作成ガイド\プロンプト\</code> に配置）も用意しています。</p>
+          <div className="dl-row">
+            <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/prompt-記事タイトル生成.md" download>プロンプト：記事タイトル生成</a>
+            <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/prompt-ブログ生成.md" download>プロンプト：ブログ生成</a>
+            <a className="btn btn-ghost btn-sm" href="/skills-guide/templates/prompt-サムネイル生成.md" download>プロンプト：サムネイル生成</a>
+          </div>
+        </GuideSection>
 
-        <h2>設定の確認</h2>
-        <p>キーが読み込めるかだけを安全に確認します（キー本体は表示しません）。</p>
-        <CodeBlock label="キー読み込みチェック" code={CHECK_CMD} />
+        <GuideSection title="設定の確認" level={2}>
+          <p>キーが読み込めるかだけを安全に確認します（キー本体は表示しません）。</p>
+          <CodeBlock label="キー読み込みチェック" code={CHECK_CMD} />
+        </GuideSection>
 
         <div className="callout note">
           <div className="label">次のステップ</div>
