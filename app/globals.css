@@ -1597,3 +1597,67 @@ section.block {
     height: 30px;
   }
 }
+
+/* ===== note集客ガイド: 案E アコーディオン＋文字拡大 ===== */
+
+/* 文字を全体に大きく（ユーザー要望: 文字が小さい） */
+.guide .card h1 { font-size: 1.95rem; }
+.guide .lead { font-size: 1.18rem; line-height: 1.9; }
+.guide .card p { font-size: 1.05rem; line-height: 1.95; }
+.guide .content li { font-size: 1.03rem; }
+.guide .req-list li { font-size: 1.05rem; }
+.guide .howto .st h3 { font-size: 1.12rem; }
+.guide .howto .st p { font-size: 1.01rem; color: var(--ink-2); }
+
+/* 折りたたみセクション本体 */
+.guide .card details.acc {
+  border-bottom: 1px solid var(--line);
+}
+.guide .card details.acc:first-of-type {
+  border-top: 1px solid var(--line);
+  margin-top: 1em;
+}
+.guide .card details.acc > summary {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 18px 8px;
+  border-radius: 10px;
+}
+.guide .card details.acc > summary::-webkit-details-marker { display: none; }
+.guide .card details.acc > summary:hover { background: var(--bg-soft); }
+/* 見出し（h2/h3）はサマリー内。既存の hairline/left-bar を打ち消して行見出し化 */
+.guide .card details.acc > summary .acc-title {
+  margin: 0;
+  padding: 0 0 0 13px;
+  border: 0;
+  border-left: 4px solid var(--orange);
+  font-size: 1.22rem;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1 1 auto;
+}
+.guide .card details.acc[open] > summary .acc-title { color: var(--orange-d); }
+/* 右側のシェブロン（開くと反転） */
+.guide .card details.acc > summary::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  margin-left: auto;
+  margin-right: 8px;
+  border-right: 2.5px solid var(--muted);
+  border-bottom: 2.5px solid var(--muted);
+  transform: rotate(45deg);
+  transition: transform 0.18s ease;
+}
+.guide .card details.acc[open] > summary::after { transform: rotate(-135deg); }
+/* 折りたたみの中身 */
+.guide .card details.acc > .acc-body {
+  padding: 2px 8px 24px 21px;
+}
+.guide .card details.acc > .acc-body > :first-child { margin-top: 0; }
