@@ -23,16 +23,24 @@ export default function SetupPage() {
         <span className="eyebrow">② 導入：インストールと最初の設定</span>
         <h1>スキルを入れて、使えるようにする</h1>
         <p className="lead">
-          むずかしい準備は不要です。まずは <strong>Python なし</strong>で「記事を書く → note に投稿する」まで動かします。
-          画像の自動生成だけ、あとから<strong>任意</strong>で足せます。
+          むずかしい準備は不要です。まずは <strong>Python なしで「記事を書く → note に投稿する」まで動かせます</strong>。
+          画像の自動生成だけ、あとから任意で足せます。
         </p>
 
-        <div className="callout note">
-          <div className="label">必要なものは2つ＋α</div>
-          <strong>① Claude Code</strong>（このスキルを動かすアプリ）と <strong>② note.com アカウント</strong>。
-          記事作成はこの2つで始められます。note への<strong>投稿</strong>には、加えてブラウザを動かす
-          <strong> Claude in Chrome</strong>（次の手順で <code>/chrome</code> で接続）が必要です。
-        </div>
+        <ul className="req-list">
+          <li>
+            <b>① Claude Code</b>（このスキルを動かすアプリ）
+            <span className="rt need">必須</span>
+          </li>
+          <li>
+            <b>② note.com アカウント</b>（投稿先）
+            <span className="rt need">必須</span>
+          </li>
+          <li>
+            <b>＋ Claude in Chrome</b>（note 投稿時のみ・次の手順で <code>/chrome</code> 接続）
+            <span className="rt opt">投稿に必要</span>
+          </li>
+        </ul>
 
         <h2>1. Claude Code を用意する</h2>
         <p>
@@ -56,27 +64,27 @@ export default function SetupPage() {
 
         <h2>3. ブラウザ操作を繋ぐ（Claude in Chrome）</h2>
         <p>
-          note-edit は note.com の編集画面を<strong>実際にブラウザで操作</strong>して投稿します。
-          そのため「<strong>Claude in Chrome</strong>」という <strong>Chromeの拡張機能</strong>を、最初に1回だけ入れて Claude Code とつなぎます。
+          note-edit は note.com の編集画面を実際にブラウザで操作して投稿します。
+          そのため「Claude in Chrome」という Chrome の拡張機能を、<strong>最初に1回だけ</strong>入れて Claude Code とつなぎます。
           覚えるコマンドは <code>/chrome</code> ひとつだけ。下の順番どおりにやれば大丈夫です。
         </p>
 
         <div className="callout warn">
           <div className="label">先に確認：有料プランが必要です</div>
-          Claude in Chrome は Claude の<strong>有料プラン（Pro・Max など）</strong>で使えます。
-          <strong>無料プランでは使えません</strong>。また Claude Code は <code>2.0.73</code> 以上にしておいてください（古いと <code>/chrome</code> が出ません）。
+          Claude in Chrome は Claude の<strong>有料プラン（Pro・Max など）が必要です</strong>。
+          無料プランでは使えません。また Claude Code は 2.0.73 以上にしておいてください（古いと <code>/chrome</code> が出ません）。
         </div>
 
         <ul className="howto">
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">1</span>
             <h3>Chrome（または Edge）を用意する</h3>
             <p>
-              使えるブラウザは <strong>Google Chrome</strong> か <strong>Microsoft Edge</strong> です（Brave・Arc などは非対応）。
+              使えるブラウザは Google Chrome か Microsoft Edge です（Brave・Arc などは非対応）。
               ふだん Chrome を使っていれば、そのままでOKです。
             </p>
           </li>
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">2</span>
             <h3>拡張機能「Claude」をChromeに追加する</h3>
             <p>
@@ -88,7 +96,7 @@ export default function SetupPage() {
               </a>
             </p>
           </li>
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">3</span>
             <h3>Claude Code で <code>/chrome</code> を実行する</h3>
             <p>
@@ -97,7 +105,7 @@ export default function SetupPage() {
               <strong>「mcp add」のような設定ファイルの追記は一切いりません。</strong>
             </p>
           </li>
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">4</span>
             <h3>note.com の操作を「許可」する</h3>
             <p>
@@ -109,7 +117,7 @@ export default function SetupPage() {
 
         <div className="callout note">
           <div className="label">Playwright や Chrome DevTools MCP は不要です</div>
-          note-edit が使うのは <strong>Claude in Chrome</strong>（拡張を入れて <code>/chrome</code> でつなぐ）だけです。
+          note-edit が使うのは Claude in Chrome（拡張を入れて <code>/chrome</code> でつなぐ）だけです。
           Playwright や Chrome DevTools MCP は使いません。
           <strong>VSCode拡張版でもターミナル版でも同じ</strong>で、Claude in Chrome がつながっていれば動きます。
         </div>
@@ -117,9 +125,9 @@ export default function SetupPage() {
         <h2>4. note.com にログインしておく（＝アクセス権限）</h2>
         <p>
           note-edit は<strong>パスワードを保存しません</strong>。Claude が操作するブラウザの
-          <strong>ログイン状態</strong>を使って投稿します。投稿前に、そのブラウザで
+          ログイン状態を使って投稿します。投稿前に、そのブラウザで
           <a href="https://note.com/login" target="_blank" rel="noopener">note.com</a> にログインしておいてください。
-          （ブラウザ操作には前手順の <strong>Claude in Chrome</strong>（<code>/chrome</code>）接続が必要です）
+          （ブラウザ操作には前手順の Claude in Chrome（<code>/chrome</code>）接続が必要です）
         </p>
 
         <h2>5. 最初に1回だけ「あなたの情報」を設定</h2>
@@ -136,12 +144,12 @@ export default function SetupPage() {
 
         <h2>使い方（基本の流れ）</h2>
         <ul className="howto">
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">1</span>
             <h3>記事を作る</h3>
             <p><code>/note-shukyaku:buzzblog &lt;メモのパス&gt;</code> → タイトル案から選ぶ → 本文が生成されます。</p>
           </li>
-          <li className="st" style={{ listStyle: "none" }}>
+          <li className="st">
             <span className="no">2</span>
             <h3>note に投稿</h3>
             <p><code>/note-shukyaku:note-edit &lt;生成された_generated.md&gt;</code> → 下書き保存まで自動。</p>
@@ -150,7 +158,7 @@ export default function SetupPage() {
 
         <h2>（任意）画像生成・プレビューを使う人だけ</h2>
         <p>
-          サムネ・図解の<strong>自動生成</strong>や、投稿前の<strong>ローカルプレビュー</strong>を使う場合だけ、
+          サムネ・図解の自動生成や、投稿前のローカルプレビューを使う場合だけ、
           Python（uv）と APIキーが要ります。手順は <Link href="/courses/note-shukyaku/api">③ API設定（画像生成）</Link> にまとめました。
           <strong>使わないならスキップでOK</strong>です（画像は Canva 等で手動でも作れます）。
         </p>

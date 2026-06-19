@@ -6,7 +6,7 @@ export function NoteGuideShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="layout">
       <NoteGuideToc />
-      <main className="content" style={{ flex: 1 }}>
+      <main className="content guide" style={{ flex: 1 }}>
         {children}
       </main>
     </div>
