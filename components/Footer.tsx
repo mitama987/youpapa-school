@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
-// 公開時に差し込む X 固定ポスト URL（CLAUDE.md 由来のプレースホルダ）
-const X_PINNED_URL = "REPLACE_X_PINNED_URL";
+// X プロフィール（固定ポストが先頭表示される）
+const X_PINNED_URL = "https://x.com/Tanaka439712";
 
 export function Footer() {
   return (
