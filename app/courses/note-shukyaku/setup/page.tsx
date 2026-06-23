@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     "PC初心者向け。Claude Codeにプラグインを3コマンドで入れて、note集客スキルを使えるようにする手順。コア（記事生成→note投稿）はPython不要。画像生成だけ任意でPythonを使います。",
 };
 
+const REPO = "mitama987/youpapa-school";
 const CMD_ADD = "/plugin marketplace add mitama987/youpapa-school";
 const CMD_INSTALL = "/plugin install note-shukyaku@youpapa-tools";
 
@@ -50,18 +51,68 @@ export default function SetupPage() {
           </p>
         </GuideSection>
 
-        <GuideSection title="2. プラグインを入れる（コピペ3手）" level={2}>
-          <p>Claude Code の入力欄に、次を1行ずつ貼って実行します（Git も黒い画面も不要）。</p>
-          <CodeBlock label="① マーケットプレイスを追加" code={CMD_ADD} />
-          <CodeBlock label="② プラグインをインストール" code={CMD_INSTALL} />
+        <GuideSection title="2. プラグインを入れる" level={2}>
           <p>
-            これで3つのスキルが入ります。<code>/</code> を押すと
-            <code>/note-shukyaku:buzzblog</code>・<code>/note-shukyaku:note-edit</code>・<code>/note-shukyaku:note-preview</code> が出ます。
+            お使いの Claude Code に合わせて、どちらかの方法で入れます。
+            <strong>VS Code 拡張版（画面右側のパネル）なら、黒い画面なしのボタン操作（A）が一番かんたん</strong>です。
+          </p>
+
+          <h3 className="sub">A. VS Code 拡張版（推奨・ボタン操作）</h3>
+          <ul className="howto">
+            <li className="st">
+              <span className="no">1</span>
+              <h3>入力欄に <code>/plugins</code> と打つ</h3>
+              <p>
+                <strong>複数形の <code>/plugins</code></strong> です。打つと「Manage plugins」という管理画面が開きます。
+              </p>
+              <div className="callout warn">
+                <div className="label">うまく開かないとき</div>
+                単数の <code>/plugin</code> は拡張版では使えず、<code>/plugin isn&apos;t available in this environment.</code> と出ます。
+                かならず <strong>複数形の <code>/plugins</code></strong> を打ってください。
+              </div>
+            </li>
+            <li className="st">
+              <span className="no">2</span>
+              <h3>「Marketplaces」タブで配布元を追加</h3>
+              <p>
+                上部の <strong>Marketplaces</strong> タブを開き、入力欄に次のリポジトリ名を貼り付けて追加します。
+              </p>
+              <CodeBlock label="Marketplaces タブに貼る" code={REPO} />
+            </li>
+            <li className="st">
+              <span className="no">3</span>
+              <h3>「Plugins」タブで note-shukyaku を Install</h3>
+              <p>
+                <strong>Plugins</strong> タブに切り替えると一覧に <code>note-shukyaku</code> が出るので、
+                <strong>Install</strong> を押します。スコープは <strong>「Install for you（自分用）」</strong>でOKです。
+              </p>
+            </li>
+            <li className="st">
+              <span className="no">4</span>
+              <h3>Claude Code を再起動して反映</h3>
+              <p>
+                「再起動して反映」のバナーが出たら、Claude Code を一度閉じて開き直します。これで3つのスキルが使えます。
+              </p>
+            </li>
+          </ul>
+
+          <h3 className="sub">B. ターミナル版（CLI）の人はこちら</h3>
+          <div className="callout note">
+            <div className="label">黒い画面（ターミナル）で動かしている人向け</div>
+            <p>入力欄に次を1行ずつ貼って実行します（拡張版の <code>/plugins</code> 画面と同じことをコマンドで行います）。</p>
+            <CodeBlock label="① マーケットプレイスを追加" code={CMD_ADD} />
+            <CodeBlock label="② プラグインをインストール" code={CMD_INSTALL} />
+          </div>
+
+          <p>
+            どちらの方法でも、入れ終わると <code>/</code> を押すだけで
+            <code>/note-shukyaku:buzzblog</code>・<code>/note-shukyaku:note-edit</code>・<code>/note-shukyaku:note-preview</code> が候補に出ます。
           </p>
           <div className="callout warn">
-            <div className="label">出てこないとき</div>
-            <code>/reload-plugins</code> を実行 → それでも出なければ Claude Code を一度閉じて開き直してください。
-            一覧確認は <code>/plugin marketplace list</code>。
+            <div className="label">候補に出てこないとき</div>
+            まず Claude Code を一度閉じて開き直してください。
+            それでも出ない場合は——拡張版なら <code>/plugins</code> の <strong>Marketplaces</strong> タブに <code>youpapa-school</code> が追加されているか確認、
+            ターミナル版なら <code>/plugin marketplace list</code> で <code>youpapa-tools</code> が入っているか確認します。
           </div>
         </GuideSection>
 
