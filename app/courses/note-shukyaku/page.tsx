@@ -62,10 +62,13 @@ export default function NoteShukyakuCourse() {
               <strong>画像生成だけ</strong>です。詳しくは「③ API設定」で説明します。
             </div>
 
-            <h2>導入は3コマンド（Python不要で始められます）</h2>
-            <p>Claude Code に貼るだけ。手動コピーの zip もあります。詳しい手順は <Link href="/courses/note-shukyaku/setup">② 導入</Link> へ。</p>
-            <CodeBlock label="① マーケットプレイスを追加" code={CMD_ADD} />
-            <CodeBlock label="② プラグインをインストール" code={CMD_INSTALL} />
+            <h2>導入はかんたん（Python不要で始められます）</h2>
+            <p>
+              <strong>VS Code 拡張版</strong>なら <code>/plugins</code> を開いて <code>mitama987/youpapa-school</code> を追加 → <code>note-shukyaku</code> を Install するだけ（黒い画面なし）。
+              <strong>ターミナル版（CLI）</strong>は下の2コマンドでもOK。手動コピーの zip もあります。詳しい手順は <Link href="/courses/note-shukyaku/setup">② 導入</Link> へ。
+            </p>
+            <CodeBlock label="ターミナル版(CLI) ① マーケットプレイスを追加" code={CMD_ADD} />
+            <CodeBlock label="ターミナル版(CLI) ② プラグインをインストール" code={CMD_INSTALL} />
             <p className="dl-row">
               <a className="btn btn-ghost btn-sm" href="/skills-guide/note-shukyaku-skills.zip" download>zipでダウンロード</a>
               <Link className="btn btn-primary btn-sm" href="/courses/note-shukyaku/setup">導入手順を見る →</Link>
