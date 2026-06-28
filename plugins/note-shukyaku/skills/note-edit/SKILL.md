@@ -1,5 +1,7 @@
 ---
+name: note-edit
 description: ローカルのMarkdown記事をnote.comに見出し・引用・箇条書きごと書式付きで投稿（下書き保存）する。ブラウザ自動化MCPとnote.comログインが必要。「noteに投稿」「note-edit」と言われたら使う。
+user-invocable: true
 ---
 
 # note.com 記事投稿スキル

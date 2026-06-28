@@ -1,5 +1,7 @@
 ---
+name: buzzblog
 description: Obsidian等のメモから日本語ブログ記事（タイトル候補10件＋本文）を生成する。文章はClaudeが生成しPython不要、画像生成は任意。「記事を書いて」「ブログ生成」「buzzblog」と言われたら使う。
+user-invocable: true
 ---
 
 # BuzzBlog Generator スキル

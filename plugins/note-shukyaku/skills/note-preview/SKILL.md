@@ -1,5 +1,7 @@
 ---
+name: note-preview
 description: ローカルのMarkdown記事をnote.com風HTMLでプレビュー表示する（任意・Python/uvが必要）。「noteプレビュー」「note-preview」と言われたら使う。
+user-invocable: true
 ---
 
 # note.com 記事プレビュースキル
