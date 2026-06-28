@@ -8,7 +8,7 @@ import { GuideSection } from "@/components/GuideSection";
 export const metadata: Metadata = {
   title: "導入：インストールと最初の設定｜note集客スキル",
   description:
-    "PC初心者向け。Claude Codeにプラグインを3コマンドで入れて、note集客スキルを使えるようにする手順。コア（記事生成→note投稿）はPython不要。画像生成だけ任意でPythonを使います。",
+    "PC初心者向け。Claude Codeにプラグインを入れて、note集客スキル（記事生成 buzzblog／note投稿 note-edit）を使えるようにする手順。記事生成はPython不要。note投稿はagent-browserが必要（Claude Codeデフォルト非同梱）。",
 };
 
 const REPO = "mitama987/youpapa-school";
@@ -39,7 +39,7 @@ export default function SetupPage() {
             <span className="rt need">必須</span>
           </li>
           <li>
-            <b>＋ Claude in Chrome</b>（note 投稿時のみ・次の手順で <code>/chrome</code> 接続）
+            <b>＋ agent-browser</b>（note 投稿時のみ・ブラウザ自動操作CLI／Claude Codeデフォルト非同梱）
             <span className="rt opt">投稿に必要</span>
           </li>
         </ul>
@@ -131,7 +131,7 @@ export default function SetupPage() {
               <h3>再読み込みして反映</h3>
               <p>
                 「再起動して反映」のバナーが出たら Claude Code を開き直す（または入力欄で <code>/reload-plugins</code> を実行）と、
-                <code>/note-shukyaku:buzzblog</code>・<code>/note-shukyaku:note-edit</code>・<code>/note-shukyaku:note-preview</code> が使えるようになります。
+                <code>/buzzblog</code>・<code>/note-edit</code>・<code>/note-preview</code> が使えるようになります。
               </p>
             </li>
           </ul>
@@ -146,7 +146,7 @@ export default function SetupPage() {
 
           <p>
             どちらの方法でも、入れ終わると <code>/</code> を押すだけで
-            <code>/note-shukyaku:buzzblog</code>・<code>/note-shukyaku:note-edit</code>・<code>/note-shukyaku:note-preview</code> が候補に出ます。
+            <code>/buzzblog</code>・<code>/note-edit</code>・<code>/note-preview</code> が候補に出ます。
           </p>
           <div className="callout warn">
             <div className="label">候補に出てこないとき</div>
@@ -156,103 +156,101 @@ export default function SetupPage() {
           </div>
         </GuideSection>
 
-        <GuideSection title="3. ブラウザ操作を繋ぐ（Claude in Chrome）" level={2}>
+        <GuideSection title="3. 使い方（基本の流れ）" level={2}>
           <p>
-            note-edit は note.com の編集画面を実際にブラウザで操作して投稿します。
-            そのため「Claude in Chrome」という Chrome の拡張機能を、<strong>最初に1回だけ</strong>入れて Claude Code とつなぎます。
-            覚えるコマンドは <code>/chrome</code> ひとつだけ。下の順番どおりにやれば大丈夫です。
+            プラグインが入ったら、基本はこの2ステップです。各スキルの詳しい説明はこの下に続きます。
           </p>
-
-          <div className="callout warn">
-            <div className="label">先に確認：有料プランが必要です</div>
-            Claude in Chrome は Claude の<strong>有料プラン（Pro・Max など）が必要です</strong>。
-            無料プランでは使えません。また Claude Code は 2.0.73 以上にしておいてください（古いと <code>/chrome</code> が出ません）。
-          </div>
-
           <ul className="howto">
             <li className="st">
               <span className="no">1</span>
-              <h3>Chrome（または Edge）を用意する</h3>
-              <p>
-                使えるブラウザは Google Chrome か Microsoft Edge です（Brave・Arc などは非対応）。
-                ふだん Chrome を使っていれば、そのままでOKです。
-              </p>
+              <h3>記事を作る（Buzzblog）</h3>
+              <p><code>/buzzblog &lt;Obsidianの記事（メモ）のパス&gt;</code> → タイトル案から選ぶ → 本文（<code>_generated.md</code>）が生成されます。</p>
             </li>
             <li className="st">
               <span className="no">2</span>
-              <h3>拡張機能「Claude」をChromeに追加する</h3>
-              <p>
-                下のボタンから Chrome ウェブストアを開き、<strong>「Chromeに追加」</strong>を押すだけ。これは最初の1回だけの作業です。
-              </p>
-              <p>
-                <a className="btn btn-ghost btn-sm" href="https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn" target="_blank" rel="noopener">
-                  Claude in Chrome を追加（Chromeウェブストア）
-                </a>
-              </p>
-            </li>
-            <li className="st">
-              <span className="no">3</span>
-              <h3>Claude Code で <code>/chrome</code> を実行する</h3>
-              <p>
-                Claude Code の入力欄に <code>/chrome</code> と打って実行すると、さきほど入れた拡張機能とつながります。
-                つながっているかの確認や、つなぎ直しも、すべてこの <code>/chrome</code> でできます。
-                <strong>「mcp add」のような設定ファイルの追記は一切いりません。</strong>
-              </p>
-            </li>
-            <li className="st">
-              <span className="no">4</span>
-              <h3>note.com の操作を「許可」する</h3>
-              <p>
-                拡張機能の設定で、Claude が操作してよいサイトに <strong>note.com</strong> を許可します（サイトごとに1回だけ）。
-                許可すると、note の投稿操作が自動でできるようになります。
-              </p>
+              <h3>note に投稿（note-edit）</h3>
+              <p><code>/note-edit &lt;生成された_generated.md&gt;</code> → note.com に下書き保存まで自動。</p>
             </li>
           </ul>
-
           <div className="callout note">
-            <div className="label">Playwright や Chrome DevTools MCP は不要です</div>
-            note-edit が使うのは Claude in Chrome（拡張を入れて <code>/chrome</code> でつなぐ）だけです。
-            Playwright や Chrome DevTools MCP は使いません。
-            <strong>VSCode拡張版でもターミナル版でも同じ</strong>で、Claude in Chrome がつながっていれば動きます。
+            <div className="label">コマンド名について</div>
+            候補には <code>/buzzblog</code>・<code>/note-edit</code>・<code>/note-preview</code> と表示されます
+            （環境によっては <code>/note-shukyaku:buzzblog</code> のように名前空間付きで出ることもあります）。
           </div>
         </GuideSection>
 
-        <GuideSection title="4. note.com にログインしておく（＝アクセス権限）" level={2}>
+        <GuideSection title="4. Buzzblog スキル ― 記事を作る" level={2}>
           <p>
-            note-edit は<strong>パスワードを保存しません</strong>。Claude が操作するブラウザの
-            ログイン状態を使って投稿します。投稿前に、そのブラウザで
-            <a href="https://note.com/login" target="_blank" rel="noopener">note.com</a> にログインしておいてください。
-            （ブラウザ操作には前手順の Claude in Chrome（<code>/chrome</code>）接続が必要です）
+            Obsidian などに書いた<strong>メモ（ネタ）を渡すと、日本語ブログ記事を生成</strong>するスキルです。
+            タイトル候補10件から選び、本文まで作って <code>_generated.md</code> として保存します。<strong>Python は不要</strong>です。
           </p>
+          <ul className="howto">
+            <li className="st">
+              <span className="no">1</span>
+              <h3>メモのパスを付けて実行</h3>
+              <p>
+                <strong>引数に、元ネタになる Obsidian の記事（メモ）ファイルのパスが必要</strong>です。
+              </p>
+              <CodeBlock label="記事を生成する" code="/buzzblog <Obsidianの記事のパス>" />
+              <p>例: <code>/buzzblog 02_note/ネタ帳/今日のメモ.md</code></p>
+            </li>
+            <li className="st">
+              <span className="no">2</span>
+              <h3>タイトルを選ぶ → 本文生成</h3>
+              <p>
+                タイトル候補が10件出るので選ぶと、本文が生成され <code>_generated.md</code> が作られます。
+                このファイルを次の note-edit で投稿します。
+              </p>
+            </li>
+          </ul>
+          <div className="callout note">
+            <div className="label">最初に1回だけ「あなたの情報」を設定</div>
+            あいさつ文・note ID・CTAリンクは、最初に1回だけ自分の値にします。むずかしければ、初回に Claude へ
+            口頭で伝えるだけでOKです（例:「note IDは○○、あいさつ文は『こんにちは！△△です。』で」）。
+            しっかり決めたい場合はプラグイン同梱の <code>config.example.md</code> を参照してください。
+          </div>
+          <div className="callout note">
+            <div className="label">画像（サムネ・図解）は任意</div>
+            記事の自動画像生成を使う場合だけ、別途 Python（uv）と APIキーが要ります。
+            使わなくても記事は作れます。詳しくは下の「（任意）画像生成・プレビュー」へ。
+          </div>
         </GuideSection>
 
-        <GuideSection title="5. 最初に1回だけ「あなたの情報」を設定" level={2}>
-          <p>あいさつ文・note ID・CTAリンクは、最初に1回だけ自分の値にします。むずかしければ、初回に Claude へ口頭で伝えるだけでOKです。</p>
-          <ul>
-            <li><strong>かんたん</strong>：「note IDは○○、あいさつ文は『こんにちは！△△です。』で」と Claude に伝える。</li>
-            <li><strong>しっかり</strong>：プラグイン同梱の <code>config.example.md</code> を見て値を決めておく。</li>
+        <GuideSection title="5. note-edit スキル ― note に投稿する" level={2}>
+          <p>
+            Buzzblog で作った <code>_generated.md</code> を、見出し・引用・箇条書きごと
+            <strong>note.com に書式付きで投稿（下書き保存）</strong>するスキルです。
+          </p>
+          <ul className="howto">
+            <li className="st">
+              <span className="no">1</span>
+              <h3>生成した記事を渡して実行</h3>
+              <CodeBlock label="note に投稿する" code="/note-edit <生成された_generated.md>" />
+              <p>例: <code>/note-edit 02_note/記事フォルダ/記事_generated.md</code> → note.com の新規エディタに流し込み、下書き保存まで自動。</p>
+            </li>
+            <li className="st">
+              <span className="no">2</span>
+              <h3>note.com にログインしておく</h3>
+              <p>
+                note-edit は<strong>パスワードを保存しません</strong>。ブラウザのログイン状態を使って投稿するので、
+                投稿前に <a href="https://note.com/login" target="_blank" rel="noopener">note.com</a> にログインしておいてください。
+              </p>
+            </li>
           </ul>
+          <div className="callout warn">
+            <div className="label">note-edit には「agent-browser」が必要です（重要）</div>
+            note-edit はブラウザを自動操作して投稿します。
+            <strong>VS Code 拡張版の Claude Code では「Claude in Chrome」が使えない</strong>ため、
+            代わりに <strong>agent-browser</strong>（CLI のブラウザ自動操作スキル）が必要です。
+            <strong>これは Claude Code に標準では入っていません</strong>（デフォルト非同梱）。
+            導入手順は<strong>追ってご案内します</strong>。
+          </div>
         </GuideSection>
 
         <div className="callout ok">
-          <div className="label">ここまでで「記事 → 投稿」ができます（Python不要）</div>
-          次の流れで使います。
+          <div className="label">ここまでで「記事 → 投稿」ができます（記事生成は Python 不要）</div>
+          Buzzblog で書いて、note-edit で投稿、が基本の流れです。
         </div>
-
-        <GuideSection title="使い方（基本の流れ）" level={2}>
-          <ul className="howto">
-            <li className="st">
-              <span className="no">1</span>
-              <h3>記事を作る</h3>
-              <p><code>/note-shukyaku:buzzblog &lt;メモのパス&gt;</code> → タイトル案から選ぶ → 本文が生成されます。</p>
-            </li>
-            <li className="st">
-              <span className="no">2</span>
-              <h3>note に投稿</h3>
-              <p><code>/note-shukyaku:note-edit &lt;生成された_generated.md&gt;</code> → 下書き保存まで自動。</p>
-            </li>
-          </ul>
-        </GuideSection>
 
         <GuideSection title="（任意）画像生成・プレビューを使う人だけ" level={2}>
           <p>
