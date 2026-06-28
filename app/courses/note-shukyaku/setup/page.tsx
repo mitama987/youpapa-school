@@ -99,10 +99,10 @@ export default function SetupPage() {
             </li>
             <li className="st">
               <span className="no">3</span>
-              <h3><code>youpapa-tools</code> が追加されたか確認</h3>
+              <h3><code>youpapa-tools</code> が一覧に出たか確認</h3>
               <p>
-                一覧に <strong>youpapa-tools</strong>（<code>GitHub: mitama987/youpapa-school</code>）が出ていれば追加完了です。
-                これでスキルが使えるようになります。
+                一覧に <strong>youpapa-tools</strong>（<code>GitHub: mitama987/youpapa-school</code>）が出れば、配布元の登録は完了です。
+                ただしこれは「お店を登録した」だけ。続けてプラグイン本体を入れます。
               </p>
               <figure className="shot">
                 <img
@@ -110,8 +110,29 @@ export default function SetupPage() {
                   alt="Marketplaces 一覧に youpapa-tools（GitHub mitama987/youpapa-school）が追加された状態"
                   loading="lazy"
                 />
-                <figcaption>一覧に <strong>youpapa-tools</strong> が出れば追加完了</figcaption>
+                <figcaption>一覧に <strong>youpapa-tools</strong> が出れば配布元の登録は完了</figcaption>
               </figure>
+            </li>
+            <li className="st">
+              <span className="no">4</span>
+              <h3>「Plugins」タブで <code>note-shukyaku</code> を Install</h3>
+              <p>
+                上部の <strong>Plugins</strong> タブに切り替え、一覧（または検索）から <code>note-shukyaku</code> を見つけて
+                <strong>Install</strong> を押します。スコープは <strong>「自分用（User）」</strong>でOKです。
+              </p>
+              <div className="callout warn">
+                <div className="label">ここが一番のポイント</div>
+                <strong>Marketplaces に追加しただけではスキルは使えません。</strong>
+                この Plugins タブの <strong>Install</strong> まで必ず行ってください。
+              </div>
+            </li>
+            <li className="st">
+              <span className="no">5</span>
+              <h3>再読み込みして反映</h3>
+              <p>
+                「再起動して反映」のバナーが出たら Claude Code を開き直す（または入力欄で <code>/reload-plugins</code> を実行）と、
+                <code>/note-shukyaku:buzzblog</code>・<code>/note-shukyaku:note-edit</code>・<code>/note-shukyaku:note-preview</code> が使えるようになります。
+              </p>
             </li>
           </ul>
 
@@ -129,9 +150,9 @@ export default function SetupPage() {
           </p>
           <div className="callout warn">
             <div className="label">候補に出てこないとき</div>
-            まず Claude Code を一度閉じて開き直してください。
-            それでも出ない場合は——拡張版なら <code>/manage</code> →「Manage plugins」の <strong>Marketplaces</strong> タブに <code>youpapa-tools</code> が追加されているか確認、
-            ターミナル版なら <code>/plugin marketplace list</code> で <code>youpapa-tools</code> が入っているか確認します。
+            まず Claude Code を一度閉じて開き直す（または <code>/reload-plugins</code>）。
+            それでも出ない場合は——拡張版なら <code>/manage</code> →「Manage plugins」の <strong>Plugins</strong> タブで <code>note-shukyaku</code> が <strong>Install 済み</strong>か確認（<strong>Marketplaces への追加だけでは使えません</strong>）、
+            ターミナル版なら <code>/plugin</code> で <code>note-shukyaku</code> がインストール済みか確認します。
           </div>
         </GuideSection>
 
