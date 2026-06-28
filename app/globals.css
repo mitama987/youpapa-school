@@ -1528,6 +1528,31 @@ section.block {
 .guide .howto .st p:has(> a.btn) {
   margin-top: 0.7em;
 }
+/* --- スクショ（手順の図） --- */
+.guide .shot {
+  grid-column: 2;
+  margin: 12px 0 2px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  max-width: 720px;
+}
+.guide .shot.narrow {
+  max-width: 340px;
+}
+.guide .shot img {
+  width: 100%;
+  display: block;
+}
+.guide .shot figcaption {
+  padding: 8px 12px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
 
 /* --- コールアウト: フラットな左アクセントバー型＋ok(緑)を新規定義 --- */
 .guide .callout {

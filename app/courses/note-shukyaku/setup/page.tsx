@@ -61,45 +61,64 @@ export default function SetupPage() {
           <ul className="howto">
             <li className="st">
               <span className="no">1</span>
-              <h3>入力欄に <code>/plugins</code> と打つ</h3>
+              <h3>入力欄に <code>/manage</code> と打つ</h3>
               <p>
-                <strong>複数形の <code>/plugins</code></strong> です。打つと「Manage plugins」という管理画面が開きます。
+                入力欄に <code>/manage</code> と打つと、候補に <strong>「Manage plugins」</strong>が出ます。
+                それを選ぶ（または <code>/manage plugins</code> まで打つ）と、プラグインの管理画面が開きます。
               </p>
+              <figure className="shot narrow">
+                <img
+                  src="/skills-guide/note-shukyaku/step1-manage-plugins.png"
+                  alt="入力欄に /manage と打つと候補に Manage plugins が表示される"
+                  loading="lazy"
+                />
+                <figcaption><code>/manage</code> と打つと「Manage plugins」が候補に出ます</figcaption>
+              </figure>
               <div className="callout warn">
-                <div className="label">うまく開かないとき</div>
-                単数の <code>/plugin</code> は拡張版では使えず、<code>/plugin isn&apos;t available in this environment.</code> と出ます。
-                かならず <strong>複数形の <code>/plugins</code></strong> を打ってください。
+                <div className="label">コマンドが見つからないとき</div>
+                <code>/plugin</code> や <code>/plugins</code> ではなく、<strong><code>/manage</code></strong> です。
+                候補が出ないときは Claude Code を一度閉じて開き直してください。
               </div>
             </li>
             <li className="st">
               <span className="no">2</span>
               <h3>「Marketplaces」タブで配布元を追加</h3>
               <p>
-                上部の <strong>Marketplaces</strong> タブを開き、入力欄に次のリポジトリ名を貼り付けて追加します。
+                上部の <strong>Marketplaces</strong> タブを開き、入力欄に次のリポジトリ名を貼り付けて、
+                右の <strong>Add</strong> ボタンを押します。
               </p>
               <CodeBlock label="Marketplaces タブに貼る" code={REPO} />
+              <figure className="shot">
+                <img
+                  src="/skills-guide/note-shukyaku/step2-add-repo.png"
+                  alt="Marketplaces タブの入力欄に mitama987/youpapa-school を入れて Add を押す"
+                  loading="lazy"
+                />
+                <figcaption>入力欄に <code>{REPO}</code> を貼って <strong>Add</strong> を押す</figcaption>
+              </figure>
             </li>
             <li className="st">
               <span className="no">3</span>
-              <h3>「Plugins」タブで note-shukyaku を Install</h3>
+              <h3><code>youpapa-tools</code> が追加されたか確認</h3>
               <p>
-                <strong>Plugins</strong> タブに切り替えると一覧に <code>note-shukyaku</code> が出るので、
-                <strong>Install</strong> を押します。スコープは <strong>「Install for you（自分用）」</strong>でOKです。
+                一覧に <strong>youpapa-tools</strong>（<code>GitHub: mitama987/youpapa-school</code>）が出ていれば追加完了です。
+                これでスキルが使えるようになります。
               </p>
-            </li>
-            <li className="st">
-              <span className="no">4</span>
-              <h3>Claude Code を再起動して反映</h3>
-              <p>
-                「再起動して反映」のバナーが出たら、Claude Code を一度閉じて開き直します。これで3つのスキルが使えます。
-              </p>
+              <figure className="shot">
+                <img
+                  src="/skills-guide/note-shukyaku/step3-added.png"
+                  alt="Marketplaces 一覧に youpapa-tools（GitHub mitama987/youpapa-school）が追加された状態"
+                  loading="lazy"
+                />
+                <figcaption>一覧に <strong>youpapa-tools</strong> が出れば追加完了</figcaption>
+              </figure>
             </li>
           </ul>
 
           <h3 className="sub">B. ターミナル版（CLI）の人はこちら</h3>
           <div className="callout note">
             <div className="label">黒い画面（ターミナル）で動かしている人向け</div>
-            <p>入力欄に次を1行ずつ貼って実行します（拡張版の <code>/plugins</code> 画面と同じことをコマンドで行います）。</p>
+            <p>入力欄に次を1行ずつ貼って実行します（拡張版の「Manage plugins」画面と同じことをコマンドで行います）。</p>
             <CodeBlock label="① マーケットプレイスを追加" code={CMD_ADD} />
             <CodeBlock label="② プラグインをインストール" code={CMD_INSTALL} />
           </div>
@@ -111,7 +130,7 @@ export default function SetupPage() {
           <div className="callout warn">
             <div className="label">候補に出てこないとき</div>
             まず Claude Code を一度閉じて開き直してください。
-            それでも出ない場合は——拡張版なら <code>/plugins</code> の <strong>Marketplaces</strong> タブに <code>youpapa-school</code> が追加されているか確認、
+            それでも出ない場合は——拡張版なら <code>/manage</code> →「Manage plugins」の <strong>Marketplaces</strong> タブに <code>youpapa-tools</code> が追加されているか確認、
             ターミナル版なら <code>/plugin marketplace list</code> で <code>youpapa-tools</code> が入っているか確認します。
           </div>
         </GuideSection>
