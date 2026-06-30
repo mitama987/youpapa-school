@@ -8,7 +8,7 @@ import { GuideSection } from "@/components/GuideSection";
 export const metadata: Metadata = {
   title: "導入：インストールと最初の設定｜note集客スキル",
   description:
-    "PC初心者向け。Claude Codeにプラグインを入れて、note集客スキル（記事生成 buzzblog／note投稿 note-edit）を使えるようにする手順。記事生成はPython不要。note投稿はagent-browserが必要（Claude Codeデフォルト非同梱）。",
+    "PC初心者向け。Claude Codeにプラグインを入れて、note集客スキル（記事生成 buzzblog／note投稿 note-edit）を使えるようにする手順。WindowsはGit必須。記事生成はPython不要。note投稿はブラウザ自動操作（Chrome DevTools MCP）が必要（Claude Codeデフォルト非同梱）。",
 };
 
 const REPO = "mitama987/youpapa-school";
@@ -39,7 +39,11 @@ export default function SetupPage() {
             <span className="rt need">必須</span>
           </li>
           <li>
-            <b>＋ agent-browser</b>（note 投稿時のみ・ブラウザ自動操作CLI／Claude Codeデフォルト非同梱）
+            <b>＋ Git for Windows</b>（Windowsの方・プラグイン追加に必要）
+            <span className="rt need">Win必須</span>
+          </li>
+          <li>
+            <b>＋ ブラウザ自動操作（Chrome DevTools MCP）</b>（note 投稿時のみ・Claude Codeデフォルト非同梱）
             <span className="rt opt">投稿に必要</span>
           </li>
         </ul>
@@ -56,6 +60,33 @@ export default function SetupPage() {
             お使いの Claude Code に合わせて、どちらかの方法で入れます。
             <strong>VS Code 拡張版（画面右側のパネル）なら、黒い画面なしのボタン操作（A）が一番かんたん</strong>です。
           </p>
+
+          <div className="callout warn">
+            <div className="label">Windowsの方：先に「Git」を入れてください（重要）</div>
+            <p>
+              プラグインの追加（Marketplaces の <strong>Add</strong>）は、裏で <code>git</code> を使ってファイルを取得します。
+              Git が入っていないと、Add のときに
+              {" "}<code>Command &apos;git&apos; not found or is in an unsafe location（current directory）</code>{" "}
+              のようなエラーで失敗します。
+            </p>
+            <ol style={{ margin: "8px 0 0", paddingLeft: "1.3em", listStyle: "decimal" }}>
+              <li>
+                <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git for Windows</a>
+                {" "}をダウンロードします（<strong>64-bit / x64版</strong>＝今の普通のPCはこれでOK。「x64」「amd64」は同じ意味です）。
+              </li>
+              <li>
+                インストールは基本そのまま「Next」で進めて大丈夫です。
+                途中の <strong>「Adjusting your PATH environment」</strong> 画面だけ、最初から選ばれている
+                推奨の <strong>「Git from the command line and also from 3rd-party software」（真ん中）</strong> のままにしてください
+                （一番下の「Bash only」を選ぶと認識されません）。
+              </li>
+              <li>
+                <strong>入れ終わったら VS Code（Claude Code）を一度すべて閉じて、開き直してください。</strong>
+                再起動しないと Git が認識されず、同じエラーが続きます。
+                {" "}不安なときは PC ごと再起動が確実です。
+              </li>
+            </ol>
+          </div>
 
           <h3 className="sub">A. VS Code 拡張版（推奨・ボタン操作）</h3>
           <ul className="howto">
@@ -238,12 +269,38 @@ export default function SetupPage() {
             </li>
           </ul>
           <div className="callout warn">
-            <div className="label">note-edit には「agent-browser」が必要です（重要）</div>
-            note-edit はブラウザを自動操作して投稿します。
-            <strong>VS Code 拡張版の Claude Code では「Claude in Chrome」が使えない</strong>ため、
-            代わりに <strong>agent-browser</strong>（CLI のブラウザ自動操作スキル）が必要です。
-            <strong>これは Claude Code に標準では入っていません</strong>（デフォルト非同梱）。
-            導入手順は<strong>追ってご案内します</strong>。
+            <div className="label">note-edit には「ブラウザ自動操作」の準備が必要です（重要）</div>
+            <p>
+              note-edit はブラウザを自動操作して投稿します。
+              <strong>VS Code 拡張版の Claude Code では「Claude in Chrome」が使えない</strong>ため、
+              代わりに <strong>Chrome DevTools MCP</strong>（ブラウザ自動操作ツール）を入れると動きます。
+              <strong>これは Claude Code に標準では入っていません</strong>（デフォルト非同梱）。
+              次の手順で1回だけ入れればOKです。
+            </p>
+            <ol style={{ margin: "8px 0 0", paddingLeft: "1.3em", listStyle: "decimal" }}>
+              <li>
+                <strong>PowerShell（パワーシェル）を開く</strong>:
+                キーボードの <strong>Windowsキー</strong> を押す → そのまま <strong>「power」</strong> と入力 →
+                候補に出る <strong>「Windows PowerShell」</strong> をクリックして開きます（黒い画面が出ます）。
+              </li>
+              <li>
+                開いた画面に、次のコマンドを<strong>そのまま貼り付けて Enter</strong> を押します。
+                <CodeBlock
+                  label="PowerShell に貼り付けて実行"
+                  code="claude mcp add --scope user chrome-devtools npx chrome-devtools-mcp@latest"
+                />
+                エラーなく終われば導入完了です（<code>--scope user</code> を付けると、どのフォルダで開いても使えるようになります）。
+              </li>
+              <li>
+                <strong>VS Code（Claude Code）を一度すべて閉じて、開き直してください。</strong>
+                再起動しないと、入れたツールが読み込まれません。
+              </li>
+            </ol>
+            <p style={{ margin: "8px 0 0", fontSize: "0.9em", opacity: 0.85 }}>
+              ※ うまくいかないときは、<strong>Node.js</strong> が入っているか確認してください
+              （<a href="https://nodejs.org/ja" target="_blank" rel="noopener">nodejs.org</a> から「LTS」版を入れて、入れたあと PowerShell とVS Codeを開き直す）。
+              <code>claude</code> コマンドが見つからない場合は、Claude Code 本体のインストールが未完了です。
+            </p>
           </div>
         </GuideSection>
 
