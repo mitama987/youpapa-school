@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 const REPO = "mitama987/youpapa-school";
 const CMD_ADD = "/plugin marketplace add mitama987/youpapa-school";
 const CMD_INSTALL = "/plugin install note-shukyaku@youpapa-tools";
+const LINE_URL = "https://lin.ee/ob91zIx";
 
 export default function SetupPage() {
   return (
@@ -245,6 +246,20 @@ export default function SetupPage() {
             記事の自動画像生成を使う場合だけ、別途 Python（uv）と APIキーが要ります。
             使わなくても記事は作れます。詳しくは下の「（任意）画像生成・プレビュー」へ。
           </div>
+          <div className="callout story">
+            <div className="label">応用：自分の文体ルールがあれば「第二の脳」として使えます</div>
+            <p>
+              Buzzblog には「ですます調で統一」などの<strong>標準のライティングルール</strong>が入っています。
+              ただし、<strong>あなた自身の文体・口調を学んだライティングルール</strong>
+              （プロジェクトの <code>CLAUDE.md</code>・メモ・文体ガイドにまとめたものや、初回に Claude へ口頭で伝えたトーン）があれば、
+              <strong>そちらが本スキルの標準ルールより優先</strong>されます。
+            </p>
+            <p>
+              つまり、汎用的な文章ではなく<strong>「あなたが書いたような記事」</strong>を生成できます。
+              自分の言い回し・語り口を一度ルール化しておけば、Buzzblog はそれを再現する
+              <strong>&ldquo;第二の脳&rdquo;</strong>として運用できます。
+            </p>
+          </div>
         </GuideSection>
 
         <GuideSection title="5. note-edit スキル ― note に投稿する" level={2}>
@@ -302,6 +317,11 @@ export default function SetupPage() {
               <code>claude</code> コマンドが見つからない場合は、Claude Code 本体のインストールが未完了です。
             </p>
           </div>
+          <div className="callout note">
+            <div className="label">文体はそのまま引き継がれます</div>
+            note-edit は Buzzblog が生成した <code>_generated.md</code> を<strong>そのまま</strong>書式付きで投稿します。
+            あなたのライティングルールで書かれた文章は、投稿時も変わりません。
+          </div>
         </GuideSection>
 
         <div className="callout ok">
@@ -326,6 +346,17 @@ export default function SetupPage() {
             <a className="btn btn-ghost btn-sm" href="/skills-guide/note-shukyaku-skills.zip" download>note-shukyaku-skills.zip をダウンロード</a>
           </p>
         </GuideSection>
+      </div>
+
+      <div className="action-card">
+        <h3>やり方が分からない・詰まったとき</h3>
+        <p>
+          やり方が分からない、詰まってしまった方がいたら、<strong>LINEで教えてほしいです</strong>。対応します！
+          軽い気持ちでメッセージを送ってもらって、まったく問題ございません。
+        </p>
+        <div className="links">
+          <a className="btn btn-line" href={LINE_URL}>LINEで相談する（無料）</a>
+        </div>
       </div>
 
       <Pager

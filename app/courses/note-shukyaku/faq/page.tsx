@@ -4,6 +4,8 @@ import { NoteGuideShell } from "@/components/NoteGuideShell";
 import { Pager } from "@/components/Pager";
 import { GuideSection } from "@/components/GuideSection";
 
+const LINE_URL = "https://lin.ee/ob91zIx";
+
 export const metadata: Metadata = {
   title: "FAQ・トラブルシュート｜note集客スキルのよくあるエラー",
   description:
@@ -94,6 +96,17 @@ export default function FaqPage() {
         <div className="callout note">
           <div className="label">それでも解決しないとき</div>
           各スキルの <code>SKILL.md</code> に詳細なエラー対処（note-edit のパターン集・禁止事項など）が載っています。note側のUI変更でセレクタがずれた場合も、そちらの「エラー対処」節を参照してください。
+        </div>
+      </div>
+
+      <div className="action-card">
+        <h3>やり方が分からない・詰まったとき</h3>
+        <p>
+          ここで解決しない、やり方が分からない、詰まってしまった方がいたら、<strong>LINEで教えてほしいです</strong>。対応します！
+          軽い気持ちでメッセージを送ってもらって、まったく問題ございません。
+        </p>
+        <div className="links">
+          <a className="btn btn-line" href={LINE_URL}>LINEで相談する（無料）</a>
         </div>
       </div>
 
