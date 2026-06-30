@@ -287,9 +287,9 @@ export default function SetupPage() {
                 開いた画面に、次のコマンドを<strong>そのまま貼り付けて Enter</strong> を押します。
                 <CodeBlock
                   label="PowerShell に貼り付けて実行"
-                  code="claude mcp add chrome-devtools npx chrome-devtools-mcp@latest"
+                  code="claude mcp add --scope user chrome-devtools npx chrome-devtools-mcp@latest"
                 />
-                エラーなく終われば導入完了です。
+                エラーなく終われば導入完了です（<code>--scope user</code> を付けると、どのフォルダで開いても使えるようになります）。
               </li>
               <li>
                 <strong>VS Code（Claude Code）を一度すべて閉じて、開き直してください。</strong>
