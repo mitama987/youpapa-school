@@ -40,7 +40,7 @@ const CONFIG_TEMPLATE = `# x-post 設定ファイル
 未指定`;
 
 export const metadata: Metadata = {
-  title: "Xポスト自動生成スキル ― APIキー不要でツイート案を2モード生成｜シクミ",
+  title: "Xポスト自動生成スキル ― APIキー不要でツイート案を2モード生成",
   description:
     "X（Twitter）の投稿案をClaude Codeで自動生成するスキルの導入手順。AI臭を消す「深掘り型」と10パターンの「量産型」を実行時に選択。外部APIキー不要・Python不要。実運用ツールXToolsPro2/4の生成プロンプトをそのまま切り出しました。",
 };
@@ -144,26 +144,39 @@ export default function XPostCourse() {
             </p>
 
             <GuideSection title="VS Code 拡張版で入れる（推奨）" open>
-              <ol className="howto">
-                <li>
-                  <span className="st">1</span>
-                  Claude Code で <code>/manage</code> を開く
+              <ul className="howto">
+                <li className="st">
+                  <span className="no">1</span>
+                  <h3>
+                    <code>/manage</code> を開く
+                  </h3>
+                  <p>
+                    入力欄に <code>/manage</code> と打つと、プラグインの管理画面が開きます。
+                  </p>
                 </li>
-                <li>
-                  <span className="st">2</span>
-                  <b>Marketplaces</b> タブで <code>mitama987/youpapa-school</code> を <b>Add</b>
+                <li className="st">
+                  <span className="no">2</span>
+                  <h3>Marketplace を追加</h3>
+                  <p>
+                    <strong>Marketplaces</strong> タブで <code>mitama987/youpapa-school</code> を{" "}
+                    <strong>Add</strong> します。
+                  </p>
                 </li>
-                <li>
-                  <span className="st">3</span>
-                  <b>Plugins</b> タブに切り替えて <code>x-post</code> を <b>Install</b>
-                  <br />
-                  <small>※ Marketplace を追加しただけでは使えません。Plugins タブでの Install が必要です</small>
+                <li className="st">
+                  <span className="no">3</span>
+                  <h3>プラグインを Install</h3>
+                  <p>
+                    <strong>Plugins</strong> タブに切り替えて <code>x-post</code> を{" "}
+                    <strong>Install</strong> → <strong>reload</strong>。
+                    <code>/x-post</code> がコマンド一覧に出れば成功です。
+                  </p>
                 </li>
-                <li>
-                  <span className="st">4</span>
-                  <b>reload</b>（再読み込み）する。<code>/x-post</code> がコマンド一覧に出れば成功
-                </li>
-              </ol>
+              </ul>
+              <div className="callout note">
+                <div className="label">よくあるつまずき</div>
+                Marketplace を <b>追加しただけでは使えません</b>。
+                Plugins タブでの <b>Install</b> と、そのあとの <b>reload</b> まで必要です。
+              </div>
               <div className="callout warn">
                 <div className="label">Windowsの方へ</div>
                 Marketplace の追加には <b>Git for Windows</b> が必要です。
