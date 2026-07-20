@@ -267,7 +267,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <span className="course-card">
+            <Link className="course-card" href="/courses/x-post">
               <div className="thumb t5">
                 <img
                   src="/thumbs/x-post.webp"
@@ -277,18 +277,18 @@ export default function Home() {
               </div>
               <div className="course-body">
                 <div className="pills">
+                  <span className="pill live">公開中</span>
                   <span className="pill lv">応用</span>
                   <span className="pill cat">開発・自動化</span>
-                  <span className="pill soon">準備中</span>
                 </div>
                 <h3>Xポスト自動生成スキル</h3>
-                <p>発信の核から日々のポストを自動生成。継続を仕組みに変えます。近日公開予定。</p>
+                <p>発信の核から日々のポストを自動生成。AI臭を消す「深掘り型」と10パターンの「量産型」を選べます。APIキー不要。</p>
                 <div className="course-meta">
-                  <span>Coming soon</span>
-                  <span className="go">準備中</span>
+                  <span>導入ガイド・無料</span>
+                  <span className="go">受講する →</span>
                 </div>
               </div>
-            </span>
+            </Link>
           </div>
 
           {/* ツール誘導（販売ツールは講座一覧に置かず、マーケットへ） */}

@@ -8,6 +8,11 @@
       "name": "note-shukyaku",
       "source": "./plugins/note-shukyaku",
       "description": "note集客スキル一式：記事自動生成(buzzblog)＋note自動投稿(note-edit)＋ローカルプレビュー(note-preview)"
+    },
+    {
+      "name": "x-post",
+      "source": "./plugins/x-post",
+      "description": "Xポスト自動生成スキル：AI臭を消す深掘り型と10パターンの量産型を実行時に選べる。APIキー不要・Python不要"
     }
   ]
 }

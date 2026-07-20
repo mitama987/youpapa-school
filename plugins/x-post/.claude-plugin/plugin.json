@@ -1,0 +1,8 @@
+{
+  "name": "x-post",
+  "description": "X（Twitter）の投稿案を2モードで自動生成するスキル。A=AI臭を消す深掘り型（ハッシュタグなし）、B=10パターンの量産型（ハッシュタグあり・最大100件）。外部APIキー不要・Python不要でClaudeが直接生成する。",
+  "version": "1.0.0",
+  "author": {
+    "name": "youpapa"
+  }
+}

@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/courses/note-shukyaku/api",
     "/courses/note-shukyaku/note",
     "/courses/note-shukyaku/faq",
+    "/courses/x-post",
     "/lessons/step1",
     "/lessons/step2",
     "/lessons/step3",
