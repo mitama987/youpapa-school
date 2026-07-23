@@ -185,11 +185,107 @@ export default function XPostCourse() {
             </GuideSection>
 
             <GuideSection title="ターミナル版（CLI）で入れる">
-              <CodeBlock label="① マーケットプレイスを追加" code={CMD_ADD} />
-              <CodeBlock label="② プラグインをインストール" code={CMD_INSTALL} />
               <p>
-                入らない場合は、下の zip をダウンロードして
-                <code>~/.claude/skills/</code> に展開しても同じように使えます。
+                黒い画面（ターミナル）で Claude Code を使っている方向けの手順です。
+                やること自体は <strong>VS Code 拡張版とまったく同じ2コマンド</strong>ですが、
+                はじめての方でもつまずかないよう、前提の準備から順番に説明します。
+              </p>
+
+              <ul className="req-list">
+                <li>
+                  <b>① Claude Code</b>（このスキルを動かすアプリ）
+                  <span className="rt need">必須</span>
+                </li>
+                <li>
+                  <b>② Git</b>（プラグイン追加コマンドが裏で使います）
+                  <span className="rt need">必須</span>
+                </li>
+                <li>
+                  <b>＋ Node.js</b>（Claude Code の土台。未導入なら先に）
+                  <span className="rt opt">推奨</span>
+                </li>
+              </ul>
+
+              <div className="callout warn">
+                <div className="label">Windowsの方：先に「Git」を入れてください（重要）</div>
+                <p>
+                  <code>/plugin marketplace add</code> は、裏で <code>git</code> を使って配布元を取得します。
+                  Git が入っていないと{" "}
+                  <code>Command &apos;git&apos; not found ...</code>{" "}
+                  のようなエラーで失敗します。
+                </p>
+                <ol style={{ margin: "8px 0 0", paddingLeft: "1.3em", listStyle: "decimal" }}>
+                  <li>
+                    <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git for Windows</a>
+                    {" "}をダウンロード（<strong>64-bit / x64版</strong>＝今どきのPCはこれ。「x64」「amd64」は同じ意味）。
+                  </li>
+                  <li>インストーラは基本そのまま「Next」で進めて大丈夫です。</li>
+                  <li>
+                    <strong>入れ終わったら Claude Code（と使っているターミナル）を一度閉じて開き直してください。</strong>
+                    再起動しないと Git が認識されず、同じエラーが続きます。
+                  </li>
+                </ol>
+                <p style={{ margin: "8px 0 0", fontSize: "0.9em", opacity: 0.85 }}>
+                  ※ Mac は Git が最初から入っていることが多く、この手順は不要な場合がほとんどです。
+                </p>
+              </div>
+
+              <ul className="howto">
+                <li className="st">
+                  <span className="no">1</span>
+                  <h3>Claude Code を起動する</h3>
+                  <p>
+                    ターミナルを開いて <code>claude</code> と打つと、Claude Code が立ち上がります。
+                  </p>
+                  <p style={{ fontSize: "0.92em", opacity: 0.9 }}>
+                    ターミナルの開き方 ―<strong> Windows</strong>: スタートで「ターミナル」または「cmd」を検索して開く。
+                    <strong> Mac</strong>: Spotlight（⌘＋Space）で「ターミナル」。
+                  </p>
+                  <p style={{ fontSize: "0.9em", opacity: 0.85 }}>
+                    ※ <code>claude</code> が見つからないときは Claude Code 本体が未導入です。
+                    {" "}<a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> を入れてログインしてください。
+                  </p>
+                </li>
+                <li className="st">
+                  <span className="no">2</span>
+                  <h3>マーケットプレイスを追加</h3>
+                  <p>
+                    <strong>Claude Code の入力欄</strong>に、次の1行を貼り付けて実行します（配布元＝お店を登録します）。
+                  </p>
+                  <CodeBlock label="① Claude Code の入力欄に貼る" code={CMD_ADD} />
+                </li>
+                <li className="st">
+                  <span className="no">3</span>
+                  <h3>プラグインをインストール</h3>
+                  <p>
+                    続けて、同じ入力欄に次の1行を貼り付けて実行します（これでスキル本体が入ります）。
+                  </p>
+                  <CodeBlock label="② Claude Code の入力欄に貼る" code={CMD_INSTALL} />
+                  <div className="callout note">
+                    <div className="label">マーケット追加“だけ”では使えません</div>
+                    <code>{CMD_ADD}</code> は配布元の登録まで。必ずこの <code>install</code> まで実行してください。
+                  </div>
+                </li>
+                <li className="st">
+                  <span className="no">4</span>
+                  <h3>再読み込みして確認</h3>
+                  <p>
+                    <code>/reload-plugins</code> を実行（または Claude Code を開き直す）と反映されます。
+                    入力欄で <code>/</code> を押して <strong><code>/x-post</code></strong> が候補に出れば成功です。
+                  </p>
+                </li>
+              </ul>
+
+              <div className="callout note">
+                <div className="label">この2コマンドは「黒い画面」に打つものではありません</div>
+                <code>{CMD_ADD}</code> と <code>{CMD_INSTALL}</code> は、
+                <strong>Claude Code を起動した中（入力欄）</strong>で打つコマンドです。
+                cmd や PowerShell に直接打つものではないので、どちらのターミナルから起動しても同じように動きます。
+              </div>
+
+              <p>
+                コマンドを使いたくない場合は、下の zip をダウンロードして展開し、中の
+                {" "}<code>x-post</code> フォルダを <code>~/.claude/skills/</code> に置いても同じように使えます。
               </p>
             </GuideSection>
 
