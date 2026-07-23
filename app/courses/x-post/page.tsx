@@ -73,7 +73,7 @@ export default function XPostCourse() {
               <li>テーマを1つ渡すだけで、X投稿案を5〜100件まとめて生成できる</li>
               <li>「本命の1本」と「キューに積むストック」を、モードを切り替えて作り分けられる</li>
               <li>AI特有の平坦な文章（＝AI臭）を消す8つの手法を、生成にも推敲にも使える</li>
-              <li>発信の軸を1回設定すれば、2回目以降は聞かれる項目が3つだけになる</li>
+              <li>発信の軸を1回設定すれば、2回目以降に聞かれるのはモードごとの数問だけになる</li>
             </ul>
 
             <div className="callout ok">
@@ -110,8 +110,8 @@ export default function XPostCourse() {
                   </tr>
                   <tr>
                     <th>文字数</th>
-                    <td>280字以内／長文は400〜1,200字</td>
-                    <td>140単位 or 280単位</td>
+                    <td>全角140字（通常）／280字（Premium）・長文400〜1,200字</td>
+                    <td>全角140字（通常）／280字（Premium）</td>
                   </tr>
                   <tr>
                     <th>件数</th>
@@ -197,7 +197,7 @@ export default function XPostCourse() {
             <p>
               毎回「誰に向けて？」「どんなトーンで？」と聞かれるのは面倒なので、
               発信の軸を <code>{CONFIG_PATH}</code> に1回だけ書いておきます。
-              これで2回目以降に聞かれるのは <strong>件数・文字数・パターンの3つだけ</strong>になります。
+              これで2回目以降に聞かれるのは <strong>モードごとの数問だけ</strong>になります（深掘り型＝件数・文字数・設計パターン、量産型＝件数・文字数・目的・感情トーン。量産型は加えて任意の一言ヒアリングが入ります）。
             </p>
             <div className="callout note">
               <div className="label">自分で書かなくてOK</div>
