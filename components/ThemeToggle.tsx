@@ -24,7 +24,25 @@ export function ThemeToggle() {
       setTheme(next);
     };
     mq.addEventListener("change", onMq);
-    return () => mq.removeEventListener("change", onMq);
+
+    // 複数マウント（モバイルバー＋サイドナビ）間で状態を同期する
+    const mo = new MutationObserver(() => {
+      const t =
+        (document.documentElement.getAttribute("data-theme") as
+          | "light"
+          | "dark"
+          | null) ?? "light";
+      setTheme(t);
+    });
+    mo.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => {
+      mq.removeEventListener("change", onMq);
+      mo.disconnect();
+    };
   }, []);
 
   const toggle = () => {

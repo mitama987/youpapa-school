@@ -115,22 +115,118 @@ img {
   padding: 0 20px;
 }
 
-/* ===== Header ===== */
-.site-header {
+/* ===== App shell（左サイドナビ＋本文列） ===== */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.app-main > .site-footer {
+  margin-top: auto;
+}
+.side-nav {
+  width: 260px;
+  flex: 0 0 260px;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+}
+.side-nav .inner {
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: var(--header-bg);
-  backdrop-filter: saturate(1.4) blur(8px);
-  border-bottom: 1px solid var(--line);
+  max-height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 12px 16px;
 }
-.site-header .bar {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 14px 20px;
+.side-brand {
   display: flex;
   align-items: center;
-  gap: 22px;
+  padding: 4px 6px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+.side-brand .theme-toggle {
+  margin-left: auto;
+}
+.side-nav nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 2px;
+}
+.side-nav nav a .num {
+  width: 23px;
+  height: 23px;
+  border-radius: 7px;
+  background: var(--bg-soft);
+  display: grid;
+  place-items: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted);
+  flex: 0 0 23px;
+}
+.side-nav nav a:hover {
+  background: var(--bg-soft);
+  text-decoration: none;
+}
+.side-nav nav a.active {
+  background: var(--orange);
+  color: #fff;
+}
+.side-nav nav a.active .num {
+  background: #fff;
+  color: var(--orange-d);
+}
+.side-nav nav a.done .num {
+  background: var(--green);
+  color: #fff;
+}
+/* グローバルナビは控えめアクティブ（旧ヘッダーのオレンジ文字を踏襲） */
+.side-nav .global-nav {
+  margin-bottom: 4px;
+}
+.side-nav .global-nav a.active {
+  background: transparent;
+  color: var(--orange-d);
+}
+/* 現在の講座配下で展開される子項目（カリキュラム / noteサブページ） */
+.side-nav nav a.toc-child {
+  padding: 7px 11px 7px 28px;
+  font-weight: 500;
+  font-size: 0.87rem;
+}
+.side-nav nav a.toc-child .num {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  font-size: 0.72rem;
+}
+.side-nav .side-cta {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.side-nav .side-cta .btn {
+  display: block;
+  width: 100%;
+}
+.mobile-bar {
+  display: none;
+}
+.nav-scrim {
+  display: none;
 }
 .brand {
   display: flex;
@@ -155,32 +251,6 @@ img {
 }
 .brand .mark::after {
   content: "S";
-}
-.nav {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  margin-left: auto;
-}
-.nav a {
-  color: var(--ink);
-  font-weight: 700;
-  font-size: 0.95rem;
-  padding: 8px 12px;
-  border-radius: 9px;
-}
-.nav a:hover {
-  background: var(--bg-soft);
-  text-decoration: none;
-}
-.nav a.active {
-  color: var(--orange-d);
-}
-.header-cta {
-  margin-left: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .btn {
   display: inline-block;
@@ -219,7 +289,6 @@ img {
   text-decoration: none;
 }
 .menu-toggle {
-  display: none;
   background: var(--surface);
   border: 1.5px solid var(--line);
   color: var(--ink);
@@ -649,70 +718,6 @@ section.block {
   display: flex;
   gap: 30px;
   padding: 26px 20px 60px;
-}
-.toc {
-  width: 248px;
-  flex: 0 0 248px;
-  position: sticky;
-  top: 90px;
-  align-self: flex-start;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 14px;
-  max-height: calc(100vh - 120px);
-  overflow: auto;
-}
-.toc h2 {
-  font-size: 0.74rem;
-  letter-spacing: 0.07em;
-  color: var(--muted);
-  margin: 6px 8px 10px;
-  text-transform: uppercase;
-}
-.toc nav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 11px;
-  border-radius: 9px;
-  color: var(--ink);
-  font-weight: 600;
-  font-size: 0.92rem;
-  margin-bottom: 2px;
-}
-.toc nav a .num {
-  width: 23px;
-  height: 23px;
-  border-radius: 7px;
-  background: var(--bg-soft);
-  display: grid;
-  place-items: center;
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: var(--muted);
-  flex: 0 0 23px;
-}
-.toc nav a:hover {
-  background: var(--bg-soft);
-  text-decoration: none;
-}
-.toc nav a.active {
-  background: var(--orange);
-  color: #fff;
-}
-.toc nav a.active .num {
-  background: #fff;
-  color: var(--orange-d);
-}
-.toc nav a.done .num {
-  background: var(--green);
-  color: #fff;
-}
-.toc .side-cta {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
 }
 .content {
   flex: 1;
@@ -1175,37 +1180,57 @@ section.block {
     flex-direction: column;
     padding: 18px 14px 50px;
   }
-  .toc {
+  .app-shell {
+    flex-direction: column;
+  }
+  .mobile-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--header-bg);
+    backdrop-filter: saturate(1.4) blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 14px;
+  }
+  .mobile-bar .theme-toggle {
+    margin-left: auto;
+  }
+  .side-nav {
     position: fixed;
     inset: 0 auto 0 0;
     width: 80%;
     max-width: 300px;
-    z-index: 60;
-    max-height: 100vh;
-    border-radius: 0;
+    z-index: 70;
     transform: translateX(-105%);
     transition: transform 0.25s;
   }
-  .toc.open {
+  .side-nav.open {
     transform: none;
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
   }
-  .nav {
-    display: none;
-    position: absolute;
-    top: 62px;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    flex-direction: column;
-    border-bottom: 1px solid var(--line);
-    padding: 8px 16px;
+  .side-nav .inner {
+    position: static;
+    max-height: none;
+    height: 100%;
   }
-  .nav.open {
-    display: flex;
+  .nav-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 65;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
   }
-  .menu-toggle {
-    display: inline-block;
+  .nav-scrim.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .home-main [id] {
+    scroll-margin-top: 70px;
   }
   .hero h1 {
     font-size: 1.8rem;
@@ -1228,10 +1253,6 @@ section.block {
   }
   .tool-cta .btn {
     width: 100%;
-  }
-  .header-cta .btn {
-    padding: 9px 14px;
-    font-size: 0.82rem;
   }
   .card {
     padding: 22px 18px;
@@ -1892,23 +1913,18 @@ section.block {
   }
 }
 
-/* ===== トップページ左メニュー（HomeToc） =====
-   / の <div class="layout home-layout"> 配下だけに適用。.toc 本体のスタイルは既存を再利用。 */
+/* ===== トップページ本文（.home-main）とサイドナビの補助スタイル ===== */
 
 /* .layout が上26pxを持つため先頭ブロックの上パディングを打ち消す */
 .home-main > .block:first-child {
   padding-top: 0;
 }
-/* 固定ヘッダー分のアンカーオフセット（.toc の top:90px に合わせる） */
+/* アンカーの着地オフセット（デスクトップはヘッダーなし。980px以下は mobile-bar 分を上書き） */
 .home-main [id] {
-  scroll-margin-top: 90px;
+  scroll-margin-top: 20px;
 }
-/* サイド分だけ狭い本文（約860px）ではカードは2列が適正 */
-.home-main .grid {
-  grid-template-columns: repeat(2, 1fr);
-}
-/* メニュー内の区切りラベル */
-.toc .toc-sep {
+/* サイドナビ内の区切りラベル */
+.side-nav .toc-sep {
   font-size: 0.74rem;
   letter-spacing: 0.07em;
   color: var(--muted);
@@ -1918,30 +1934,26 @@ section.block {
   text-transform: uppercase;
 }
 /* 講座サブリンク（└ 付き・インデント・控えめ） */
-.toc nav a.toc-sub {
+.side-nav nav a.toc-sub {
   padding: 7px 11px 7px 20px;
   font-weight: 500;
   font-size: 0.87rem;
   color: var(--muted);
 }
-.toc nav a.toc-sub::before {
+.side-nav nav a.toc-sub::before {
   content: "└";
   color: var(--muted);
   font-size: 0.8rem;
   flex: 0 0 auto;
 }
-.toc nav a.toc-sub:hover {
+.side-nav nav a.toc-sub:hover {
   color: var(--ink);
 }
-@media (max-width: 980px) {
-  /* トップのみ非表示（ドロワー開閉が未実装のため。講座ページの .toc には影響なし） */
-  .home-layout .toc {
-    display: none;
-  }
+/* アクティブ時はピル配色を優先（.toc-sub の muted 指定より後勝ち） */
+.side-nav nav a.toc-sub.active,
+.side-nav nav a.toc-sub.active:hover {
+  color: #fff;
 }
-@media (max-width: 620px) {
-  /* .home-main .grid(2列指定) は詳細度でベースの1列指定に勝つため再宣言必須 */
-  .home-main .grid {
-    grid-template-columns: 1fr;
-  }
+.side-nav nav a.toc-sub.active::before {
+  color: #fff;
 }

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ResumeCTA } from "@/components/ResumeCTA";
-import { HomeToc } from "@/components/HomeToc";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
 
@@ -39,8 +38,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="layout home-layout">
-        <HomeToc />
+      <div className="layout">
         <main className="content home-main">
         <section className="block" id="start">
           <div className="section-head">

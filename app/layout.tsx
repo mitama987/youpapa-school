@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Header } from "@/components/Header";
+import { SideNav } from "@/components/SideNav";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
@@ -46,9 +46,13 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body suppressHydrationWarning>
-        <Header />
-        {children}
-        <Footer />
+        <div className="app-shell">
+          <SideNav />
+          <div className="app-main">
+            {children}
+            <Footer />
+          </div>
+        </div>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
