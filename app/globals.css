@@ -1722,3 +1722,172 @@ section.block {
   background: var(--surface);
 }
 .guide .card details.acc > .acc-body > :first-child { margin-top: 0; }
+
+/* ===== x-post コース: ステップカード＋タブUI（新規クラスのみ・既存ルール変更なし） =====
+   /courses/x-post の <main class="content guide xpost"> 配下だけに適用。
+   既存トークンのみ使用・light/dark 自動対応。 */
+
+/* --- 読み幅を絞って中央寄せ（サイドバー無しページの可読性） --- */
+.content.xpost {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.xpost .card {
+  padding: 28px 30px;
+  margin-bottom: 28px;
+}
+.xpost .like-row {
+  margin-top: 18px;
+}
+.xpost .fine {
+  font-size: 0.9em;
+  color: var(--muted);
+}
+
+/* --- タブ切替（導入方法の選択） --- */
+.guide .tab-bar {
+  display: flex;
+  border-bottom: 2px solid var(--line);
+  margin: 18px 0 26px;
+}
+.guide .tab-btn {
+  flex: 1;
+  padding: 12px 14px;
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.guide .tab-btn:hover {
+  color: var(--ink);
+}
+.guide .tab-btn[aria-selected="true"] {
+  color: var(--orange-d);
+  border-bottom-color: var(--orange);
+}
+
+/* --- ステップカード（枠＋角丸＋広めの間隔） --- */
+.guide .steps {
+  list-style: none;
+  margin: 22px 0;
+  padding: 0;
+  display: grid;
+  gap: 1.6rem;
+}
+.guide .step {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  padding: 1.4rem 1.5rem;
+}
+.guide .step-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.guide .step-no {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 900;
+  display: inline-grid;
+  place-items: center;
+}
+.guide .step-title {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+.guide .step-body {
+  color: var(--ink-2);
+}
+.guide .step-body p {
+  margin: 0.45em 0;
+  font-size: 1rem;
+}
+.guide .step .code-block {
+  background: var(--surface);
+  margin: 12px 0 0;
+}
+.guide .step .callout {
+  margin: 12px 0 0;
+}
+
+/* --- kbd（キー表記） --- */
+.guide kbd {
+  display: inline-block;
+  padding: 0.12em 0.5em;
+  font-size: 0.85em;
+  font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  box-shadow: inset 0 -1px 0 var(--line);
+  line-height: 1.5;
+}
+
+/* --- ダークターミナル調コードブロック（両テーマ共通で暗色） --- */
+.code-block.dark {
+  background: #0d1117;
+  border-color: #30363d;
+}
+.code-block.dark .code-bar {
+  background: #161b22;
+  border-bottom-color: #30363d;
+}
+.code-block.dark .code-bar .lbl {
+  color: #8b949e;
+}
+.code-block.dark pre {
+  color: #3fb950;
+}
+.code-block.dark .copy-btn {
+  background: #21262d;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+.code-block.dark .copy-btn:hover {
+  border-color: var(--orange);
+  color: #fff;
+}
+.code-block.dark .copy-btn.copied {
+  color: #3fb950;
+  border-color: #3fb950;
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 620px) {
+  .xpost .card {
+    padding: 20px 18px;
+  }
+  .guide .steps {
+    gap: 1.1rem;
+  }
+  .guide .step {
+    padding: 1.1rem 1rem;
+  }
+  .guide .step-no {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+  .guide .tab-btn {
+    font-size: 0.9rem;
+    padding: 10px 6px;
+  }
+}

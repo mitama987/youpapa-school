@@ -2,7 +2,16 @@
 import { useState } from "react";
 
 // note集客ガイドのコード/設定ブロック。ラベル＋ワンクリックコピー（Clipboard API + フォールバック）。
-export function CodeBlock({ label, code }: { label: string; code: string }) {
+// tone="dark" で両テーマ共通のターミナル調（黒地・緑字）になる。
+export function CodeBlock({
+  label,
+  code,
+  tone,
+}: {
+  label: string;
+  code: string;
+  tone?: "dark";
+}) {
   const [copied, setCopied] = useState(false);
 
   function flash() {
@@ -36,7 +45,7 @@ export function CodeBlock({ label, code }: { label: string; code: string }) {
   }
 
   return (
-    <div className="code-block">
+    <div className={tone === "dark" ? "code-block dark" : "code-block"}>
       <div className="code-bar">
         <span className="lbl">{label}</span>
         <button

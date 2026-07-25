@@ -4,6 +4,7 @@ import { CommentThread } from "@/components/CommentThread";
 import { LikeButton } from "@/components/LikeButton";
 import { CodeBlock } from "@/components/CodeBlock";
 import { GuideSection } from "@/components/GuideSection";
+import { Tabs } from "@/components/Tabs";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
 const CMD_ADD = "/plugin marketplace add mitama987/youpapa-school";
@@ -42,7 +43,7 @@ const CONFIG_TEMPLATE = `# x-post 設定ファイル
 export const metadata: Metadata = {
   title: "Xポスト自動生成スキル ― APIキー不要でツイート案を2モード生成",
   description:
-    "X（Twitter）の投稿案をClaude Codeで自動生成するスキルの導入手順。AI臭を消す「深掘り型」と10パターンの「量産型」を実行時に選択。外部APIキー不要・Python不要。実運用ツールXToolsPro2/4の生成プロンプトをそのまま切り出しました。",
+    "X投稿案をClaude Codeで自動生成。深掘り型と量産型の2モード、APIキー・Python不要。実運用ツールXToolsPro2/4の生成プロンプトをスキル化。",
 };
 
 export default function XPostCourse() {
@@ -54,40 +55,35 @@ export default function XPostCourse() {
             <Link href="/">講座一覧</Link> ＞ 開発・自動化 ＞ Xポスト自動生成スキル
           </div>
           <span className="eyebrow">開発・自動化 ／ X運用の自動化 ／ 公開中</span>
-          <h1>Xポスト自動生成スキル ― 投稿案を2モードで書き出す</h1>
+          <h1>Xポスト自動生成スキル ― 投稿案を2モードで一括生成</h1>
           <p>
-            「毎日投稿したいけど、ネタも時間も続かない」を解決するスキルです。
-            実運用中のX自動投稿ツール <strong>XToolsPro2 / XToolsPro4</strong> に組み込んでいた生成プロンプトを、
-            そのまま Claude Code のスキルとして切り出しました。
-            <strong>外部APIキーもPythonも不要</strong>。インストールしたその場で動きます。
+            実運用ツール <strong>XToolsPro2 / XToolsPro4</strong> の生成プロンプトをそのままスキル化。
+            <strong>APIキー・Python不要</strong>。
           </p>
         </div>
       </section>
 
       <div className="layout">
-        <main className="content guide" style={{ flex: 1 }}>
+        <main className="content guide xpost">
           <div className="card">
             <span className="eyebrow">このスキルでできること</span>
             <h2>ゴール</h2>
             <ul>
-              <li>テーマを1つ渡すだけで、X投稿案を5〜100件まとめて生成できる</li>
-              <li>「本命の1本」と「キューに積むストック」を、モードを切り替えて作り分けられる</li>
-              <li>AI特有の平坦な文章（＝AI臭）を消す8つの手法を、生成にも推敲にも使える</li>
-              <li>発信の軸を1回設定すれば、2回目以降に聞かれるのはモードごとの数問だけになる</li>
+              <li>テーマ1つで投稿案を5〜100件生成</li>
+              <li>本命1本とストックをモードで作り分け</li>
+              <li>AI臭を消す8手法を生成・推敲に活用</li>
+              <li>発信の軸の設定は初回のみ</li>
             </ul>
-
             <div className="callout ok">
               <div className="label">先に結論</div>
-              文章は <strong>Claude が直接書きます</strong>。OpenAI や Gemini のAPIキーは
-              <strong>一切必要ありません</strong>。Python環境の用意も不要です。
-              note集客スキルより導入のハードルは低く、インストール後すぐ使えます。
+              文章は <strong>Claude が直接執筆</strong>。OpenAI・Gemini の APIキーも Python 環境も
+              <strong>不要</strong>。インストール後すぐ使えます。
             </div>
+          </div>
 
+          <div className="card">
             <h2>2つのモード</h2>
-            <p>
-              同じ「X投稿の生成」でも、狙いによって書き方はまったく違います。
-              このスキルは2本の生成プロンプトを統合せず、<strong>実行時に選べる2モード</strong>として残しています。
-            </p>
+            <p>狙いに合わせて、実行時に2つの生成モードを選択。</p>
             <div className="gtable">
               <table>
                 <thead>
@@ -99,222 +95,200 @@ export default function XPostCourse() {
                 </thead>
                 <tbody>
                   <tr>
-                    <th>由来</th>
-                    <td>XToolsPro4 post-generator</td>
-                    <td>XToolsPro2 AIモード</td>
-                  </tr>
-                  <tr>
                     <th>ハッシュタグ</th>
-                    <td>付けない</td>
+                    <td>なし</td>
                     <td>2〜3個必須</td>
                   </tr>
                   <tr>
                     <th>文字数</th>
-                    <td>全角140字（通常）／280字（Premium）・長文400〜1,200字</td>
-                    <td>全角140字（通常）／280字（Premium）</td>
+                    <td>140／280字・長文400〜1,200字</td>
+                    <td>140／280字</td>
                   </tr>
                   <tr>
                     <th>件数</th>
-                    <td>5 / 10 / 20</td>
-                    <td>10 / 50 / 100</td>
+                    <td>5・10・20件</td>
+                    <td>10・50・100件</td>
                   </tr>
                   <tr>
-                    <th>各案に付くもの</th>
-                    <td>切り口名＋自己評価スコア</td>
+                    <th>各案の付属</th>
+                    <td>切り口名＋スコア</td>
                     <td>パターン名（10種）</td>
                   </tr>
                   <tr>
-                    <th>設計手法</th>
-                    <td>AI臭を消す8手法（A/B/C）</td>
-                    <td>10パターン＋成功事例7指針</td>
-                  </tr>
-                  <tr>
-                    <th>想定用途</th>
+                    <th>用途</th>
                     <td>本命ポスト・ブランディング</td>
-                    <td>ランダム投稿キューのストック</td>
+                    <td>投稿キューのストック</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+          </div>
 
-            <h2>導入はかんたん（Python不要）</h2>
-            <p>
-              <strong>VS Code 拡張版</strong>なら黒い画面は一切出てきません。
-              <strong>ターミナル版（CLI）</strong>は下の2コマンドでOKです。
-            </p>
-
-            <GuideSection title="VS Code 拡張版で入れる（推奨）" open>
-              <ul className="howto">
-                <li className="st">
-                  <span className="no">1</span>
-                  <h3>
-                    <code>/manage</code> を開く
-                  </h3>
-                  <p>
-                    入力欄に <code>/manage</code> と打つと、プラグインの管理画面が開きます。
-                  </p>
-                </li>
-                <li className="st">
-                  <span className="no">2</span>
-                  <h3>Marketplace を追加</h3>
-                  <p>
-                    <strong>Marketplaces</strong> タブで <code>mitama987/youpapa-school</code> を{" "}
-                    <strong>Add</strong> します。
-                  </p>
-                </li>
-                <li className="st">
-                  <span className="no">3</span>
-                  <h3>プラグインを Install</h3>
-                  <p>
-                    <strong>Plugins</strong> タブに切り替えて <code>x-post</code> を{" "}
-                    <strong>Install</strong> → <strong>reload</strong>。
-                    <code>/x-post</code> がコマンド一覧に出れば成功です。
-                  </p>
-                </li>
-              </ul>
-              <div className="callout note">
-                <div className="label">よくあるつまずき</div>
-                Marketplace を <b>追加しただけでは使えません</b>。
-                Plugins タブでの <b>Install</b> と、そのあとの <b>reload</b> まで必要です。
-              </div>
-              <div className="callout warn">
-                <div className="label">Windowsの方へ</div>
-                Marketplace の追加には <b>Git for Windows</b> が必要です。
-                「git not found」と出たら Git を入れて、<b>エディタごと再起動</b>してください。
-              </div>
-            </GuideSection>
-
-            <GuideSection title="ターミナル版（CLI）で入れる">
+          <div className="card">
+            <h2>導入</h2>
+            <div className="callout warn">
+              <div className="label">Windows は先に Git</div>
               <p>
-                黒い画面（ターミナル）で Claude Code を使っている方向けの手順です。
-                やること自体は <strong>VS Code 拡張版とまったく同じ2コマンド</strong>ですが、
-                はじめての方でもつまずかないよう、前提の準備から順番に説明します。
+                <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">
+                  Git for Windows
+                </a>
+                （64-bit版）をインストール。「Next」連打で完了。
               </p>
-
-              <ul className="req-list">
-                <li>
-                  <b>① Claude Code</b>（このスキルを動かすアプリ）
-                  <span className="rt need">必須</span>
-                </li>
-                <li>
-                  <b>② Git</b>（プラグイン追加コマンドが裏で使います）
-                  <span className="rt need">必須</span>
-                </li>
-                <li>
-                  <b>＋ Node.js</b>（Claude Code の土台。未導入なら先に）
-                  <span className="rt opt">推奨</span>
-                </li>
-              </ul>
-
-              <div className="callout warn">
-                <div className="label">Windowsの方：先に「Git」を入れてください（重要）</div>
-                <p>
-                  <code>/plugin marketplace add</code> は、裏で <code>git</code> を使って配布元を取得します。
-                  Git が入っていないと{" "}
-                  <code>Command &apos;git&apos; not found ...</code>{" "}
-                  のようなエラーで失敗します。
-                </p>
-                <ol style={{ margin: "8px 0 0", paddingLeft: "1.3em", listStyle: "decimal" }}>
-                  <li>
-                    <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git for Windows</a>
-                    {" "}をダウンロード（<strong>64-bit / x64版</strong>＝今どきのPCはこれ。「x64」「amd64」は同じ意味）。
-                  </li>
-                  <li>インストーラは基本そのまま「Next」で進めて大丈夫です。</li>
-                  <li>
-                    <strong>入れ終わったら Claude Code（と使っているターミナル）を一度閉じて開き直してください。</strong>
-                    再起動しないと Git が認識されず、同じエラーが続きます。
-                  </li>
-                </ol>
-                <p style={{ margin: "8px 0 0", fontSize: "0.9em", opacity: 0.85 }}>
-                  ※ Mac は Git が最初から入っていることが多く、この手順は不要な場合がほとんどです。
-                </p>
-              </div>
-
-              <ul className="howto">
-                <li className="st">
-                  <span className="no">1</span>
-                  <h3>Claude Code を起動する</h3>
-                  <p>
-                    ターミナルを開いて <code>claude</code> と打つと、Claude Code が立ち上がります。
-                  </p>
-                  <p style={{ fontSize: "0.92em", opacity: 0.9 }}>
-                    ターミナルの開き方 ―<strong> Windows</strong>: スタートで「ターミナル」または「cmd」を検索して開く。
-                    <strong> Mac</strong>: Spotlight（⌘＋Space）で「ターミナル」。
-                  </p>
-                  <p style={{ fontSize: "0.9em", opacity: 0.85 }}>
-                    ※ <code>claude</code> が見つからないときは Claude Code 本体が未導入です。
-                    {" "}<a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> を入れてログインしてください。
-                  </p>
-                </li>
-                <li className="st">
-                  <span className="no">2</span>
-                  <h3>マーケットプレイスを追加</h3>
-                  <p>
-                    <strong>Claude Code の入力欄</strong>に、次の1行を貼り付けて実行します（配布元＝お店を登録します）。
-                  </p>
-                  <CodeBlock label="① Claude Code の入力欄に貼る" code={CMD_ADD} />
-                </li>
-                <li className="st">
-                  <span className="no">3</span>
-                  <h3>プラグインをインストール</h3>
-                  <p>
-                    続けて、同じ入力欄に次の1行を貼り付けて実行します（これでスキル本体が入ります）。
-                  </p>
-                  <CodeBlock label="② Claude Code の入力欄に貼る" code={CMD_INSTALL} />
-                  <div className="callout note">
-                    <div className="label">マーケット追加“だけ”では使えません</div>
-                    <code>{CMD_ADD}</code> は配布元の登録まで。必ずこの <code>install</code> まで実行してください。
-                  </div>
-                </li>
-                <li className="st">
-                  <span className="no">4</span>
-                  <h3>再読み込みして確認</h3>
-                  <p>
-                    <code>/reload-plugins</code> を実行（または Claude Code を開き直す）と反映されます。
-                    入力欄で <code>/</code> を押して <strong><code>/x-post</code></strong> が候補に出れば成功です。
-                  </p>
-                </li>
-              </ul>
-
-              <div className="callout note">
-                <div className="label">この2コマンドは「黒い画面」に打つものではありません</div>
-                <code>{CMD_ADD}</code> と <code>{CMD_INSTALL}</code> は、
-                <strong>Claude Code を起動した中（入力欄）</strong>で打つコマンドです。
-                cmd や PowerShell に直接打つものではないので、どちらのターミナルから起動しても同じように動きます。
-              </div>
-
               <p>
-                コマンドを使いたくない場合は、下の zip をダウンロードして展開し、中の
-                {" "}<code>x-post</code> フォルダを <code>~/.claude/skills/</code> に置いても同じように使えます。
+                導入後は VS Code／ターミナルを<strong>再起動</strong>。Mac は多くの場合不要。
               </p>
-            </GuideSection>
+            </div>
+            <Tabs
+              tabs={[
+                {
+                  label: "VS Code 拡張版（推奨）",
+                  content: (
+                    <>
+                      <ol className="steps">
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">1</span>
+                            <h3 className="step-title">
+                              <code>/manage</code> を開く
+                            </h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              入力欄に <code>/manage</code> と入力し、プラグイン管理画面を表示。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">2</span>
+                            <h3 className="step-title">Marketplace を追加</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              <strong>Marketplaces</strong> タブで <code>mitama987/youpapa-school</code> を{" "}
+                              <strong>Add</strong>。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">3</span>
+                            <h3 className="step-title">x-post を Install</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              <strong>Plugins</strong> タブで <code>x-post</code> を <strong>Install</strong> →{" "}
+                              <strong>reload</strong>。<code>/x-post</code> が候補に出れば完了。
+                            </p>
+                          </div>
+                        </li>
+                      </ol>
+                      <div className="callout note">
+                        <div className="label">よくあるつまずき</div>
+                        Add だけでは未完了。<strong>Install → reload</strong> まで実行。
+                      </div>
+                    </>
+                  ),
+                },
+                {
+                  label: "ターミナル版（CLI）",
+                  content: (
+                    <>
+                      <ol className="steps">
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">1</span>
+                            <h3 className="step-title">Claude Code を起動</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              ターミナルで <code>claude</code> と入力して起動。
+                            </p>
+                            <p className="fine">
+                              ターミナル ― Windows: <kbd>Win</kbd> →「cmd」検索 ／ Mac: <kbd>⌘</kbd>+
+                              <kbd>Space</kbd> →「ターミナル」。未導入なら{" "}
+                              <a href="https://claude.com/claude-code" target="_blank" rel="noopener">
+                                Claude Code
+                              </a>{" "}
+                              を入れてログイン。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">2</span>
+                            <h3 className="step-title">Marketplace を追加</h3>
+                          </div>
+                          <div className="step-body">
+                            <CodeBlock tone="dark" label="① 入力欄に貼って実行" code={CMD_ADD} />
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">3</span>
+                            <h3 className="step-title">x-post を Install</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>add だけでは使えず、install まで必須。</p>
+                            <CodeBlock tone="dark" label="② 続けて貼って実行" code={CMD_INSTALL} />
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">4</span>
+                            <h3 className="step-title">再読み込み</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              <code>/reload-plugins</code> を実行。<code>/x-post</code> が候補に出れば完了。
+                            </p>
+                          </div>
+                        </li>
+                      </ol>
+                      <div className="callout note">
+                        <div className="label">貼る場所は Claude Code の入力欄</div>
+                        cmd や PowerShell に直接打つコマンドではありません。
+                      </div>
+                      <p className="fine">
+                        コマンドを使わない場合 ― 下の zip を展開し、<code>x-post</code> フォルダを{" "}
+                        <code>~/.claude/skills/</code> に配置でも可。
+                      </p>
+                    </>
+                  ),
+                },
+              ]}
+            />
+          </div>
 
-            <h2>最初の1回だけ、発信の軸を設定する</h2>
+          <div className="card">
+            <h2>発信の軸の設定（初回のみ）</h2>
             <p>
-              毎回「誰に向けて？」「どんなトーンで？」と聞かれるのは面倒なので、
-              発信の軸を <code>{CONFIG_PATH}</code> に1回だけ書いておきます。
-              これで2回目以降に聞かれるのは <strong>モードごとの数問だけ</strong>になります（深掘り型＝件数・文字数・設計パターン、量産型＝件数・文字数・目的・感情トーン。量産型は加えて任意の一言ヒアリングが入ります）。
+              発信の軸を <code>{CONFIG_PATH}</code> に1回だけ設定。以降の質問はモード別の数問のみ。
             </p>
             <div className="callout note">
               <div className="label">自分で書かなくてOK</div>
-              ファイルが無い状態で <code>/x-post</code> を実行すると、
-              Claude が質問しながらこのファイルを作ってくれます。
-              中身を先に見ておきたい方だけ、下の雛形をコピーしてください。
+              ファイルが無ければ <code>/x-post</code> 実行時に Claude が質問しながら自動作成。
             </div>
-            <CodeBlock label={`設定ファイルの雛形（${CONFIG_PATH}）`} code={CONFIG_TEMPLATE} />
+            <GuideSection title="設定ファイルの雛形を見る" level={3}>
+              <CodeBlock label={`設定ファイルの雛形（${CONFIG_PATH}）`} code={CONFIG_TEMPLATE} />
+            </GuideSection>
+          </div>
 
+          <div className="card">
             <h2>使い方</h2>
-            <CodeBlock label="① いちばん基本（対話で聞いてくれます）" code="/x-post 副業の始め方" />
-            <CodeBlock label="② 記事やブログを元ネタにする" code="/x-post https://note.com/xxx/n/xxxx 深掘り" />
-            <CodeBlock label="③ キューに積む分をまとめて作る" code="/x-post 時間管理 量産 50件" />
-            <p>
-              引数なしで <code>/x-post</code> だけでも動きます。
-              モードが決まっていなければ、最初に「A 深掘り型 / B 量産型」を1問だけ聞かれます。
+            <p>入力欄に1行入れるだけ。</p>
+            <CodeBlock label="① 基本形" code="/x-post 副業の始め方" />
+            <CodeBlock label="② 記事を元ネタに" code="/x-post https://note.com/xxx/n/xxxx 深掘り" />
+            <CodeBlock label="③ 量産してキューへ" code="/x-post 時間管理 量産 50件" />
+            <p className="fine">
+              引数なしの <code>/x-post</code> でも起動。モード未指定なら最初に A／B を1問。
             </p>
+          </div>
 
+          <div className="card">
             <GuideSection title="出力サンプルを見る">
               <p>
-                <b>モードA（深掘り型）</b>― ハッシュタグなし。切り口名とスコアが付きます。
+                <b>モードA</b> ― ハッシュタグなし、切り口名とスコア付き。
               </p>
               <div className="gtable">
                 <table>
@@ -345,60 +319,63 @@ export default function XPostCourse() {
                 </table>
               </div>
               <p>
-                ファイル末尾に<b>スコア上位3件</b>がまとまるので、「今日はこれを出す」を選ぶだけで済みます。
-              </p>
-              <p>
-                <b>モードB（量産型）</b>― 10パターンを循環させ、全件にハッシュタグ2〜3個が付きます。
-                本文は1〜2行ごとに空行が入り、そのまま貼れる形で整形されます。
-                ファイル末尾には<b>パターン別の内訳表</b>が付くので、型の偏りが一目で分かります。
+                末尾に<b>スコア上位3件</b>を集約。<b>モードB</b>は10パターン循環＋タグ2〜3個、末尾に内訳表。
               </p>
             </GuideSection>
 
             <GuideSection title="AI臭を消す8手法とは">
-              <p>
-                モードAの中核です。「整っているのに刺さらない」文章を、8つの角度から作り替えます。
-                生成時はエッセンスを内在化し、生成後の推敲では指示文をそのまま適用できます。
-              </p>
+              <p>モードAの中核。平坦な文章を8つの角度から改稿。</p>
               <ul>
-                <li><b>❶ 逆方向構成</b>：結論を1行で決め、そこから前提を逆算する</li>
-                <li><b>❷ 本音の悩み</b>：建前ではなく、言語化されていない本音に触れる</li>
-                <li><b>❸ 対立構造</b>：「常識ではこうだが実際は違う」で主張を立てる</li>
-                <li><b>❹ 核フレーズ抽出</b>：10文字以内・煽りなしの一言を1つ作る</li>
-                <li><b>❺ 想定反論</b>：鋭い反論を先回りし、認めた上で返す</li>
-                <li><b>❻ 抽象度診断</b>：抽象的な箇所を体験・数字・固有名に降ろす</li>
-                <li><b>❼ 冒頭3パターン</b>：意外性／痛み／数字のどれで入るかを選ぶ</li>
-                <li><b>❽ 読者離脱予測</b>：読むのをやめたくなる箇所を潰す</li>
+                <li>
+                  <b>❶ 逆方向構成</b>：結論から前提を逆算
+                </li>
+                <li>
+                  <b>❷ 本音の悩み</b>：建前でなく本音に言及
+                </li>
+                <li>
+                  <b>❸ 対立構造</b>：「常識と違う」で主張
+                </li>
+                <li>
+                  <b>❹ 核フレーズ抽出</b>：10字以内の一言
+                </li>
+                <li>
+                  <b>❺ 想定反論</b>：先回りして認めて返す
+                </li>
+                <li>
+                  <b>❻ 抽象度診断</b>：体験・数字・固有名へ
+                </li>
+                <li>
+                  <b>❼ 冒頭3パターン</b>：意外性・痛み・数字
+                </li>
+                <li>
+                  <b>❽ 読者離脱予測</b>：離脱点を事前に排除
+                </li>
               </ul>
-              <p>
-                この3つをまとめた設計パターン（A 構造から組み立てる／B 主張型の記事／C 仕上げで精度を上げる）を、
-                生成時に選べます。
-              </p>
+              <p className="fine">生成時は設計パターンA〜Cとして選択可能。</p>
               <div className="callout note">
                 <div className="label">出典</div>
-                「AI臭を消す8手法」は marketer_osaru1 氏のフレームワークを整理したものです。
+                marketer_osaru1 氏のフレームワークを整理。
               </div>
             </GuideSection>
 
             <GuideSection title="よくある質問">
-              <p><b>Q. APIキーは本当に要りませんか？</b></p>
               <p>
-                A. 要りません。文章は Claude Code の中で Claude 自身が書きます。
-                OpenAI・Gemini・Anthropic いずれのAPIキーも設定不要です。
+                <b>Q. APIキーは必要？</b>
               </p>
-              <p><b>Q. XToolsPro に取り込めるCSVは出せますか？</b></p>
+              <p>A. 不要。文章は Claude Code 内で Claude が直接執筆。APIキーの設定は一切なし。</p>
               <p>
-                A. 出せません。XToolsPro2 / XToolsPro4 のどちらにも「投稿本文のCSV一括インポート」機能が無いためです
-                （XToolsPro2 のCSV一括登録はアカウント登録専用です）。
-                代わりに、本文だけを区切り線でつないだコピペ用テキストを書き出せます。
+                <b>Q. XToolsPro用のCSVは出せる？</b>
               </p>
-              <p><b>Q. 数字や実績を勝手に盛られませんか？</b></p>
+              <p>A. 不可。本文のCSV一括インポート機能が無いため。代わりにコピペ用テキストを出力。</p>
               <p>
-                A. 盛りません。手元にない数字は書かないルールをスキル側に入れています。
-                実績が無い場合は、数字を前提としないパターンに自動で振り替えます。
+                <b>Q. 数字や実績を盛られない？</b>
               </p>
-              <p><b>Q. そのまま投稿していいですか？</b></p>
+              <p>A. 手元にない数字は書かないルールを内蔵。実績が無ければ数字前提のパターンを回避。</p>
               <p>
-                A. 生成物は<b>下書き</b>です。投稿前に必ずご自身の目で確認してください。
+                <b>Q. そのまま投稿していい？</b>
+              </p>
+              <p>
+                A. 生成物は<b>下書き</b>。投稿前に必ず自分の目で確認。
               </p>
             </GuideSection>
 
@@ -411,7 +388,7 @@ export default function XPostCourse() {
               </Link>
             </p>
 
-            <p style={{ marginTop: 18 }}>
+            <p className="like-row">
               <LikeButton targetId="courses:x-post" />
             </p>
           </div>
@@ -419,11 +396,8 @@ export default function XPostCourse() {
           <CommentThread targetId="courses:x-post" />
 
           <div className="action-card">
-            <h3>つまずいたら聞いてください</h3>
-            <p>
-              インストールでエラーが出た、思った投稿にならない ― どんな内容でも大丈夫です。
-              LINEから直接ご相談いただけます。
-            </p>
+            <h3>つまずいたら LINE で相談</h3>
+            <p>導入エラーも生成結果の悩みも、LINE で無料相談。</p>
             <div className="links">
               <a className="btn btn-line" href={LINE_URL}>
                 LINEで相談する（無料）
