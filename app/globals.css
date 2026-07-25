@@ -1891,3 +1891,57 @@ section.block {
     padding: 10px 6px;
   }
 }
+
+/* ===== トップページ左メニュー（HomeToc） =====
+   / の <div class="layout home-layout"> 配下だけに適用。.toc 本体のスタイルは既存を再利用。 */
+
+/* .layout が上26pxを持つため先頭ブロックの上パディングを打ち消す */
+.home-main > .block:first-child {
+  padding-top: 0;
+}
+/* 固定ヘッダー分のアンカーオフセット（.toc の top:90px に合わせる） */
+.home-main [id] {
+  scroll-margin-top: 90px;
+}
+/* サイド分だけ狭い本文（約860px）ではカードは2列が適正 */
+.home-main .grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+/* メニュー内の区切りラベル */
+.toc .toc-sep {
+  font-size: 0.74rem;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin: 12px 8px 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  text-transform: uppercase;
+}
+/* 講座サブリンク（└ 付き・インデント・控えめ） */
+.toc nav a.toc-sub {
+  padding: 7px 11px 7px 20px;
+  font-weight: 500;
+  font-size: 0.87rem;
+  color: var(--muted);
+}
+.toc nav a.toc-sub::before {
+  content: "└";
+  color: var(--muted);
+  font-size: 0.8rem;
+  flex: 0 0 auto;
+}
+.toc nav a.toc-sub:hover {
+  color: var(--ink);
+}
+@media (max-width: 980px) {
+  /* トップのみ非表示（ドロワー開閉が未実装のため。講座ページの .toc には影響なし） */
+  .home-layout .toc {
+    display: none;
+  }
+}
+@media (max-width: 620px) {
+  /* .home-main .grid(2列指定) は詳細度でベースの1列指定に勝つため再宣言必須 */
+  .home-main .grid {
+    grid-template-columns: 1fr;
+  }
+}

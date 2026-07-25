@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ResumeCTA } from "@/components/ResumeCTA";
+import { HomeToc } from "@/components/HomeToc";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
 
@@ -38,8 +39,10 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="block">
-        <div className="wrap">
+      <div className="layout home-layout">
+        <HomeToc />
+        <main className="content home-main">
+        <section className="block" id="start">
           <div className="section-head">
             <div>
               <div className="kicker">START HERE</div>
@@ -67,11 +70,9 @@ export default function Home() {
           <p style={{ margin: "8px 0 0" }}>
             <ResumeCTA />
           </p>
-        </div>
-      </section>
+        </section>
 
-      <section className="block" style={{ paddingTop: 0 }}>
-        <div className="wrap">
+        <section className="block" style={{ paddingTop: 0 }}>
           <div className="section-head">
             <div>
               <div className="kicker">COURSES</div>
@@ -111,7 +112,7 @@ export default function Home() {
           </div>
 
           {/* 商品 */}
-          <div className="cat-head">
+          <div className="cat-head" id="product">
             <div className="kicker">PRODUCT</div>
             <h3>商品 ― つくる</h3>
             <p>解決したい不満を、AIと自動化で最小工数の商品に。</p>
@@ -142,7 +143,7 @@ export default function Home() {
           </div>
 
           {/* 販売 */}
-          <div className="cat-head">
+          <div className="cat-head" id="sales">
             <div className="kicker">SALES</div>
             <h3>販売 ― 売る</h3>
             <p>良い商品を「伝わる形」にして売る。</p>
@@ -169,7 +170,7 @@ export default function Home() {
           </div>
 
           {/* 集客 */}
-          <div className="cat-head">
+          <div className="cat-head" id="attract">
             <div className="kicker">ATTRACT</div>
             <h3>集客 ― 広める</h3>
             <p>SNS・YouTubeなどに同じ核を配信し続け、広告に頼らず広める。</p>
@@ -292,7 +293,7 @@ export default function Home() {
           </div>
 
           {/* ツール誘導（販売ツールは講座一覧に置かず、マーケットへ） */}
-          <div className="tool-cta">
+          <div className="tool-cta" id="tools">
             <div>
               <h3>集客ツールをお探しですか？</h3>
               <p>
@@ -306,8 +307,9 @@ export default function Home() {
               ツール一覧を見る →
             </a>
           </div>
-        </div>
-      </section>
+        </section>
+        </main>
+      </div>
     </>
   );
 }
