@@ -2257,11 +2257,11 @@ section.block {
   padding: 2px 8px;
   border-radius: var(--radius-pill);
 }
-.cc-pill.live {
+.cc-pill.cc-live {
   background: var(--success-soft);
   color: var(--success-soft-fg);
 }
-.cc-pill.soon {
+.cc-pill.cc-soon {
   background: var(--bg-sunken);
   color: var(--fg-4);
 }

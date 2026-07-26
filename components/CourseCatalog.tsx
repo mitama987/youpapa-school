@@ -21,7 +21,7 @@ function CourseCard({ course }: { course: Course }) {
         <span className="cc-meta">
           <span
             className={
-              course.status === "live" ? "cc-pill live" : "cc-pill soon"
+              course.status === "live" ? "cc-pill cc-live" : "cc-pill cc-soon"
             }
           >
             {course.status === "live" ? "公開中" : "準備中"}
