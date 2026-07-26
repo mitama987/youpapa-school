@@ -1,0 +1,393 @@
+/* ==========================================================================
+   TaskFlow — Colors & Type
+   Light + dark mode via [data-theme="dark"] on <html> or <body>.
+   ========================================================================== */
+
+/* ---------- Fonts ---------------------------------------------------------- */
+/* Inter — UI / body. Fraunces — light serif display for headings.
+   NOTE: fonts are loaded from Google Fonts (substitution acceptable per brief;
+   Inter is listed in the brief, Fraunces chosen as the serif — see README). */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* ==========================================================================
+   1. PRIMITIVES — the raw palette. Never style UI directly from these.
+   ========================================================================== */
+:root {
+  /* Blue (primary) — soft, calm, trustworthy */
+  --blue-50:  #F3F7FC;
+  --blue-100: #E4EEF9;
+  --blue-200: #C7DCF2;
+  --blue-300: #9BC1E6;
+  --blue-400: #6BA1D6;
+  --blue-500: #4A82C2;   /* brand */
+  --blue-600: #3A6AA5;
+  --blue-700: #2F5484;
+  --blue-800: #274367;
+  --blue-900: #1E3451;
+
+  /* Neutral (gray) — slightly cool */
+  --gray-0:   #FFFFFF;
+  --gray-25:  #FCFCFD;
+  --gray-50:  #F7F8FA;
+  --gray-100: #EEF0F4;
+  --gray-200: #E2E5EB;
+  --gray-300: #CBD0D9;
+  --gray-400: #9AA2B1;
+  --gray-500: #6B7280;
+  --gray-600: #4A515E;
+  --gray-700: #343945;
+  --gray-800: #22262F;
+  --gray-900: #14171D;
+  --gray-950: #0B0D12;
+
+  /* Coral (accent / CTA) — warm, inviting */
+  --coral-50:  #FEF4F1;
+  --coral-100: #FDE6DE;
+  --coral-200: #FAC8B6;
+  --coral-300: #F5A387;
+  --coral-400: #EE7F5E;
+  --coral-500: #E55A3A;   /* brand accent */
+  --coral-600: #C64728;
+  --coral-700: #9E3820;
+  --coral-800: #7A2B19;
+  --coral-900: #5B2013;
+
+  /* Semantic chroma (used sparingly) */
+  --green-500: #3DA47A;
+  --green-100: #DDF1E7;
+  --amber-500: #D4893E;
+  --amber-100: #FBEAD3;
+  --red-500:   #CC4A4A;
+  --red-100:   #F8DADA;
+  --violet-500:#7A6BD4;
+  --violet-100:#E6E1F7;
+}
+
+/* ==========================================================================
+   2. SEMANTIC TOKENS — LIGHT
+   ========================================================================== */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg-app:       var(--gray-50);
+  --bg-surface:   var(--gray-0);
+  --bg-sunken:    var(--gray-100);
+  --bg-raised:    var(--gray-0);
+  --bg-inverse:   var(--gray-900);
+  --bg-overlay:   rgba(20, 23, 29, 0.48);
+
+  /* Foreground */
+  --fg-1:         var(--gray-900);   /* primary text */
+  --fg-2:         var(--gray-600);   /* secondary / body */
+  --fg-3:         var(--gray-500);   /* muted / meta */
+  --fg-4:         var(--gray-400);   /* placeholder / disabled */
+  --fg-on-brand:  #FFFFFF;
+  --fg-on-accent: #FFFFFF;
+  --fg-inverse:   var(--gray-0);
+  --fg-link:      var(--blue-600);
+
+  /* Borders */
+  --border-subtle:  var(--gray-200);
+  --border-default: var(--gray-300);
+  --border-strong:  var(--gray-400);
+  --border-focus:   var(--blue-500);
+
+  /* Brand */
+  --brand:         var(--blue-500);
+  --brand-hover:   var(--blue-600);
+  --brand-press:   var(--blue-700);
+  --brand-soft:    var(--blue-100);
+  --brand-soft-fg: var(--blue-700);
+
+  /* Accent (CTA) */
+  --accent:        var(--coral-500);
+  --accent-hover:  var(--coral-600);
+  --accent-press:  var(--coral-700);
+  --accent-soft:   var(--coral-100);
+  --accent-soft-fg:var(--coral-700);
+
+  /* Semantic */
+  --success:        var(--green-500);
+  --success-soft:   var(--green-100);
+  --warning:        var(--amber-500);
+  --warning-soft:   var(--amber-100);
+  --danger:         var(--red-500);
+  --danger-soft:    var(--red-100);
+  --info:           var(--violet-500);
+  --info-soft:      var(--violet-100);
+
+  /* Shadows — soft, low-opacity; ample whitespace means shadows do the work */
+  --shadow-xs: 0 1px 2px rgba(20, 23, 29, 0.04);
+  --shadow-sm: 0 1px 2px rgba(20, 23, 29, 0.04), 0 1px 3px rgba(20, 23, 29, 0.06);
+  --shadow-md: 0 2px 4px rgba(20, 23, 29, 0.04), 0 4px 12px rgba(20, 23, 29, 0.06);
+  --shadow-lg: 0 4px 8px rgba(20, 23, 29, 0.04), 0 12px 28px rgba(20, 23, 29, 0.08);
+  --shadow-xl: 0 8px 16px rgba(20, 23, 29, 0.06), 0 24px 56px rgba(20, 23, 29, 0.10);
+  --shadow-focus: 0 0 0 3px rgba(74, 130, 194, 0.28);
+  --shadow-focus-accent: 0 0 0 3px rgba(229, 90, 58, 0.28);
+}
+
+/* ==========================================================================
+   3. SEMANTIC TOKENS — DARK
+   ========================================================================== */
+:root[data-theme="dark"],
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-app:       var(--gray-950);
+  --bg-surface:   var(--gray-900);
+  --bg-sunken:    #0F1218;
+  --bg-raised:    var(--gray-800);
+  --bg-inverse:   var(--gray-50);
+  --bg-overlay:   rgba(0, 0, 0, 0.6);
+
+  --fg-1:         #F1F3F7;
+  --fg-2:         #B9BFCB;
+  --fg-3:         #858C9B;
+  --fg-4:         #5C6372;
+  --fg-on-brand:  #FFFFFF;
+  --fg-on-accent: #FFFFFF;
+  --fg-inverse:   var(--gray-900);
+  --fg-link:      var(--blue-300);
+
+  --border-subtle:  #242833;
+  --border-default: #2F3542;
+  --border-strong:  #3F4656;
+  --border-focus:   var(--blue-400);
+
+  --brand:         var(--blue-400);
+  --brand-hover:   var(--blue-300);
+  --brand-press:   var(--blue-200);
+  --brand-soft:    rgba(107, 161, 214, 0.14);
+  --brand-soft-fg: var(--blue-200);
+
+  --accent:        var(--coral-400);
+  --accent-hover:  var(--coral-300);
+  --accent-press:  var(--coral-200);
+  --accent-soft:   rgba(238, 127, 94, 0.14);
+  --accent-soft-fg:var(--coral-200);
+
+  --success-soft:   rgba(61, 164, 122, 0.16);
+  --warning-soft:   rgba(212, 137, 62, 0.16);
+  --danger-soft:    rgba(204, 74, 74, 0.18);
+  --info-soft:      rgba(122, 107, 212, 0.18);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.32);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.32), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.42);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.36), 0 12px 28px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.4),  0 24px 56px rgba(0, 0, 0, 0.56);
+  --shadow-focus: 0 0 0 3px rgba(107, 161, 214, 0.35);
+  --shadow-focus-accent: 0 0 0 3px rgba(238, 127, 94, 0.35);
+}
+
+/* ==========================================================================
+   4. TYPE — families, scale, semantic roles
+   ========================================================================== */
+:root {
+  --font-sans:   "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif:  "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-mono:   "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Type scale — modular, 1.2 ratio tuned by hand */
+  --fs-xs:   12px;
+  --fs-sm:   13px;
+  --fs-base: 14px;   /* dense UI default */
+  --fs-md:   15px;
+  --fs-lg:   17px;
+  --fs-xl:   20px;
+  --fs-2xl:  24px;
+  --fs-3xl:  30px;
+  --fs-4xl:  38px;
+  --fs-5xl:  48px;
+  --fs-6xl:  64px;
+
+  /* Line heights */
+  --lh-tight:   1.15;
+  --lh-snug:    1.3;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  /* Weights */
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* Tracking */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;
+  --tracking-caps:   0.08em;
+
+  /* Semantic type roles — shorthand properties via custom props
+     (consume via `font: var(--type-h1)` won't work — use the classes below) */
+}
+
+/* Semantic type classes — reach for these instead of per-element styles */
+.type-display,
+.type-h1, .type-h2, .type-h3,
+.type-eyebrow,
+.type-body, .type-body-lg, .type-body-sm,
+.type-meta, .type-label, .type-code {
+  font-family: var(--font-sans);
+  color: var(--fg-1);
+}
+
+.type-display {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: var(--fs-6xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.type-h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--fs-5xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.type-h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+}
+.type-h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+}
+.type-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.type-body-lg {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+.type-body {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+}
+.type-body-sm {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+}
+.type-meta {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
+  color: var(--fg-3);
+}
+.type-label {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+}
+.type-code {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+/* ==========================================================================
+   5. SPACING, RADII, MOTION
+   ========================================================================== */
+:root {
+  /* 4px base; 6 and 10 included for tighter UI needs */
+  --sp-0:   0;
+  --sp-1:   2px;
+  --sp-2:   4px;
+  --sp-3:   6px;
+  --sp-4:   8px;
+  --sp-5:  12px;
+  --sp-6:  16px;
+  --sp-7:  20px;
+  --sp-8:  24px;
+  --sp-9:  32px;
+  --sp-10: 40px;
+  --sp-11: 48px;
+  --sp-12: 64px;
+  --sp-13: 80px;
+  --sp-14: 96px;
+
+  /* Radii — cards slightly softer than inputs */
+  --radius-xs:  4px;
+  --radius-sm:  6px;
+  --radius-md:  8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl:20px;
+  --radius-pill:9999px;
+
+  /* Motion — brisk, eased, never bouncy for UI */
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-standard:cubic-bezier(0.2, 0, 0, 1);
+
+  --dur-instant: 80ms;
+  --dur-fast:    140ms;
+  --dur-base:    220ms;
+  --dur-slow:    360ms;
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-narrow: 720px;
+}
+
+/* ==========================================================================
+   6. BASE ELEMENT STYLING (optional — import and you get sensible defaults)
+   ========================================================================== */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--fg-1);
+  background: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1 { font: inherit; } /* reset — use .type-* classes explicitly */
+
+a {
+  color: var(--fg-link);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:hover { color: var(--brand-hover); text-decoration: underline; text-underline-offset: 3px; }
+
+::selection {
+  background: var(--brand-soft);
+  color: var(--fg-1);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}
