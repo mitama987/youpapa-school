@@ -82,10 +82,10 @@ export default function Step4() {
         </p>
         <div className="links">
           <Link className="btn btn-primary" href="/courses/note-shukyaku">
-            記事を自動生成→note投稿スキルLP
+            note自動生成&投稿スキルを導入する
           </Link>
           <Link className="btn btn-primary" href="/courses/x-post">
-            Xポスト自動生成スキルLP
+            Xポスト自動生成スキルを導入する
           </Link>
           <span className="btn btn-primary soon">YouTube自動編集・投稿スキルLP</span>
         </div>
