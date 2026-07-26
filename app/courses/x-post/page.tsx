@@ -139,19 +139,22 @@ export default function XPostCourse() {
                 <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">
                   Git for Windows
                 </a>{" "}
-                をダウンロードします（<strong>64-bit / x64版</strong>＝今の普通のPCはこれでOK。
-                「x64」「amd64」は同じ意味です）。
+                をダウンロードしてインストールします（<strong>64-bit / x64版</strong>
+                ＝今の普通のPCはこれでOK。「x64」「amd64」は同じ意味です）。
               </p>
-              <p>
-                インストールは基本そのまま「Next」で進めて大丈夫です。途中の{" "}
-                <strong>「Adjusting your PATH environment」</strong>{" "}
-                画面だけ、最初から選ばれている推奨の
-                「Git from the command line and also from 3rd-party software」（真ん中）
-                のままにしてください（一番下の「Bash only」を選ぶと認識されません）。
-              </p>
-              <p>
-                導入後は VS Code／ターミナルを<strong>再起動</strong>。Mac は多くの場合不要。
-              </p>
+              <details className="mini-acc">
+                <summary>詳細はこちら（インストール時の注意）</summary>
+                <p>
+                  インストールは基本そのまま「Next」で進めて大丈夫です。途中の{" "}
+                  <strong>「Adjusting your PATH environment」</strong>{" "}
+                  画面だけ、最初から選ばれている推奨の
+                  「Git from the command line and also from 3rd-party software」（真ん中）
+                  のままにしてください（一番下の「Bash only」を選ぶと認識されません）。
+                </p>
+                <p>
+                  導入後は VS Code／ターミナルを<strong>再起動</strong>。Mac は多くの場合不要。
+                </p>
+              </details>
             </div>
             <div className="callout note">
               <div className="label">前提：Claude の有料プラン</div>

@@ -522,6 +522,24 @@ img {
   font-size: 11px;
   line-height: 1;
 }
+
+/* コールアウト内の軽量アコーディオン（「詳細はこちら」リンク型） */
+.callout details.mini-acc {
+  margin-top: 4px;
+}
+.callout details.mini-acc > summary {
+  cursor: pointer;
+  color: var(--fg-link);
+  font-weight: 600;
+  font-size: 0.9em;
+  user-select: none;
+}
+.callout details.mini-acc > summary:hover {
+  text-decoration: underline;
+}
+.callout details.mini-acc[open] > summary {
+  margin-bottom: 4px;
+}
 .side-nav nav a.rm-sub:hover {
   color: var(--fg-1);
 }
