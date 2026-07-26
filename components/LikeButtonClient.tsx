@@ -102,9 +102,9 @@ export function LikeButtonClient({
         gap: 8,
         padding: "10px 18px",
         borderRadius: 999,
-        border: `1.5px solid ${liked ? "#ef4444" : "var(--accent-soft-bd)"}`,
-        background: liked ? "#fff1f1" : "var(--surface)",
-        color: liked ? "#b91c1c" : "var(--orange-d)",
+        border: `1.5px solid ${liked ? "var(--danger)" : "var(--accent-soft-bd)"}`,
+        background: liked ? "var(--danger-soft)" : "var(--surface)",
+        color: liked ? "var(--danger-soft-fg)" : "var(--accent-soft-fg)",
         fontWeight: 800,
         fontSize: "0.95rem",
         cursor: pending ? "wait" : liked ? "default" : "pointer",
@@ -124,11 +124,11 @@ export function LikeButtonClient({
         style={{
           minWidth: 18,
           textAlign: "center",
-          background: liked ? "#fee2e2" : "var(--bg-soft)",
+          background: liked ? "var(--danger-soft)" : "var(--bg-sunken)",
           padding: "2px 9px",
           borderRadius: 999,
           fontSize: "0.85rem",
-          color: liked ? "#7f1d1d" : "var(--ink)",
+          color: liked ? "var(--danger-soft-fg)" : "var(--ink)",
         }}
         suppressHydrationWarning
       >
