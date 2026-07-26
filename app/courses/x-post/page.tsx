@@ -11,6 +11,7 @@ const CMD_ADD = "/plugin marketplace add mitama987/youpapa-school";
 const CMD_INSTALL = "/plugin install x-post@youpapa-tools";
 const CMD_CLI_WIN = "irm https://claude.ai/install.ps1 | iex";
 const CMD_CLI_MAC = "curl -fsSL https://claude.ai/install.sh | bash";
+const CMD_MP_UPDATE = "/plugin marketplace update youpapa-tools";
 const CONFIG_PATH = "~/.claude/x-post-config.md";
 
 const CONFIG_TEMPLATE = `# x-post 設定ファイル
@@ -137,8 +138,16 @@ export default function XPostCourse() {
               <p>
                 <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">
                   Git for Windows
-                </a>
-                （64-bit版）をインストール。「Next」連打で完了。
+                </a>{" "}
+                をダウンロードします（<strong>64-bit / x64版</strong>＝今の普通のPCはこれでOK。
+                「x64」「amd64」は同じ意味です）。
+              </p>
+              <p>
+                インストールは基本そのまま「Next」で進めて大丈夫です。途中の{" "}
+                <strong>「Adjusting your PATH environment」</strong>{" "}
+                画面だけ、最初から選ばれている推奨の
+                「Git from the command line and also from 3rd-party software」（真ん中）
+                のままにしてください（一番下の「Bash only」を選ぶと認識されません）。
               </p>
               <p>
                 導入後は VS Code／ターミナルを<strong>再起動</strong>。Mac は多くの場合不要。
@@ -209,6 +218,16 @@ export default function XPostCourse() {
                             <p>
                               Claude Code の入力欄に <code>/manage</code> と入力し、プラグイン管理画面を表示。
                             </p>
+                            <figure className="shot narrow">
+                              <img
+                                src="/skills-guide/note-shukyaku/step1-manage-plugins.png"
+                                alt="入力欄に /manage と打つと候補に Manage plugins が表示される"
+                                loading="lazy"
+                              />
+                              <figcaption>
+                                <code>/manage</code> と打つと「Manage plugins」が候補に出ます
+                              </figcaption>
+                            </figure>
                           </div>
                         </li>
                         <li className="step">
@@ -221,6 +240,26 @@ export default function XPostCourse() {
                               <strong>Marketplaces</strong> タブで <code>mitama987/youpapa-school</code> を{" "}
                               <strong>Add</strong>。
                             </p>
+                            <figure className="shot">
+                              <img
+                                src="/skills-guide/note-shukyaku/step2-add-repo.png"
+                                alt="Marketplaces タブの入力欄に mitama987/youpapa-school を入れて Add を押す"
+                                loading="lazy"
+                              />
+                              <figcaption>
+                                入力欄に <code>mitama987/youpapa-school</code> を貼って <strong>Add</strong> を押す
+                              </figcaption>
+                            </figure>
+                            <figure className="shot">
+                              <img
+                                src="/skills-guide/note-shukyaku/step3-added.png"
+                                alt="Marketplaces 一覧に youpapa-tools が追加された状態"
+                                loading="lazy"
+                              />
+                              <figcaption>
+                                一覧に <strong>youpapa-tools</strong> が出れば配布元の登録は完了
+                              </figcaption>
+                            </figure>
                           </div>
                         </li>
                         <li className="step">
@@ -423,6 +462,16 @@ export default function XPostCourse() {
                 },
               ]}
             />
+            <div className="callout note">
+              <div className="label">
+                「Plugin &quot;x-post&quot; not found」と出る場合
+              </div>
+              <p>
+                以前に配布元（youpapa-tools）を登録したことがあると、手元の情報が古いまま
+                になっていることがあります。以下で更新してから install をやり直してください。
+              </p>
+              <CodeBlock tone="dark" label="配布元を最新に更新" code={CMD_MP_UPDATE} />
+            </div>
           </div>
 
           <div className="card">
