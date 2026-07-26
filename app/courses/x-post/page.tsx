@@ -9,6 +9,8 @@ import { Tabs } from "@/components/Tabs";
 const LINE_URL = "https://lin.ee/ob91zIx";
 const CMD_ADD = "/plugin marketplace add mitama987/youpapa-school";
 const CMD_INSTALL = "/plugin install x-post@youpapa-tools";
+const CMD_CLI_WIN = "irm https://claude.ai/install.ps1 | iex";
+const CMD_CLI_MAC = "curl -fsSL https://claude.ai/install.sh | bash";
 const CONFIG_PATH = "~/.claude/x-post-config.md";
 
 const CONFIG_TEMPLATE = `# x-post 設定ファイル
@@ -142,6 +144,10 @@ export default function XPostCourse() {
                 導入後は VS Code／ターミナルを<strong>再起動</strong>。Mac は多くの場合不要。
               </p>
             </div>
+            <div className="callout note">
+              <div className="label">前提：Claude の有料プラン</div>
+              Claude Code の利用には <strong>Pro / Max プラン</strong>（または API 課金）が必要。無料プランでは使えません。
+            </div>
             <Tabs
               tabs={[
                 {
@@ -195,6 +201,80 @@ export default function XPostCourse() {
                   ),
                 },
                 {
+                  label: "デスクトップアプリ版",
+                  content: (
+                    <>
+                      <ol className="steps">
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">1</span>
+                            <h3 className="step-title">アプリをインストール</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              <a href="https://claude.ai/download" target="_blank" rel="noopener">
+                                claude.ai/download
+                              </a>{" "}
+                              から Claude デスクトップアプリ（Windows／Mac）を入手してインストール →
+                              Claude アカウントでログイン。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">2</span>
+                            <h3 className="step-title">「Code」タブを開く</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              アプリ上部の <strong>Code</strong> をクリック。ここが Claude Code の画面。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">3</span>
+                            <h3 className="step-title">フォルダを選択して開始</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              <strong>Local</strong> → <strong>Select folder</strong>{" "}
+                              で投稿案を保存したいフォルダ（例: デスクトップに作った{" "}
+                              <code>x-posts</code>）を指定してセッション開始。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">4</span>
+                            <h3 className="step-title">スキルを導入</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>入力欄に以下を順に貼って実行（ターミナル版と同じコマンド）。</p>
+                            <CodeBlock tone="dark" label="① 入力欄に貼って実行" code={CMD_ADD} />
+                            <CodeBlock tone="dark" label="② 続けて貼って実行" code={CMD_INSTALL} />
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">5</span>
+                            <h3 className="step-title">確認</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              入力欄に <code>/x-post</code> と打って候補に出れば完了。
+                            </p>
+                          </div>
+                        </li>
+                      </ol>
+                      <div className="callout note">
+                        <div className="label">CLI のインストールは不要</div>
+                        アプリ単体で完結し、Git が無くても動作。設定・プラグインは VS Code 版／ターミナル版と共有されます。
+                      </div>
+                    </>
+                  ),
+                },
+                {
                   label: "ターミナル版（CLI）",
                   content: (
                     <>
@@ -202,34 +282,72 @@ export default function XPostCourse() {
                         <li className="step">
                           <div className="step-head">
                             <span className="step-no">1</span>
-                            <h3 className="step-title">Claude Code を起動</h3>
+                            <h3 className="step-title">ターミナルを開く</h3>
                           </div>
                           <div className="step-body">
                             <p>
-                              ターミナルで <code>claude</code> と入力して起動。
-                            </p>
-                            <p className="fine">
-                              ターミナル ― Windows: <kbd>Win</kbd> →「cmd」検索 ／ Mac: <kbd>⌘</kbd>+
-                              <kbd>Space</kbd> →「ターミナル」。未導入なら{" "}
-                              <a href="https://claude.com/claude-code" target="_blank" rel="noopener">
-                                Claude Code
-                              </a>{" "}
-                              を入れてログイン。
+                              Windows: <kbd>Win</kbd> →「powershell」と検索 →{" "}
+                              <strong>Windows PowerShell</strong> ／ Mac: <kbd>⌘</kbd>+<kbd>Space</kbd>{" "}
+                              →「ターミナル」。
                             </p>
                           </div>
                         </li>
                         <li className="step">
                           <div className="step-head">
                             <span className="step-no">2</span>
-                            <h3 className="step-title">Marketplace を追加</h3>
+                            <h3 className="step-title">Claude Code をインストール</h3>
                           </div>
                           <div className="step-body">
-                            <CodeBlock tone="dark" label="① 入力欄に貼って実行" code={CMD_ADD} />
+                            <p>
+                              OSに合った1行を貼って <kbd>Enter</kbd>。自動で入ります。
+                            </p>
+                            <CodeBlock tone="dark" label="Windows（PowerShell に貼る）" code={CMD_CLI_WIN} />
+                            <CodeBlock tone="dark" label="Mac（ターミナルに貼る）" code={CMD_CLI_MAC} />
                           </div>
                         </li>
                         <li className="step">
                           <div className="step-head">
                             <span className="step-no">3</span>
+                            <h3 className="step-title">入ったか確認</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              ターミナルを<strong>いったん閉じて開き直し</strong>、
+                              <code>claude --version</code> を実行。バージョン番号が出ればOK。
+                            </p>
+                            <p className="fine">
+                              「claude が見つからない」と出る場合も、まずはターミナルの開き直しで解決することが大半。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">4</span>
+                            <h3 className="step-title">起動してログイン</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              <code>claude</code> と入力して起動。初回はブラウザが開くので、Claude
+                              アカウントでログインして許可。
+                            </p>
+                            <p className="fine">
+                              投稿案の保存先を分けたい場合は、先に <code>cd</code>{" "}
+                              で作業フォルダへ移動してから起動。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">5</span>
+                            <h3 className="step-title">Marketplace を追加</h3>
+                          </div>
+                          <div className="step-body">
+                            <CodeBlock tone="dark" label="① Claude Code の入力欄に貼って実行" code={CMD_ADD} />
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">6</span>
                             <h3 className="step-title">x-post を Install</h3>
                           </div>
                           <div className="step-body">
@@ -239,7 +357,7 @@ export default function XPostCourse() {
                         </li>
                         <li className="step">
                           <div className="step-head">
-                            <span className="step-no">4</span>
+                            <span className="step-no">7</span>
                             <h3 className="step-title">再読み込み</h3>
                           </div>
                           <div className="step-body">
@@ -250,8 +368,8 @@ export default function XPostCourse() {
                         </li>
                       </ol>
                       <div className="callout note">
-                        <div className="label">貼る場所は Claude Code の入力欄</div>
-                        cmd や PowerShell に直接打つコマンドではありません。
+                        <div className="label">貼る場所に注意</div>
+                        手順2はターミナル（PowerShell）に、手順5〜7は<strong>起動後の Claude Code の入力欄</strong>に貼ります。
                       </div>
                       <p className="fine">
                         コマンドを使わない場合 ― 下の zip を展開し、<code>x-post</code> フォルダを{" "}
