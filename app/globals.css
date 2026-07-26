@@ -313,8 +313,13 @@
   --shadow-hover: var(--shadow-md);
 }
 
-/* L7. darkエイリアス上書き（リテラル解決のためL6では反転しない6個のみ） */
+/* L7. darkエイリアス上書き
+   - リテラル解決のためL6では反転しない6個（header-bg/各bd）
+   - dark専用の視認性調整: 本文背景をカードより1段暗く（サーフェス同士が
+     溶けるのを防ぐ）、ヘアラインを1段強く（黒地では border-subtle が埋没する） */
 :root[data-theme="dark"] {
+  --bg: var(--bg-app);
+  --line: var(--border-default);
   --header-bg: rgba(11, 13, 18, 0.85);
   --accent-soft-bd: rgba(238, 127, 94, 0.32);
   --pill-live-bd: rgba(61, 164, 122, 0.35);
