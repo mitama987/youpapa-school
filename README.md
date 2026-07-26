@@ -48,7 +48,7 @@ pnpm build        # 本番ビルド検証
 
 ```bash
 git checkout main
-git revert -m 1 <v2マージコミットのSHA>   # マージコミットを打ち消す
+git revert -m 1 89fc66e   # v2マージコミット（2026-07-26）を打ち消す
 git push origin main
 ```
 
