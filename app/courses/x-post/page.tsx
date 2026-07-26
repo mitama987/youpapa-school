@@ -158,19 +158,62 @@ export default function XPostCourse() {
                         <li className="step">
                           <div className="step-head">
                             <span className="step-no">1</span>
-                            <h3 className="step-title">
-                              <code>/manage</code> を開く
-                            </h3>
+                            <h3 className="step-title">VS Code を入れる</h3>
                           </div>
                           <div className="step-body">
                             <p>
-                              入力欄に <code>/manage</code> と入力し、プラグイン管理画面を表示。
+                              <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">
+                                code.visualstudio.com
+                              </a>{" "}
+                              からダウンロードしてインストール（導入済みなら次へ）。
                             </p>
                           </div>
                         </li>
                         <li className="step">
                           <div className="step-head">
                             <span className="step-no">2</span>
+                            <h3 className="step-title">拡張機能「Claude Code」をインストール</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              左端の拡張機能アイコン（<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>）→
+                              「<strong>Claude Code</strong>」を検索 → <strong>Anthropic</strong> 製
+                              （<code>anthropic.claude-code</code>）を <strong>Install</strong>。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">3</span>
+                            <h3 className="step-title">Claude Code を開いてログイン</h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              <kbd>Ctrl</kbd>+<kbd>Esc</kbd>（Mac: <kbd>⌘</kbd>+<kbd>Esc</kbd>）または右上の
+                              Claude アイコンでパネルを開く。初回はブラウザが開くので、Claude
+                              アカウントでログインして許可。
+                            </p>
+                            <p className="fine">
+                              投稿案の保存先にしたいフォルダを「フォルダーを開く」で開いておくとスムーズ。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">4</span>
+                            <h3 className="step-title">
+                              <code>/manage</code> を開く
+                            </h3>
+                          </div>
+                          <div className="step-body">
+                            <p>
+                              Claude Code の入力欄に <code>/manage</code> と入力し、プラグイン管理画面を表示。
+                            </p>
+                          </div>
+                        </li>
+                        <li className="step">
+                          <div className="step-head">
+                            <span className="step-no">5</span>
                             <h3 className="step-title">Marketplace を追加</h3>
                           </div>
                           <div className="step-body">
@@ -182,7 +225,7 @@ export default function XPostCourse() {
                         </li>
                         <li className="step">
                           <div className="step-head">
-                            <span className="step-no">3</span>
+                            <span className="step-no">6</span>
                             <h3 className="step-title">x-post を Install</h3>
                           </div>
                           <div className="step-body">
