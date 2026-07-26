@@ -216,10 +216,6 @@ export function SideNav() {
               <IconBook />
               講座一覧
             </Link>
-            <a href="https://sns-tools-market.vercel.app/">
-              <IconWrench />
-              ツール一覧
-            </a>
             <Link
               href="/articles"
               className={globalActive === "articles" ? "active" : undefined}
@@ -234,6 +230,10 @@ export function SideNav() {
               <IconMessage />
               掲示板
             </Link>
+            <a href="https://sns-tools-market.vercel.app/">
+              <IconWrench />
+              ツール一覧
+            </a>
           </nav>
           {inNote ? (
             <nav className="side-section" aria-label="note集客コース">
