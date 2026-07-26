@@ -138,7 +138,7 @@ export function SideNav() {
       </Link>
     );
   });
-  ATTRACT_SUBS.forEach((it) => {
+  ATTRACT_SUBS.forEach((it, i) => {
     const active = pathname === it.href || pathname.startsWith(`${it.href}/`);
     roadmapRows.push(
       <Link
@@ -146,6 +146,9 @@ export function SideNav() {
         href={it.href}
         className={active ? "rm-sub page-active" : "rm-sub"}
       >
+        <span className="rm-tree" aria-hidden="true">
+          {i === ATTRACT_SUBS.length - 1 ? "└" : "├"}
+        </span>
         {it.label}
       </Link>
     );
