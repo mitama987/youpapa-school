@@ -36,6 +36,8 @@ export function saveState(state: ProgressState) {
   } catch {
     // ignore quota
   }
+  // サイドバー進捗（%・ロードマップ）を同一タブで即時更新するための通知
+  window.dispatchEvent(new Event("yps:progress"));
 }
 
 export function stepDone(state: ProgressState, st: Step): number {

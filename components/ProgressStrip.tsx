@@ -12,8 +12,13 @@ export function ProgressStrip() {
     const onStorage = (e: StorageEvent) => {
       if (e.key === "yps:checks") setState(loadState());
     };
+    const onProgress = () => setState(loadState());
     window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    window.addEventListener("yps:progress", onProgress);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("yps:progress", onProgress);
+    };
   }, []);
 
   const done = mounted ? grandDone(state) : 0;

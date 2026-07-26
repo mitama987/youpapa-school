@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { IconMoon, IconSun } from "./icons";
 
 const THKEY = "yps:theme";
 
@@ -66,7 +67,9 @@ export function ThemeToggle() {
       onClick={toggle}
       suppressHydrationWarning
     >
-      <span suppressHydrationWarning>{mounted ? (theme === "dark" ? "☀️" : "🌙") : "🌙"}</span>
+      <span suppressHydrationWarning>
+        {mounted && theme === "dark" ? <IconSun size={16} /> : <IconMoon size={16} />}
+      </span>
     </button>
   );
 }

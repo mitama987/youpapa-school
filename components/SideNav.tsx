@@ -1,44 +1,36 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { ThemeToggle } from "./ThemeToggle";
-import { STEPS, loadState, stepDone, type ProgressState } from "@/lib/progress";
+import {
+  GRAND_TOTAL,
+  STEPS,
+  grandDone,
+  loadState,
+  nextLesson,
+  stepDone,
+  type ProgressState,
+} from "@/lib/progress";
+import {
+  IconBook,
+  IconBookOpen,
+  IconCheck,
+  IconMessage,
+  IconWrench,
+} from "./icons";
 
 const LINE_URL = "https://lin.ee/ob91zIx";
 
-const ANCHOR_IDS = ["start", "product", "sales", "attract", "tools"] as const;
-type AnchorId = (typeof ANCHOR_IDS)[number];
-
-type NavItem =
-  | { kind: "anchor"; id: AnchorId; label: string; num: string }
-  | { kind: "course"; href: string; label: string; num?: string; sub?: boolean };
-
-const COURSE_MAP: NavItem[] = [
-  { kind: "anchor", id: "start", label: "受講の進め方", num: "◎" },
-  { kind: "course", href: "/courses/fukugyo-ai", label: "副業×AI×自動化", num: "★" },
-  { kind: "anchor", id: "product", label: "商品 ― つくる", num: "1" },
-  { kind: "course", href: "/courses/web-app", label: "Webアプリ作成", sub: true },
-  { kind: "anchor", id: "sales", label: "販売 ― 売る", num: "2" },
-  { kind: "course", href: "/courses/lp", label: "LP作成", sub: true },
-  { kind: "anchor", id: "attract", label: "集客 ― 広める", num: "3" },
-  { kind: "course", href: "/courses/sns", label: "SNS集客", sub: true },
-  { kind: "course", href: "/courses/youtube", label: "YouTube作成", sub: true },
-  { kind: "course", href: "/courses/note-shukyaku", label: "note集客", sub: true },
-  { kind: "course", href: "/courses/x-post", label: "Xポスト自動生成", sub: true },
-  { kind: "anchor", id: "tools", label: "集客ツール", num: "4" },
+// 学習ロードマップ（handoffの01-04）。STEPS と同順で /lessons/step1..4 に直結する
+const ROADMAP = [
+  { href: "/lessons/step1", label: "リサーチする", num: "01" },
+  { href: "/lessons/step2", label: "商品をつくる", num: "02" },
+  { href: "/lessons/step3", label: "販売する", num: "03" },
+  { href: "/lessons/step4", label: "集客する", num: "04" },
 ];
 
-// 副業×AI×自動化コース滞在中に展開するカリキュラム（旧 LessonToc）
-const LESSON_CHILDREN = [
-  { href: "/lessons/step1", label: "リサーチ", num: "1", key: "s1" as const },
-  { href: "/lessons/step2", label: "商品", num: "2", key: "s2" as const },
-  { href: "/lessons/step3", label: "販売", num: "3", key: "s3" as const },
-  { href: "/lessons/step4", label: "集客", num: "4", key: "s4" as const },
-  { href: "/lessons/pitfalls", label: "つまずき対処", num: "!", key: null },
-];
-
-// note集客コース滞在中に展開するサブページ（旧 NoteGuideToc）
+// note集客コース滞在中に表示するサブページ
 const NOTE_CHILDREN = [
   { href: "/courses/note-shukyaku/method", label: "note集客の方法", num: "1" },
   { href: "/courses/note-shukyaku/setup", label: "導入：事前準備", num: "2" },
@@ -62,16 +54,13 @@ function navKeyFor(pathname: string): NavKey | null {
   return null;
 }
 
-// サイト共通の左サイドナビ（旧 Header / HomeToc / LessonToc / NoteGuideToc を統合）。
-// スクロールスパイはトップページのみ。現在地の講座配下では子項目をアコーディオン展開する。
+// サイト共通の左サイドナビ（デザインv2: アイコンナビ＋学習ロードマップ＋進捗＋LINE）。
 export function SideNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [activeAnchor, setActiveAnchor] = useState<AnchorId | null>(null);
   const [progress, setProgress] = useState<ProgressState>({});
   const [mounted, setMounted] = useState(false);
 
-  const isHome = pathname === "/";
   const inLessons =
     pathname === "/courses/fukugyo-ai" || pathname.startsWith("/lessons");
   const inNote = pathname.startsWith("/courses/note-shukyaku");
@@ -95,115 +84,71 @@ export function SideNav() {
     };
   }, [open]);
 
-  // SideNavはルートlayoutで1回だけマウントされるため、遷移ごとに進捗を再読込する
+  // ルートlayoutで1回だけマウントされるため、遷移ごとに進捗を再読込。
+  // さらに storage（別タブ）と yps:progress（同一タブのチェック操作）で即時反映する
   useEffect(() => {
-    setProgress(loadState());
+    const reload = () => setProgress(loadState());
+    reload();
     setMounted(true);
-  }, [pathname]);
-
-  // スクロールスパイ（トップページのみ）。IOをトリガーに現在地を決定的に再計算する
-  useEffect(() => {
-    if (pathname !== "/") {
-      setActiveAnchor(null);
-      return;
-    }
-    const recompute = () => {
-      const line = window.innerHeight * 0.35;
-      let current: AnchorId = ANCHOR_IDS[0];
-      for (const id of ANCHOR_IDS) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= line) current = id;
-      }
-      if (
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 2
-      ) {
-        current = ANCHOR_IDS[ANCHOR_IDS.length - 1];
-      }
-      setActiveAnchor(current);
+    window.addEventListener("storage", reload);
+    window.addEventListener("yps:progress", reload);
+    return () => {
+      window.removeEventListener("storage", reload);
+      window.removeEventListener("yps:progress", reload);
     };
-
-    const observer = new IntersectionObserver(recompute, {
-      rootMargin: "0px 0px -65% 0px",
-      threshold: [0, 0.5, 1],
-    });
-    ANCHOR_IDS.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    const footer = document.querySelector(".site-footer");
-    if (footer) observer.observe(footer);
-
-    recompute();
-    return () => observer.disconnect();
   }, [pathname]);
 
-  const lessonRows = LESSON_CHILDREN.map((it) => {
-    const st = it.key ? STEPS.find((s) => s.key === it.key) : null;
-    const isDone = mounted && st ? stepDone(progress, st) === st.total : false;
+  // SSR/未マウント時は step1 を current とする決定的初期値（新規ユーザーと同一表示）
+  const nx = mounted ? nextLesson(progress) : { st: STEPS[0], idx: 0 };
+  const currentIdx = nx ? nx.idx : -1; // null = 全完了 → current なし
+  const pct = mounted
+    ? Math.round((grandDone(progress) / GRAND_TOTAL) * 100)
+    : 0;
+
+  const roadmapRows: ReactNode[] = [];
+  ROADMAP.forEach((it, i) => {
+    const st = STEPS[i];
+    const isDone = mounted && stepDone(progress, st) === st.total;
+    const isCurrent = !isDone && i === currentIdx;
+    if (i > 0) {
+      roadmapRows.push(
+        <span key={`c${i}`} className="rm-connector" aria-hidden="true" />
+      );
+    }
     const cls = [
-      "toc-child",
-      pathname === it.href ? "active" : "",
+      "roadmap-row",
+      pathname === it.href ? "page-active" : "",
+      isCurrent ? "current" : "",
       isDone ? "done" : "",
     ]
       .filter(Boolean)
       .join(" ");
-    return (
+    roadmapRows.push(
       <Link key={it.href} href={it.href} className={cls} suppressHydrationWarning>
-        <span className="num">{it.num}</span>
+        <span className="rm-badge" suppressHydrationWarning>
+          {isDone ? <IconCheck size={13} /> : it.num}
+        </span>
         {it.label}
       </Link>
     );
   });
-
-  const noteRows = NOTE_CHILDREN.map((it) => (
-    <Link
-      key={it.href}
-      href={it.href}
-      className={pathname === it.href ? "toc-child active" : "toc-child"}
-    >
-      <span className="num">{it.num}</span>
-      {it.label}
-    </Link>
-  ));
-
-  const courseMapRows = COURSE_MAP.map((it) => {
-    if (it.kind === "anchor") {
-      return isHome ? (
-        <a
-          key={it.id}
-          href={`#${it.id}`}
-          className={activeAnchor === it.id ? "active" : undefined}
-          onClick={() => setOpen(false)}
-        >
-          <span className="num">{it.num}</span>
-          {it.label}
-        </a>
-      ) : (
-        <Link key={it.id} href={`/#${it.id}`}>
-          <span className="num">{it.num}</span>
-          {it.label}
-        </Link>
-      );
-    }
-    return (
-      <Fragment key={it.href}>
-        <Link
-          href={it.href}
-          className={
-            [it.sub ? "toc-sub" : "", pathname === it.href ? "active" : ""]
-              .filter(Boolean)
-              .join(" ") || undefined
-          }
-        >
-          {it.num ? <span className="num">{it.num}</span> : null}
-          {it.label}
-        </Link>
-        {it.href === "/courses/fukugyo-ai" && inLessons ? lessonRows : null}
-        {it.href === "/courses/note-shukyaku" && inNote ? noteRows : null}
-      </Fragment>
+  if (inLessons) {
+    roadmapRows.push(
+      <span key="cp" className="rm-connector" aria-hidden="true" />,
+      <Link
+        key="/lessons/pitfalls"
+        href="/lessons/pitfalls"
+        className={
+          pathname === "/lessons/pitfalls"
+            ? "roadmap-row page-active"
+            : "roadmap-row"
+        }
+      >
+        <span className="rm-badge">!</span>
+        つまずき対処
+      </Link>
     );
-  });
+  }
 
   return (
     <>
@@ -243,30 +188,75 @@ export function SideNav() {
             <ThemeToggle />
           </div>
           <nav className="global-nav" aria-label="サイト全体">
-            <Link href="/" className={globalActive === "home" ? "active" : undefined}>
+            <Link
+              href="/"
+              className={globalActive === "home" ? "active" : undefined}
+            >
+              <IconBook />
               講座一覧
             </Link>
-            <a href="https://sns-tools-market.vercel.app/">ツール一覧</a>
+            <a href="https://sns-tools-market.vercel.app/">
+              <IconWrench />
+              ツール一覧
+            </a>
             <Link
               href="/articles"
               className={globalActive === "articles" ? "active" : undefined}
             >
+              <IconBookOpen />
               記事
             </Link>
             <Link
               href="/community"
               className={globalActive === "community" ? "active" : undefined}
             >
+              <IconMessage />
               掲示板
             </Link>
           </nav>
-          <nav className="course-nav" aria-label="講座メニュー">
-            <div className="toc-sep">コースマップ</div>
-            {courseMapRows}
+          {inNote ? (
+            <nav className="side-section" aria-label="note集客コース">
+              <div className="side-sec-label">note集客コース</div>
+              {NOTE_CHILDREN.map((it) => (
+                <Link
+                  key={it.href}
+                  href={it.href}
+                  className={
+                    pathname === it.href
+                      ? "roadmap-row current page-active"
+                      : "roadmap-row"
+                  }
+                >
+                  <span className="rm-badge">{it.num}</span>
+                  {it.label}
+                </Link>
+              ))}
+            </nav>
+          ) : null}
+          <nav className="side-section" aria-label="学習ロードマップ">
+            <div className="side-sec-label">学習ロードマップ</div>
+            {roadmapRows}
           </nav>
-          <div className="side-cta">
-            <a className="btn btn-line" href={LINE_URL}>
-              LINEで受け取る（無料）
+          <div className="side-bottom">
+            <div className="side-progress">
+              <div className="sp-head">
+                <span className="sp-label">学習進捗</span>
+                <span className="sp-pct" suppressHydrationWarning>
+                  {pct}%
+                </span>
+              </div>
+              <div className="sp-track">
+                <div
+                  className="sp-fill"
+                  style={{ width: `${pct}%` }}
+                  suppressHydrationWarning
+                />
+              </div>
+            </div>
+            <span className="side-cta-hint">特典の受け取り・質問はこちら</span>
+            <a className="btn-line-outline" href={LINE_URL}>
+              <span className="line-badge">L</span>
+              LINEで相談する
             </a>
           </div>
         </div>

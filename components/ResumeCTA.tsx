@@ -3,7 +3,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadState, nextLesson, grandDone, type ProgressState } from "@/lib/progress";
 
-export function ResumeCTA() {
+type ResumeCTAProps = {
+  className?: string;
+  hideHint?: boolean;
+};
+
+export function ResumeCTA({
+  className = "btn btn-primary",
+  hideHint = false,
+}: ResumeCTAProps) {
   const [state, setState] = useState<ProgressState>({});
   const [mounted, setMounted] = useState(false);
 
@@ -14,7 +22,7 @@ export function ResumeCTA() {
 
   if (!mounted) {
     return (
-      <Link className="btn btn-primary" href="/lessons/step1">
+      <Link className={className} href="/lessons/step1">
         STEP1から無料で始める →
       </Link>
     );
@@ -42,10 +50,10 @@ export function ResumeCTA() {
 
   return (
     <>
-      <Link className="btn btn-primary" href={href}>
+      <Link className={className} href={href}>
         {label}
       </Link>
-      {hint && <span className="resume-hint">{hint}</span>}
+      {hint && !hideHint && <span className="resume-hint">{hint}</span>}
     </>
   );
 }
