@@ -30,6 +30,12 @@ const ROADMAP = [
   { href: "/lessons/step4", label: "集客する", num: "04" },
 ];
 
+// 「04 集客する」配下に常設するスキルLPサブリンク
+const ATTRACT_SUBS = [
+  { href: "/courses/note-shukyaku", label: "note自動生成&投稿" },
+  { href: "/courses/x-post", label: "Xポスト自動生成" },
+];
+
 // note集客コース滞在中に表示するサブページ
 const NOTE_CHILDREN = [
   { href: "/courses/note-shukyaku/method", label: "note集客の方法", num: "1" },
@@ -128,6 +134,18 @@ export function SideNav() {
         <span className="rm-badge" suppressHydrationWarning>
           {isDone ? <IconCheck size={13} /> : it.num}
         </span>
+        {it.label}
+      </Link>
+    );
+  });
+  ATTRACT_SUBS.forEach((it) => {
+    const active = pathname === it.href || pathname.startsWith(`${it.href}/`);
+    roadmapRows.push(
+      <Link
+        key={it.href}
+        href={it.href}
+        className={active ? "rm-sub page-active" : "rm-sub"}
+      >
         {it.label}
       </Link>
     );
