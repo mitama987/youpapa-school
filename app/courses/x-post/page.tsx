@@ -144,16 +144,18 @@ export default function XPostCourse() {
               </p>
               <details className="mini-acc">
                 <summary>詳細はこちら（インストール時の注意）</summary>
-                <p>
-                  インストールは基本そのまま「Next」で進めて大丈夫です。途中の{" "}
-                  <strong>「Adjusting your PATH environment」</strong>{" "}
-                  画面だけ、最初から選ばれている推奨の
-                  「Git from the command line and also from 3rd-party software」（真ん中）
-                  のままにしてください（一番下の「Bash only」を選ぶと認識されません）。
-                </p>
-                <p>
-                  導入後は VS Code／ターミナルを<strong>再起動</strong>。Mac は多くの場合不要。
-                </p>
+                <ul>
+                  <li>インストールは基本そのまま「Next」で進めてOK</li>
+                  <li>
+                    途中の<strong>「Adjusting your PATH environment」</strong>
+                    画面だけ、最初から選ばれている推奨の
+                    「Git from the command line and also from 3rd-party software」（真ん中）のまま
+                    （一番下の「Bash only」を選ぶと認識されません）
+                  </li>
+                  <li>
+                    導入後は VS Code／ターミナルを<strong>再起動</strong>（Mac は多くの場合不要）
+                  </li>
+                </ul>
               </details>
             </div>
             <div className="callout note">
@@ -581,9 +583,13 @@ export default function XPostCourse() {
               </p>
               <p>A. 不要。文章は Claude Code 内で Claude が直接執筆。APIキーの設定は一切なし。</p>
               <p>
-                <b>Q. XToolsPro用のCSVは出せる？</b>
+                <b>Q. XToolsProに一括で取り込める？</b>
               </p>
-              <p>A. 不可。本文のCSV一括インポート機能が無いため。代わりにコピペ用テキストを出力。</p>
+              <p>
+                A. 可能。「XTP3の予約用に」「XTP4用に」と言えば取り込み形式で出力
+                （XTP3予約投稿＝投稿日時＋本文のタブ区切り／XTP4・ランダム投稿＝空行区切りテキスト）。
+                各ツールの貼り付けインポートにそのまま流し込めます。
+              </p>
               <p>
                 <b>Q. 数字や実績を盛られない？</b>
               </p>

@@ -1,6 +1,6 @@
 # モードB「量産型」プロンプト原文
 
-> 出典: XToolsPro2 POST（ランダム投稿 → AIモード）
+> 出典: XToolsPro3 POST（ランダム投稿 → AIモード）
 > - `ai_generator.py`（システムプロンプト・生成プロンプト）
 > - `static/js/ai-mode-manager.js`（「魂」ヒアリングの質問文）
 >
