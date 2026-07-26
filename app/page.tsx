@@ -43,22 +43,27 @@ export default function Home() {
         <div className="flow-card">
           <div className="flow-steps">
             <div className="flow-step is-active">
-              <span className="flow-dot">1</span>
-              <span className="flow-label">基礎を学ぶ</span>
+              <span className="flow-dot">01</span>
+              <span className="flow-label">リサーチする</span>
             </div>
             <span className="flow-connector" aria-hidden="true" />
             <div className="flow-step">
-              <span className="flow-dot">2</span>
+              <span className="flow-dot">02</span>
               <span className="flow-label">商品をつくる</span>
             </div>
             <span className="flow-connector" aria-hidden="true" />
             <div className="flow-step">
-              <span className="flow-dot">3</span>
-              <span className="flow-label">集客・販売する</span>
+              <span className="flow-dot">03</span>
+              <span className="flow-label">販売する</span>
+            </div>
+            <span className="flow-connector" aria-hidden="true" />
+            <div className="flow-step">
+              <span className="flow-dot">04</span>
+              <span className="flow-label">集客する</span>
             </div>
           </div>
           <p className="flow-caption">
-            基礎から実践まで、3つのステップで着実にスキルを身につけます。
+            基礎から実践まで、4つのステップで着実にスキルを身につけます。
           </p>
         </div>
       </section>

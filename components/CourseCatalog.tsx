@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { COURSES, COURSE_CATS, type Course } from "@/lib/courses";
 
-const FILTERS = ["すべて", ...COURSE_CATS] as const;
+const FILTERS = ["すべて", "公開中", ...COURSE_CATS] as const;
 type Filter = (typeof FILTERS)[number];
 
 function CourseCard({ course }: { course: Course }) {
@@ -56,8 +56,17 @@ function CourseCard({ course }: { course: Course }) {
 // clientコンポーネントだが初期表示（すべて）はSSRされ全カードがHTMLに含まれる
 export function CourseCatalog() {
   const [filter, setFilter] = useState<Filter>("すべて");
-  const shown =
-    filter === "すべて" ? COURSES : COURSES.filter((c) => c.cat === filter);
+  let shown;
+  if (filter === "すべて") {
+    shown = COURSES;
+  } else if (filter === "公開中") {
+    shown = COURSES.filter((c) => c.status === "live");
+  } else {
+    // カテゴリ絞り込み時は公開中を上に（安定ソートで元の並びは維持）
+    shown = COURSES.filter((c) => c.cat === filter).sort((a, b) =>
+      a.status === b.status ? 0 : a.status === "live" ? -1 : 1
+    );
+  }
 
   return (
     <section className="home-section">
