@@ -78,11 +78,15 @@ export default function Step4() {
       <div className="action-card">
         <h3>次のアクション：配信を自動化して続ける仕組みにする</h3>
         <p>
-          「1人で全部まわすのは無理」を解くのが自動化です。私が実際に使っている配信自動化スキルを準備中です。公開したらここから受け取れます。
+          「1人で全部まわすのは無理」を解くのが自動化です。私が実際に使っている配信自動化スキルのうち、note投稿とXポストは公開中。ここから受け取れます（YouTubeは準備中）。
         </p>
         <div className="links">
-          <span className="btn btn-primary soon">記事を自動生成→note投稿スキルLP</span>
-          <span className="btn btn-primary soon">Xポスト自動生成スキルLP</span>
+          <Link className="btn btn-primary" href="/courses/note-shukyaku">
+            記事を自動生成→note投稿スキルLP
+          </Link>
+          <Link className="btn btn-primary" href="/courses/x-post">
+            Xポスト自動生成スキルLP
+          </Link>
           <span className="btn btn-primary soon">YouTube自動編集・投稿スキルLP</span>
         </div>
       </div>
