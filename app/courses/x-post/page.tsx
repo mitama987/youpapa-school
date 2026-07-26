@@ -43,7 +43,7 @@ const CONFIG_TEMPLATE = `# x-post 設定ファイル
 export const metadata: Metadata = {
   title: "Xポスト自動生成スキル ― APIキー不要でツイート案を2モード生成",
   description:
-    "X投稿案をClaude Codeで自動生成。深掘り型と量産型の2モード、APIキー・Python不要。実運用ツールXToolsPro2/4の生成プロンプトをスキル化。",
+    "X投稿案をClaude Codeで自動生成。深掘り型と量産型の2モード、APIキー・Python不要。実運用ツールXToolsPro3/4の生成プロンプトをスキル化。",
 };
 
 export default function XPostCourse() {
@@ -54,10 +54,14 @@ export default function XPostCourse() {
           <div className="crumbs">
             <Link href="/">講座一覧</Link> ＞ 開発・自動化 ＞ Xポスト自動生成スキル
           </div>
-          <span className="eyebrow">開発・自動化 ／ X運用の自動化 ／ 公開中</span>
+          <div className="pills">
+            <span className="pill cat">開発・自動化</span>
+            <span className="pill cat">X運用の自動化</span>
+            <span className="pill live">公開中</span>
+          </div>
           <h1>Xポスト自動生成スキル ― 投稿案を2モードで一括生成</h1>
           <p>
-            実運用ツール <strong>XToolsPro2 / XToolsPro4</strong> の生成プロンプトをそのままスキル化。
+            実運用ツール <strong>XToolsPro3 / XToolsPro4</strong> の生成プロンプトをそのままスキル化。
             <strong>APIキー・Python不要</strong>。
           </p>
         </div>
