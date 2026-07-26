@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Inter, Noto_Sans_JP } from "next/font/google";
 import { SideNav } from "@/components/SideNav";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  variable: "--font-noto-sans-jp",
+  display: "swap",
+});
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://shikumi-lake.vercel.app";
 const GA_ID = "G-SVXN7W24K8";
@@ -41,7 +53,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html
+      lang="ja"
+      suppressHydrationWarning
+      className={`${inter.variable} ${notoSansJP.variable}`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
