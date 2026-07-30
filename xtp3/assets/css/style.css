@@ -134,6 +134,7 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0 0 8p
   font-size: clamp(36px, 5.6vw, 64px);
   margin: 4px 0 20px;
 }
+.hero-copy h1.h1-long { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.45; }
 .lede { font-size: 17px; color: var(--ink-2); margin: 0 0 28px; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 18px 24px; font-size: 13px; color: var(--ink-3); }
@@ -635,6 +636,7 @@ h3 { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0 0 8p
   .sp-only { display: inline; }
   .br-pc { display: none; }
   .hero-copy h1 { font-size: clamp(28px, 8vw, 38px); overflow-wrap: anywhere; }
+  .hero-copy h1.h1-long { font-size: clamp(24px, 6.5vw, 30px); }
   .hero { padding: 56px 0 48px; }
   .pain, .why, .features, .metrics, .pricing, .addons, .compare, .reviews, .dev, .faq { padding: 64px 0; }
   .final { padding: 80px 0; }
