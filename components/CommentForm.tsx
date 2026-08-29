@@ -1,6 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useState } from "react";
 
 const MAX_BODY = 1000;
 
@@ -9,6 +8,11 @@ function shortId(uid: string | null) {
   return uid.replace(/-/g, "").slice(0, 4);
 }
 
+/**
+ * 匿名コメント投稿フォーム。
+ * 2026-08 の Neon 移行で Google ログイン（認証バッジ）は廃止し、
+ * サーバー発行の署名付き Cookie による匿名 ID に一本化した。
+ */
 export function CommentForm({
   targetId,
   userId,
@@ -16,46 +20,13 @@ export function CommentForm({
 }: {
   targetId: string;
   userId: string | null;
-  onPosted: () => void | Promise<void>;
+  onPosted: (uid?: string) => void | Promise<void>;
 }) {
   const [body, setBody] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [displayName, setDisplayName] = useState("");
-  const [isGoogle, setIsGoogle] = useState(false);
-  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
-  if (!supabaseRef.current) supabaseRef.current = createClient();
 
-  // 既ログイン者の名前を引っ張る（Google なら name、匿名なら "ゲスト#xxxx"）
-  useEffect(() => {
-    if (!userId) {
-      setDisplayName("");
-      setIsGoogle(false);
-      return;
-    }
-    supabaseRef.current!.auth.getUser().then(({ data }) => {
-      const u = data.user;
-      if (!u) return;
-      const name = (u.user_metadata?.full_name as string | undefined) ||
-        (u.user_metadata?.name as string | undefined);
-      const provider = u.app_metadata?.provider as string | undefined;
-      if (provider && provider !== "anonymous" && name) {
-        setDisplayName(name);
-        setIsGoogle(true);
-      } else {
-        setDisplayName(`ゲスト#${shortId(u.id)}`);
-        setIsGoogle(false);
-      }
-    });
-  }, [userId]);
-
-  const ensureSession = useCallback(async () => {
-    const supabase = supabaseRef.current!;
-    if (userId) return userId;
-    const { data, error } = await supabase.auth.signInAnonymously();
-    if (error) throw error;
-    return data.user!.id;
-  }, [userId]);
+  const displayName = userId ? `ゲスト#${shortId(userId)}` : "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,41 +42,23 @@ export function CommentForm({
     }
     setPending(true);
     try {
-      const supabase = supabaseRef.current!;
-      const uid = await ensureSession();
-      const finalName = isGoogle && displayName ? displayName : `ゲスト#${shortId(uid)}`;
-      const { error: insertError } = await supabase.from("comments").insert({
-        target_id: targetId,
-        user_id: uid,
-        display_name: finalName,
-        is_anonymous: !isGoogle,
-        body: trimmed,
+      const res = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ target_id: targetId, body: trimmed }),
       });
-      if (insertError) {
+      if (!res.ok) {
         setError("投稿に失敗しました。少し時間を置いて再度お試しください。");
       } else {
+        const data = (await res.json()) as { uid?: string };
         setBody("");
-        await onPosted();
+        await onPosted(data.uid);
       }
     } catch {
       setError("投稿に失敗しました。");
     } finally {
       setPending(false);
     }
-  };
-
-  const handleGoogleLogin = async () => {
-    const supabase = supabaseRef.current!;
-    const origin = window.location.origin;
-    const next = window.location.pathname;
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: `${origin}/auth/callback?next=${encodeURIComponent(next)}` },
-    });
-  };
-
-  const handleSignOut = async () => {
-    await supabaseRef.current!.auth.signOut();
   };
 
   return (
@@ -142,31 +95,9 @@ export function CommentForm({
         }}
       >
         <div suppressHydrationWarning>
-          {userId
-            ? `投稿者：${displayName || "（読み込み中）"}${isGoogle ? "（Google）" : "（匿名）"}`
-            : "未ログイン：匿名で投稿できます"}
+          {userId ? `投稿者：${displayName}（匿名）` : "匿名で投稿できます"}
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {!isGoogle && (
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              className="btn btn-ghost"
-              style={{ padding: "8px 14px", fontSize: "0.85rem" }}
-            >
-              Google でログイン
-            </button>
-          )}
-          {userId && (
-            <button
-              type="button"
-              onClick={handleSignOut}
-              className="btn btn-ghost"
-              style={{ padding: "8px 14px", fontSize: "0.85rem" }}
-            >
-              ログアウト
-            </button>
-          )}
           <button
             type="submit"
             disabled={pending || body.trim().length === 0}

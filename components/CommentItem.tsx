@@ -1,6 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useState } from "react";
 import type { CommentRow } from "./CommentThread";
 
 function fmtDate(iso: string) {
@@ -26,23 +25,24 @@ export function CommentItem({
 }) {
   const [reported, setReported] = useState(false);
   const [reportError, setReportError] = useState<string | null>(null);
-  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
-  if (!supabaseRef.current) supabaseRef.current = createClient();
 
   const handleReport = async () => {
     const reason = window.prompt("通報理由（任意・300 文字まで）");
     if (reason === null) return;
     setReportError(null);
-    const { error } = await supabaseRef.current!.from("reports").insert({
-      comment_id: comment.id,
-      reporter_id: (await supabaseRef.current!.auth.getUser()).data.user?.id,
-      reason: reason || null,
-    });
-    if (error) {
-      if (error.code === "23505") setReported(true); // 二重通報
-      else setReportError(error.message);
-    } else {
-      setReported(true);
+    try {
+      const res = await fetch("/api/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ comment_id: comment.id, reason: reason || null }),
+      });
+      if (res.ok) {
+        setReported(true); // already=true（二重通報）も受付済み扱い
+      } else {
+        setReportError("通報に失敗しました。");
+      }
+    } catch {
+      setReportError("通報に失敗しました。");
     }
   };
 

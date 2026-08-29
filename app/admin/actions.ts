@@ -1,29 +1,30 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { sql } from "@/lib/db";
+import { grantAdmin, isAdmin } from "@/lib/admin";
 
 async function ensureAdmin() {
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
-  const role = (data.user?.app_metadata?.role as string | undefined) ?? null;
-  if (!data.user || role !== "admin") {
+  if (!(await isAdmin())) {
     throw new Error("forbidden");
   }
 }
 
+/** /admin のパスワードフォーム。一致すれば admin Cookie を発行して再描画。 */
+export async function adminLogin(formData: FormData) {
+  const password = String(formData.get("password") ?? "");
+  await grantAdmin(password);
+  revalidatePath("/admin");
+}
+
 export async function setStatus(id: string, status: "visible" | "hidden") {
   await ensureAdmin();
-  const admin = createAdminClient();
-  const { error } = await admin.from("comments").update({ status }).eq("id", id);
-  if (error) throw new Error(error.message);
+  if (status !== "visible" && status !== "hidden") throw new Error("bad status");
+  await sql`update comments set status = ${status} where id = ${id}::uuid`;
   revalidatePath("/admin");
 }
 
 export async function deleteComment(id: string) {
   await ensureAdmin();
-  const admin = createAdminClient();
-  const { error } = await admin.from("comments").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  await sql`delete from comments where id = ${id}::uuid`;
   revalidatePath("/admin");
 }

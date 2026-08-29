@@ -1,4 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
+import { NIL_UUID, sql } from "@/lib/db";
+import { getUid } from "@/lib/identity";
 import { CommentList } from "./CommentList";
 
 export type CommentRow = {
@@ -13,16 +14,24 @@ export type CommentRow = {
 };
 
 export async function CommentThread({ targetId }: { targetId: string }) {
-  const supabase = await createClient();
-
-  // user_id は返さず is_mine だけ返す RPC 経由（匿名性リーク対策）
-  const [{ data: comments }, { data: userData }] = await Promise.all([
-    supabase.rpc("get_comments", { p_target: targetId, p_limit: 20 }),
-    supabase.auth.getUser(),
-  ]);
-
-  const initialComments = (comments ?? []) as CommentRow[];
-  const currentUserId = userData.user?.id ?? null;
+  // user_id は返さず is_mine だけ返す（匿名性リーク対策。旧 get_comments RPC と同じ可視範囲）
+  let initialComments: CommentRow[] = [];
+  let currentUserId: string | null = null;
+  try {
+    currentUserId = await getUid();
+    const uid = currentUserId ?? NIL_UUID;
+    const rows = await sql`
+      select c.id, c.target_id, c.display_name, c.is_anonymous, c.body, c.status,
+             c.created_at, (c.user_id = ${uid}::uuid) as is_mine
+      from comments c
+      where c.target_id = ${targetId}
+        and (c.status = 'visible' or c.user_id = ${uid}::uuid)
+      order by c.created_at desc
+      limit 20`;
+    initialComments = rows as CommentRow[];
+  } catch {
+    // SSR 失敗時は空で初期化（クライアント側で同期する）
+  }
 
   return (
     <section

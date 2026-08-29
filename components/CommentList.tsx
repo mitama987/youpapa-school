@@ -1,6 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useCallback, useState } from "react";
 import type { CommentRow } from "./CommentThread";
 import { CommentForm } from "./CommentForm";
 import { CommentItem } from "./CommentItem";
@@ -16,39 +15,43 @@ export function CommentList({
 }) {
   const [comments, setComments] = useState<CommentRow[]>(initialComments);
   const [userId, setUserId] = useState<string | null>(initialUserId);
-  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
-  if (!supabaseRef.current) supabaseRef.current = createClient();
-
-  // クライアントマウント時にセッション状態を再同期
-  useEffect(() => {
-    const supabase = supabaseRef.current!;
-    supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id ?? null));
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUserId(session?.user?.id ?? null);
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
 
   const refresh = useCallback(async () => {
-    const supabase = supabaseRef.current!;
-    // user_id は返さず is_mine だけ返す RPC 経由（匿名性リーク対策）
-    const { data } = await supabase.rpc("get_comments", {
-      p_target: targetId,
-      p_limit: 20,
-    });
-    if (data) setComments(data as CommentRow[]);
+    try {
+      // user_id は返さず is_mine だけ返す API 経由（匿名性リーク対策）
+      const res = await fetch(
+        `/api/comments?target=${encodeURIComponent(targetId)}&limit=20`,
+      );
+      if (!res.ok) return;
+      const data = (await res.json()) as { comments: CommentRow[] };
+      setComments(data.comments);
+    } catch {
+      // ignore
+    }
   }, [targetId]);
 
+  // 投稿完了時: サーバーが uid Cookie を発行しているので状態も同期する
+  const handlePosted = useCallback(
+    async (uid?: string) => {
+      if (uid) setUserId(uid);
+      await refresh();
+    },
+    [refresh],
+  );
+
   const handleDelete = async (id: string) => {
-    const supabase = supabaseRef.current!;
     setComments((prev) => prev.filter((c) => c.id !== id)); // 楽観更新
-    const { error } = await supabase.from("comments").delete().eq("id", id);
-    if (error) await refresh();
+    try {
+      const res = await fetch(`/api/comments/${id}`, { method: "DELETE" });
+      if (!res.ok) await refresh();
+    } catch {
+      await refresh();
+    }
   };
 
   return (
     <>
-      <CommentForm targetId={targetId} userId={userId} onPosted={refresh} />
+      <CommentForm targetId={targetId} userId={userId} onPosted={handlePosted} />
       <div style={{ marginTop: 18 }}>
         {comments.length === 0 ? (
           <p style={{ color: "var(--muted)", margin: 0 }}>
@@ -60,7 +63,7 @@ export function CommentList({
               key={c.id}
               comment={c}
               isOwn={c.is_mine}
-              canReport={!!userId && !c.is_mine}
+              canReport={!c.is_mine}
               onDelete={handleDelete}
             />
           ))

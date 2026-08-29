@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 
 export function LikeButtonClient({
   targetId,
@@ -14,8 +13,6 @@ export function LikeButtonClient({
   const [count, setCount] = useState(initialCount);
   const [already, setAlready] = useState(initialAlready);
   const [pending, setPending] = useState(false);
-  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
-  if (!supabaseRef.current) supabaseRef.current = createClient();
 
   // 連打抑止 (250ms)
   const lastClickRef = useRef(0);
@@ -25,22 +22,12 @@ export function LikeButtonClient({
     let cancelled = false;
     (async () => {
       try {
-        const supabase = supabaseRef.current!;
-        const { data: row } = await supabase
-          .from("likes")
-          .select("count")
-          .eq("target_id", targetId)
-          .maybeSingle();
-        if (!cancelled && row?.count != null) setCount(Number(row.count));
-
-        const { data: userData } = await supabase.auth.getUser();
-        if (userData.user) {
-          const { data: ev } = await supabase
-            .from("like_events")
-            .select("target_id")
-            .eq("target_id", targetId)
-            .maybeSingle();
-          if (!cancelled) setAlready(!!ev);
+        const res = await fetch(`/api/likes?target=${encodeURIComponent(targetId)}`);
+        if (!res.ok) return;
+        const data = (await res.json()) as { count: number; already: boolean };
+        if (!cancelled) {
+          setCount(Number(data.count));
+          setAlready(!!data.already);
         }
       } catch {
         // ignore
@@ -50,15 +37,6 @@ export function LikeButtonClient({
       cancelled = true;
     };
   }, [targetId]);
-
-  const ensureSession = async () => {
-    const supabase = supabaseRef.current!;
-    const { data } = await supabase.auth.getUser();
-    if (data.user) return data.user.id;
-    const { data: signed, error } = await supabase.auth.signInAnonymously();
-    if (error || !signed.user) throw error ?? new Error("anon signin failed");
-    return signed.user.id;
-  };
 
   const handleClick = async () => {
     if (already) return;
@@ -70,15 +48,15 @@ export function LikeButtonClient({
     setCount((c) => c + 1); // 楽観更新
     setAlready(true);
     try {
-      await ensureSession();
-      const { data, error } = await supabaseRef.current!.rpc("like_once", {
-        p_target: targetId,
+      const res = await fetch("/api/like", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ target: targetId }),
       });
-      if (!error && Array.isArray(data) && data[0]) {
-        const row = data[0] as { new_count: number; already: boolean };
-        setCount(Number(row.new_count));
-        setAlready(!!row.already || true);
-      }
+      if (!res.ok) throw new Error("like failed");
+      const row = (await res.json()) as { new_count: number; already: boolean };
+      setCount(Number(row.new_count));
+      setAlready(true);
     } catch {
       // 失敗時はロールバック
       setCount((c) => Math.max(0, c - 1));
