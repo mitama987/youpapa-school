@@ -88,8 +88,8 @@ note.com のアイキャッチ画像は **1280×670 (≒1.91:1, OGP準拠)** が
 **サムネ画像が未生成、または既存サムネが note 推奨サイズ (1280×670 / 1.91:1) でない場合は、まずサムネを生成または再生成する。**
 
 **生成方針（必須）:**
-- モデル: **`gpt-image-2`**（OpenAI Images API、`buzzblog-generator/data.json` の `openaiImageModel` から読み込み）
-- 生成サイズ: **`1536x1024`**（gpt-image-2 が直接対応する最も横長の比率）
+- モデル: **`gpt-image-2.6-sunburst`**（OpenAI Images API、`buzzblog-generator/data.json` の `openaiImageModel` から読み込み。新しいモデルが使えないキーでは `gpt-image-2` にする）
+- 生成サイズ: **`1536x1024`**（直接作れる最も横長の比率）
 - 後処理: **Pillow で中央水平帯を 1.91:1 にクロップ → LANCZOS で 1280×670 に縮小**
 - 出力: 既存サムネファイルがあれば **同じパスに上書き**
 
@@ -98,14 +98,14 @@ note.com のアイキャッチ画像は **1280×670 (≒1.91:1, OGP準拠)** が
 - 元記事の MD に「サムネ案」セクションがあれば、その配色・コピー指示を踏襲する
 - 「薄い色」「パステル」は使わない（彩度の高い黄色／シアン／マゼンタ等を指定）。日本語テキストは正確に表示するよう明示
 
-**参考実装**: `scripts/blog_assets/gen_follower31_thumbnail_gpt.py`（gpt-image-2 + Pillow クロップ + LANCZOS リサイズの完全な雛形）
+**参考実装**: `scripts/blog_assets/gen_follower31_thumbnail_gpt.py`（Pillow クロップ + LANCZOS リサイズの完全な雛形）
 
 ```python
 # 生成 → クロップ → リサイズの最小ロジック
 TARGET_W, TARGET_H = 1280, 670
 TARGET_RATIO = TARGET_W / TARGET_H
 
-resp = client.images.generate(model="gpt-image-2", prompt=PROMPT, size="1536x1024", n=1)
+resp = client.images.generate(model="gpt-image-2.6-sunburst", prompt=PROMPT, size="1536x1024", n=1)
 img = Image.open(io.BytesIO(base64.b64decode(resp.data[0].b64_json))).convert("RGB")
 src_w, src_h = img.size
 new_h = int(round(src_w / TARGET_RATIO))
@@ -1111,6 +1111,7 @@ BuzzBlog 等から流し込む本文は、note 投稿時に以下を**標準で�
 
 ## バージョン履歴
 
+- ver 2.14 - 2026/11/11 - Step 3.5-A のサムネ生成モデルを `gpt-image-2` → `gpt-image-2.6-sunburst`（2026年11月時点の新しい版）に更新。新しいモデルが使えないキーでは `gpt-image-2` に戻せる
 - ver 2.13 - 2026/05/17 - 「本文表現のガイドライン」に **読みやすさ改善（流し込み時の標準整形）** を新設。太字20箇所目安・箇条書きは中黒引用・短文化・段落改行・**見出し上空行（note限定、MDには入れない）**・冒頭悩みパートのパターン10準拠を標準化。再流し込み時の **画像保全（window.__IMGFIGS__ に既存figure outerHTMLを退避→再挿入）** 手順を追加し、再アップロード不要＋クリップボード混入回避を明文化。タイトル欄は手動編集尊重で触らない方針を追記
 - ver 2.12 - 2026/05/09 - Step 3.5 を 3.5-A (サムネ生成) と 3.5-B (手動アップロード) に分割。サムネ生成は **gpt-image-2 で 1536x1024 を生成 → Pillow で 1.91:1 中央クロップ → LANCZOS で 1280×670 に縮小** が必須。参考実装は `scripts/blog_assets/gen_follower31_thumbnail_gpt.py`。プロンプトは「主要要素を中央65%帯に収める」「薄い色は使わない」を明示
 - ver 2.11 - 2026/04/27 - パターン16（コードブロック挿入：一括DOM置換方式）を新設。`<pre class="codeBlock"><code>...</code></pre>` をUUID付きで構築するとProseMirrorが受理する。ツールバー「コード」ボタンはトグル動作で連続処理時に巻き戻し事故が起きるため非推奨。Markdown→blocks変換ルールに `pre` 型を追加、パターン8の switch にも `case 'pre'` を追加。フェンス記法と単独行コマンド段落をコードブロック化する経路を整備

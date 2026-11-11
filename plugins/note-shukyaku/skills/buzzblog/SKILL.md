@@ -153,45 +153,47 @@ provider: "claude-code"
 
 ### 画像生成モデル
 
-#### デフォルト: `gpt-image-2`（OpenAI、2026-04-21リリース）
+#### デフォルト: `gpt-image-2.6-sunburst`（OpenAI、2026-11-04リリース）
 
-サムネイル・挿絵・図解すべての画像生成で **gpt-image-2 をデフォルトで使う** 。
+サムネイル・図解の画像生成で **gpt-image-2.6-sunburst をデフォルトで使う** （挿絵は下の表のとおり Gemini）。
 
-- **特徴:** CJK文字を99%以上の精度で正確に描画する（DALL-E 3の60% → 99%+ への大幅向上）。日本語ラベル・数字・タイトルがほぼ崩れずに出る
+- **特徴:** 日本語ラベル・数字・タイトルがほぼ崩れずに出る（2026-11-11 の確認では、サムネの日本語 4 行・図解の 13 ラベルで文字化け 0）。「文字は中央に収める」などの配置の指示も守りやすい。1 枚 40〜50 秒
 - **エンドポイント:** `https://api.openai.com/v1/images/generations`
 - **APIキー:** `data.json` の `openaiApiKey` フィールドから取得
-- **モデルID:** `data.json` の `openaiImageModel` から取得（既定値: `gpt-image-2`）
+- **モデルID:** `data.json` の `openaiImageModel` から取得（既定値: `gpt-image-2.6-sunburst`）
+- **速さを優先したいとき:** `openaiImageModel` を `gpt-image-2.6-flare` にする（1 枚 約 10 秒。ただし文字が端に寄って、切り抜きで欠けることがある）
+- **新しいモデルが使えないとき:** HTTP 400／403／404 でモデル名のエラーが出たら、`openaiImageModel` を `gpt-image-2` にすれば前の版で動く
 - **16:9アスペクト比:** `size: "1536x1024"` を指定（公式サポートサイズ）
 - **レスポンス形式:** `data[0].b64_json` （base64） または `data[0].url`
 
-#### フォールバック: `gemini-3-pro-image-preview`
+#### 挿絵とフォールバック: `gemini-nano-banana-2.1`（Google、2026-10リリース）
 
-OpenAI 側で課金エラー（402）、レート制限（429）、サービス停止が出た場合、または **ユーザーが明示的に Gemini を指定した場合のみ** Gemini に切り替える。
+挿絵（文字なしの抽象イラスト）は Gemini で作る。サムネイル・図解は、OpenAI 側で課金エラー（402）、レート制限（429）、サービス停止が出た場合、または **ユーザーが明示的に Gemini を指定した場合のみ** Gemini に切り替える。
 
 - **APIキー:** `data.json` の `apiKey` フィールド
 - **エンドポイント:** `https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={API_KEY}`
 - **アスペクト比指定:** `generationConfig.imageConfig.aspectRatio: "16:9"`
 - **使用禁止:** `gemini-2.5-flash-image` は日本語が文字化けする
-- **存在しないモデル:** `gemini-3.1-pro-image-preview` は2026-04-18時点で404。pro品質は `gemini-3-pro-image-preview` を指定
+- **存在しないモデル:** `gemini-3.1-pro-image-preview` は存在しない（404）。落ち着いた絵にしたいときは `gemini-3-pro-image` を指定
 
 #### 画像種別と使い分け（重要）
 
 | 画像種別 | 用途 | デフォルトモデル |
 |---|---|---|
-| サムネイル | タイトル・バッジ・実績テキスト多め | **gpt-image-2** （CJK精度が必須） |
-| 図解（diagram） | 比較表・フローチャート・カード型情報 | **gpt-image-2** （CJK精度が必須） |
-| 挿絵（H2 直下） | テキストなしの抽象イラスト | **gemini-3-pro-image-preview** （色彩・雰囲気が安定） |
+| サムネイル | タイトル・バッジ・実績テキスト多め | **gpt-image-2.6-sunburst** （日本語の文字精度が必須） |
+| 図解（diagram） | 比較表・フローチャート・カード型情報 | **gpt-image-2.6-sunburst** （日本語の文字精度が必須） |
+| 挿絵（H2 直下） | テキストなしの抽象イラスト | **gemini-nano-banana-2.1** （描き込みが多く華やか） |
 
-**Why:** gpt-image-2 はCJK文字を99%描画できるがテキストなしの抽象イラストでは過度に "AI っぽい" 仕上がりになりがち。Gemini はテキストなしの雰囲気イラストで色彩と構図のまとまりが良いので、挿絵は Gemini を使う。
+**Why:** GPT 系は日本語の文字を正確に描けるが、テキストなしの抽象イラストでは過度に "AI っぽい" 仕上がりになりがち。Gemini はテキストなしの雰囲気イラストで色彩と構図のまとまりが良いので、挿絵は Gemini を使う。
 
 ### Step 6: (オプション) サムネイル生成
 
 ユーザーに「サムネイルも生成しますか？」と確認し、希望がある場合のみ実行。
 
-1. プラグイン設定 `data.json` から OpenAI APIキー（`openaiApiKey`）とモデル（`openaiImageModel`、既定 `gpt-image-2`）を取得
+1. プラグイン設定 `data.json` から OpenAI APIキー（`openaiApiKey`）とモデル（`openaiImageModel`、既定 `gpt-image-2.6-sunburst`）を取得
 2. サムネイルプロンプト `サムネイル生成.md` を読み込む
 3. レイアウトパターンを選択（A: 王道スタック / B: 左右分割 / C: 下段リストパネル / D: ダイナミック）
-4. Python スクリプトで gpt-image-2 を呼び出す（APIキーは data.json から読み込み、スクリプト本体に埋め込まない）:
+4. Python スクリプトで gpt-image-2.6-sunburst を呼び出す（APIキーは data.json から読み込み、スクリプト本体に埋め込まない）:
 ```bash
 python -c "
 import json, urllib.request, base64, sys
@@ -199,7 +201,7 @@ DATA_JSON = r'<あなたのVaultのパス>\.obsidian\plugins\buzzblog-generator\
 with open(DATA_JSON, encoding='utf-8') as f:
     cfg = json.load(f)
 API_KEY = cfg['openaiApiKey']
-MODEL = cfg.get('openaiImageModel', 'gpt-image-2')
+MODEL = cfg.get('openaiImageModel', 'gpt-image-2.6-sunburst')
 prompt = '''...(composed prompt)...'''
 data = json.dumps({
     'model': MODEL,
@@ -228,7 +230,7 @@ with open(sys.argv[1], 'wb') as f:
 
 ### Step 7: 挿絵生成
 
-画像ファイルがまだない場合、**`gemini-3-pro-image-preview`** で自動生成する（テキストなしの抽象イラスト用途では Gemini の方が色彩・構図が安定する）。
+画像ファイルがまだない場合、**`gemini-nano-banana-2.1`** で自動生成する（テキストなしの抽象イラスト用途では Gemini の方が色彩・構図が安定する）。
 
 **重要: 挿絵はH2（`##`）見出しの直下のみに配置する。H3（`###`）の下には挿入しない。**
 
@@ -250,7 +252,7 @@ DATA_JSON = r'<あなたのVaultのパス>\.obsidian\plugins\buzzblog-generator\
 with open(DATA_JSON, encoding='utf-8') as f:
     cfg = json.load(f)
 API_KEY = cfg['apiKey']
-MODEL = 'gemini-3-pro-image-preview'
+MODEL = 'gemini-nano-banana-2.1'
 ENDPOINT = f'https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={API_KEY}'
 
 def gen(prompt, output_path):
@@ -283,7 +285,7 @@ with ThreadPoolExecutor(max_workers=4) as ex:
 ユーザーから「分かりづらい所に図解を入れて」「表を図解にして」など、**説明的・教育的な図解** の依頼があった場合に実行する。挿絵（抽象イラスト）とは別物で、テキスト・数字・矢印・カードレイアウトを含む infographic。
 
 1. 記事内で図解化すべきセクションを特定（比較表・フローチャート・概念図など）
-2. プラグイン設定 `data.json` から OpenAI APIキーを取得（**gpt-image-2 必須**：日本語ラベル精度が出る）
+2. プラグイン設定 `data.json` から OpenAI APIキーを取得（**gpt-image-2.6-sunburst 必須**：日本語ラベル精度が出る）
 3. プロンプトに以下を必ず含める:
    - `Render Japanese text accurately and clearly readable` (CJK精度を強調)
    - 含めない単語の明示禁止リスト（古い情報を排除する場合）
@@ -344,6 +346,7 @@ with ThreadPoolExecutor(max_workers=4) as ex:
 
 ## Version History
 
+- ver 0.5 / 2026-11-11 / 画像生成モデルを新しい版に更新。サムネ・図解は `gpt-image-2` → `gpt-image-2.6-sunburst`、挿絵は `gemini-3-pro-image-preview` → `gemini-nano-banana-2.1`。速さ優先の `gpt-image-2.6-flare` と、新しいモデルが使えないときに `gpt-image-2` へ戻す方法を追記
 - ver 0.4 / 2026-08-05 / Step 3 修正: タイトル10案が画面に表示されない問題の対策。AskUserQuestion の question 本文に10案全部を番号付きで含めることを必須化（thinking 内で生成した候補は非表示のため「上の10案」参照が空振りしていた）
 - ver 0.3 / 2026-05-03 / 挿絵（H2 直下）のみ Gemini に戻す。テキストなしの抽象イラストは Gemini の方が色彩・構図のまとまりが良いため。サムネ・図解は gpt-image-2 維持
 - ver 0.2 / 2026-05-03 / 画像生成モデルを `gemini-3-pro-image-preview` から **`gpt-image-2`** （OpenAI、CJK文字99%以上の精度）に切替。サムネイル・挿絵・図解の3種別すべて gpt-image-2 をデフォルトにし、Gemini はフォールバックに降格。Step 8（図解生成）を新設。APIキーは `data.json` の `openaiApiKey` フィールドから読み込む方式に統一

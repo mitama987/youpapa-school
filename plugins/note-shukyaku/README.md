@@ -75,7 +75,7 @@ Claude Code で「メモ → 記事 → note投稿」を半自動化するスキ
 
 ざっくり：
 1. uv を入れる（Windows: PowerShell で `irm https://astral.sh/uv/install.ps1 | iex`）
-2. OpenAI（gpt-image-2）/ Gemini のАPIキーを `.env` か `data.json` に設定（[`config.example.md`](config.example.md)）
+2. OpenAI（gpt-image-2.6）/ Gemini のАPIキーを `.env` か `data.json` に設定（[`config.example.md`](config.example.md)）
 3. プレビュー：`uv run python -m note_preview <記事.md>`（note-preview スキル内 `note_preview/` を使用）
 4. サムネ生成：`uv run python skills/note-preview/scripts/gen_thumbnail.py "プロンプト" 出力.png`
 
