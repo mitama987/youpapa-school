@@ -50,7 +50,7 @@ export default function NoteShukyakuCourse() {
               items={[
                 { href: "/courses/note-shukyaku/method", label: "① note集客の方法 ― なぜnote／何を書く／継続の仕組み", meta: "考え方" },
                 { href: "/courses/note-shukyaku/setup", label: "② 導入：全体像と事前準備", meta: "準備" },
-                { href: "/courses/note-shukyaku/api", label: "③ API設定 ― 画像生成（gpt-image-2 / Gemini）", meta: "設定" },
+                { href: "/courses/note-shukyaku/api", label: "③ API設定 ― 画像生成（gpt-image-2.6 / Gemini）", meta: "設定" },
                 { href: "/courses/note-shukyaku/note", label: "④ note投稿設定 ― note IDとログイン", meta: "設定" },
                 { href: "/courses/note-shukyaku/faq", label: "⑤ FAQ・トラブルシュート", meta: "読み物" },
               ]}

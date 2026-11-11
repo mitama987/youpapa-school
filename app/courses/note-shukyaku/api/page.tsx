@@ -6,19 +6,19 @@ import { Pager } from "@/components/Pager";
 import { GuideSection } from "@/components/GuideSection";
 
 export const metadata: Metadata = {
-  title: "API設定（画像生成）｜gpt-image-2 / Gemini のキー設定",
+  title: "API設定（画像生成）｜gpt-image-2.6 / Gemini のキー設定",
   description:
-    "BuzzBlogの画像生成に使うAPIキーの設定。OpenAI(gpt-image-2)とGemini、GPTキー=OpenAIキーの誤解防止、data.json と .env の2方式、モデルの使い分けをプレースホルダ付きで解説します。",
+    "BuzzBlogの画像生成に使うAPIキーの設定。OpenAI(gpt-image-2.6)とGemini、GPTキー=OpenAIキーの誤解防止、data.json と .env の2方式、モデルの使い分けをプレースホルダ付きで解説します。",
 };
 
 const DATA_JSON = `{
   "openaiApiKey": "sk-REPLACE_ME",
-  "openaiImageModel": "gpt-image-2",
+  "openaiImageModel": "gpt-image-2.6-sunburst",
   "apiKey": "AIza-REPLACE_ME"
 }`;
 
 const ENV_EXAMPLE = `OPENAI_API_KEY=sk-REPLACE_ME
-OPENAI_IMAGE_MODEL=gpt-image-2
+OPENAI_IMAGE_MODEL=gpt-image-2.6-sunburst
 GEMINI_API_KEY=AIza-REPLACE_ME`;
 
 const CHECK_CMD = `uv run python -c "import os; print('OpenAI:', 'OK' if os.environ.get('OPENAI_API_KEY') else 'なし'); print('Gemini:', 'OK' if os.environ.get('GEMINI_API_KEY') else 'なし')"`;
@@ -73,8 +73,8 @@ export default function ApiSetupPage() {
                 <tr><th>キー</th><th>サービス</th><th>用途</th><th>必須度</th></tr>
               </thead>
               <tbody>
-                <tr><td><strong>OpenAI APIキー</strong></td><td>OpenAI（<code>gpt-image-2</code>）</td><td>サムネ・図解の生成</td><td>画像を使うなら必須</td></tr>
-                <tr><td><strong>Gemini APIキー</strong></td><td>Google（<code>gemini-3-pro-image-preview</code>）</td><td>挿絵・画像のフォールバック</td><td>任意</td></tr>
+                <tr><td><strong>OpenAI APIキー</strong></td><td>OpenAI（<code>gpt-image-2.6-sunburst</code>）</td><td>サムネ・図解の生成</td><td>画像を使うなら必須</td></tr>
+                <tr><td><strong>Gemini APIキー</strong></td><td>Google（<code>gemini-nano-banana-2.1</code>）</td><td>挿絵・画像のフォールバック</td><td>任意</td></tr>
               </tbody>
             </table>
           </div>
@@ -82,8 +82,8 @@ export default function ApiSetupPage() {
 
         <GuideSection title="APIキーの取得" level={2}>
           <ul>
-            <li><strong>OpenAI</strong>：<a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener">platform.openai.com</a> で発行（画像APIは課金設定が必要）。モデルは <code>gpt-image-2</code>。</li>
-            <li><strong>Google Gemini</strong>：<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> で発行（無料枠あり）。モデルは <code>gemini-3-pro-image-preview</code>。</li>
+            <li><strong>OpenAI</strong>：<a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener">platform.openai.com</a> で発行（画像APIは課金設定が必要）。モデルは <code>gpt-image-2.6-sunburst</code>。</li>
+            <li><strong>Google Gemini</strong>：<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> で発行（無料枠あり）。モデルは <code>gemini-nano-banana-2.1</code>。</li>
           </ul>
           <div className="callout warn">
             <div className="label">キーは絶対に公開しない</div>
@@ -98,9 +98,9 @@ export default function ApiSetupPage() {
                 <tr><th>画像の種類</th><th>用途</th><th>モデル</th></tr>
               </thead>
               <tbody>
-                <tr><td><strong>サムネイル</strong></td><td>タイトル・バッジなど文字多め</td><td><code>gpt-image-2</code>（日本語が崩れにくい）</td></tr>
-                <tr><td><strong>図解</strong></td><td>比較表・フローチャート</td><td><code>gpt-image-2</code></td></tr>
-                <tr><td><strong>挿絵（H2直下）</strong></td><td>文字なしの抽象イラスト</td><td><code>gemini-3-pro-image-preview</code></td></tr>
+                <tr><td><strong>サムネイル</strong></td><td>タイトル・バッジなど文字多め</td><td><code>gpt-image-2.6-sunburst</code>（日本語が崩れにくい）</td></tr>
+                <tr><td><strong>図解</strong></td><td>比較表・フローチャート</td><td><code>gpt-image-2.6-sunburst</code></td></tr>
+                <tr><td><strong>挿絵（H2直下）</strong></td><td>文字なしの抽象イラスト</td><td><code>gemini-nano-banana-2.1</code></td></tr>
               </tbody>
             </table>
           </div>
@@ -108,6 +108,7 @@ export default function ApiSetupPage() {
             <li>OpenAI側で課金エラー（402）やレート制限（429）が出ると、画像生成は自動でGeminiにフォールバックします。</li>
             <li>サムネは <code>1536x1024</code> で生成 → 中央を 1.91:1 にクロップ → <code>1280×670</code>（note推奨）へ縮小します。</li>
             <li><code>gemini-2.5-flash-image</code> は日本語が化けるため使いません。</li>
+            <li>モデル名は2026年11月時点の新しい版です。速さを優先するなら <code>gpt-image-2.6-flare</code> も選べます（文字が端に寄って、切り抜きで欠けることがあります）。</li>
           </ul>
         </GuideSection>
 
@@ -121,7 +122,7 @@ export default function ApiSetupPage() {
           <CodeBlock label="data.json（プレースホルダ）" code={DATA_JSON} />
           <div className="callout warn">
             <div className="label">フィールド名の注意</div>
-            <code>openaiApiKey</code> = OpenAIキー、<code>apiKey</code> = <strong>Geminiキー</strong>（名前が紛らわしいので取り違え注意）。<code>openaiImageModel</code> は <code>gpt-image-2</code> のまま変えないでください。
+            <code>openaiApiKey</code> = OpenAIキー、<code>apiKey</code> = <strong>Geminiキー</strong>（名前が紛らわしいので取り違え注意）。<code>openaiImageModel</code> は <code>gpt-image-2.6-sunburst</code> にします。「モデルが見つからない」というエラーが出るキーでは、<code>gpt-image-2</code> に書き換えると前の版で動きます。
           </div>
 
           <h3>方式B：.env（プロジェクトルート）</h3>

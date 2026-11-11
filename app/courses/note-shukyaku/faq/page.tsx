@@ -49,12 +49,17 @@ export default function FaqPage() {
         </GuideSection>
         <GuideSection title="402（課金）や 429（レート制限）が出る" level={3}>
           <p>
-            OpenAIの支払い設定切れ、またはレート上限です。支払い方法を確認するか、しばらく待って再試行します。402/429のとき画像生成は <code>gemini-3-pro-image-preview</code> に自動フォールバックするので、Geminiキーも入れておくと安心です。
+            OpenAIの支払い設定切れ、またはレート上限です。支払い方法を確認するか、しばらく待って再試行します。402/429のとき画像生成は <code>gemini-nano-banana-2.1</code> に自動フォールバックするので、Geminiキーも入れておくと安心です。
+          </p>
+        </GuideSection>
+        <GuideSection title="「モデルが見つからない」というエラーが出る" level={3}>
+          <p>
+            サムネ・図解の既定モデルは <code>gpt-image-2.6-sunburst</code>（2026年11月時点の新しい版）です。お使いのOpenAIキーでまだ使えない場合は、<code>data.json</code> の <code>openaiImageModel</code>（または <code>.env</code> の <code>OPENAI_IMAGE_MODEL</code>）を <code>gpt-image-2</code> に書き換えると前の版で動きます。
           </p>
         </GuideSection>
         <GuideSection title="画像の日本語が文字化けする" level={3}>
           <p>
-            日本語を含むサムネ・図解は <code>gpt-image-2</code> を使ってください（日本語精度が高い）。<code>gemini-2.5-flash-image</code> は化けるため使用禁止です。文字なしの抽象イラスト（挿絵）は <code>gemini-3-pro-image-preview</code> でOKです。
+            日本語を含むサムネ・図解は <code>gpt-image-2.6-sunburst</code> を使ってください（日本語精度が高い）。<code>gemini-2.5-flash-image</code> は化けるため使用禁止です。文字なしの抽象イラスト（挿絵）は <code>gemini-nano-banana-2.1</code> でOKです。
           </p>
         </GuideSection>
         <GuideSection title="サムネの比率がおかしい・縦に間延びする" level={3}>

@@ -1,4 +1,4 @@
-// 講座カードのサムネを gpt-image-2 で生成して public/thumbs/ に保存する。
+// 講座カードのサムネを gpt-image-2.6-sunburst で生成して public/thumbs/ に保存する。
 //
 // 使い方:
 //   $env:OPENAI_API_KEY="sk-..."   # PowerShell (または .env.local に追記)
@@ -13,7 +13,7 @@ import path from "node:path";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT_DIR = path.join(ROOT, "public", "thumbs");
-const MODEL = "gpt-image-2"; // グローバル設定（サムネ=gpt-image-2）に準拠
+const MODEL = "gpt-image-2.6-sunburst"; // グローバル設定（サムネ=gpt-image-2.6）に準拠・2026-11-11 更新
 const SIZE = "1536x1024"; // landscape（16:9 に近い）
 
 // .env.local から OPENAI_API_KEY を拾えるようにする（未設定なら環境変数を使用）

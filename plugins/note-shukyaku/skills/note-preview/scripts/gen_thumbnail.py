@@ -1,7 +1,9 @@
 """汎用サムネイル生成テンプレート（任意・画像生成は上級ステップ／Python要）。
 
-gpt-image-2 で 1536x1024 を生成 → 中央を 1.91:1 にクロップ → 1280x670（note推奨）へ縮小する。
+gpt-image-2.6-sunburst で 1536x1024 を生成 → 中央を 1.91:1 にクロップ → 1280x670（note推奨）へ縮小する。
 APIキーは環境変数 OPENAI_API_KEY、または data.json（環境変数 OPENAI_DATA_JSON でパス指定）から読む。
+モデルは環境変数 OPENAI_IMAGE_MODEL（または data.json の openaiImageModel）で変えられる。
+新しいモデルが使えないキーでは OPENAI_IMAGE_MODEL=gpt-image-2 を指定する。
 
 使い方:
     uv run python gen_thumbnail.py "サムネのプロンプト文" 出力先.png
@@ -24,7 +26,7 @@ TARGET_W, TARGET_H = 1280, 670  # note 推奨サイズ（1.91:1）
 def load_openai_config() -> tuple[str, str]:
     """OpenAIキーとモデルを 環境変数 → data.json の順で取得。"""
     key = os.environ.get("OPENAI_API_KEY")
-    model = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-2")
+    model = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-2.6-sunburst")
     if key:
         return key, model
     cfg_path = os.environ.get("OPENAI_DATA_JSON")  # 例: <Vault>\.obsidian\plugins\buzzblog-generator\data.json

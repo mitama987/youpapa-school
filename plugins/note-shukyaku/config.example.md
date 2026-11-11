@@ -36,7 +36,7 @@ $env:NOTE_CTA_URL  = "https://note.com/taro-blog/n/xxxxxxxx"
 `.env` の例：
 ```
 OPENAI_API_KEY=sk-あなたのキー
-OPENAI_IMAGE_MODEL=gpt-image-2
+OPENAI_IMAGE_MODEL=gpt-image-2.6-sunburst
 GEMINI_API_KEY=AIzaあなたのキー
 ```
 
@@ -44,9 +44,10 @@ GEMINI_API_KEY=AIzaあなたのキー
 ```json
 {
   "openaiApiKey": "sk-あなたのキー",
-  "openaiImageModel": "gpt-image-2",
+  "openaiImageModel": "gpt-image-2.6-sunburst",
   "apiKey": "AIzaあなたのキー"
 }
 ```
+> モデル名は 2026-11 時点の新しい版です。お使いのキーで「モデルが見つからない」というエラーが出るときは、`gpt-image-2` に書き換えると前の版で動きます。
 > `openaiApiKey` = OpenAIキー、`apiKey` = **Geminiキー**（名前が紛らわしいので注意）。
 > 「画像サムネ用API」と「GPTのAPIキー」は同じ OpenAIキー1本です（記事の文章は Claude が生成するので GPTチャットAPIは不要）。
